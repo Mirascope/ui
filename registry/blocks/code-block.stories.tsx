@@ -71,6 +71,33 @@ export const JavaScript: Story = {
   },
 };
 
+// Basic JavaScript example
+export const JavaScriptHighlighting: Story = {
+  args: {
+    code: `function hello() {
+      console.log("This is a really really really long line of code that should be highlighted");
+      return true;
+    }`,
+    language: "javascript",
+    showLineNumbers: true,
+    meta: "{1-3}",
+  },
+  parameters: {
+    docs: {
+      source: {
+        type: "code",
+        format: true,
+      },
+    },
+  },
+  decorators: [
+    (Story) => (
+      <div style={{ maxWidth: "600px", overflow: "auto" }}>
+        <Story />
+      </div>
+    ),
+  ],
+};
 // TypeScript example
 export const TypeScript: Story = {
   args: {

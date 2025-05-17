@@ -145,20 +145,17 @@ export async function highlightCode(
 
     // Generate HTML for both light and dark themes
     // Using direct codeToHtml call from shiki
-    const lightThemeHtml = await codeToHtml(processedCode, {
+    const themeHtml = await codeToHtml(processedCode, {
       lang: language || "text",
-      theme: "github-light", // Use original theme
-      transformers: [transformerNotationHighlight(), transformerNotationDiff()],
-    });
-
-    const darkThemeHtml = await codeToHtml(processedCode, {
-      lang: language || "text",
-      theme: "github-dark-default", // Use original theme
+      themes: {
+        light: "github-light",
+        dark: "github-dark-default",
+      },
       transformers: [transformerNotationHighlight(), transformerNotationDiff()],
     });
 
     // Return both versions for theme switching
-    return { lightThemeHtml, darkThemeHtml };
+    return { themeHtml };
   } catch (error) {
     console.error(
       `Error highlighting code with language "${language}":`,
@@ -174,6 +171,6 @@ export async function highlightCode(
       .replace(/'/g, "&#039;");
 
     const fallbackHtml = `<pre class="shiki"><code>${escapedCode.trim()}</code></pre>`;
-    return { lightThemeHtml: fallbackHtml, darkThemeHtml: fallbackHtml };
+    return { themeHtml: fallbackHtml };
   }
 }
