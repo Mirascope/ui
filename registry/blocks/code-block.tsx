@@ -21,8 +21,7 @@ export function CodeBlock({
   className = "",
   showLineNumbers = true,
 }: CodeBlockProps) {
-  const [lightHtml, setLightHtml] = useState<string>("");
-  const [darkHtml, setDarkHtml] = useState<string>("");
+  const [html, setHtml] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const codeRef = useRef<HTMLDivElement>(null);
   const [isSmallBlock, setIsSmallBlock] = useState<boolean>(false);
@@ -31,13 +30,8 @@ export function CodeBlock({
     async function highlight() {
       setIsLoading(true);
       try {
-        const { lightThemeHtml, darkThemeHtml } = await highlightCode(
-          code,
-          language,
-          meta
-        );
-        setLightHtml(lightThemeHtml);
-        setDarkHtml(darkThemeHtml);
+        const { themeHtml } = await highlightCode(code, language, meta);
+        setHtml(themeHtml);
       } catch (error) {
         console.error("Error highlighting code:", error);
         // Fallback to plain pre/code in case of error
@@ -49,8 +43,7 @@ export function CodeBlock({
           .replace(/'/g, "&#039;");
 
         const fallbackHtml = `<pre class="language-${language}"><code>${escapedCode}</code></pre>`;
-        setLightHtml(fallbackHtml);
-        setDarkHtml(fallbackHtml);
+        setHtml(fallbackHtml);
       } finally {
         setIsLoading(false);
       }
@@ -67,7 +60,7 @@ export function CodeBlock({
       // Consider blocks less than 100px as small
       setIsSmallBlock(height < 100);
     }
-  }, [isLoading, lightHtml, darkHtml]);
+  }, [isLoading, html]);
 
   // If loading, just show the code without syntax highlighting to maintain size
   if (isLoading) {
@@ -88,7 +81,7 @@ export function CodeBlock({
       className={cn(
         `code-block-wrapper ${
           showLineNumbers && "show-line-numbers"
-        } group relative m-0 overflow-auto p-0 text-sm border rounded-md`,
+        } group relative m-0 p-0 text-sm border rounded-md`,
         className
       )}
     >
@@ -104,17 +97,12 @@ export function CodeBlock({
         <CopyButton content={stripHighlightMarkers(code)} />
       </div>
 
-      {/* Light theme code */}
-      <div
-        className='light-theme-code w-full text-sm dark:hidden'
-        dangerouslySetInnerHTML={{ __html: lightHtml }}
-      />
-
-      {/* Dark theme code */}
-      <div
-        className='dark-theme-code hidden w-full text-sm dark:block'
-        dangerouslySetInnerHTML={{ __html: darkHtml }}
-      />
+      <div className='highlight-container w-full overflow-auto'>
+        <div
+          className='w-full text-sm'
+          dangerouslySetInnerHTML={{ __html: html }}
+        />
+      </div>
     </div>
   );
 }
