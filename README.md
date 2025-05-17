@@ -28,6 +28,14 @@ pnpm registry:build
    pnpm dlx shadcn@latest add http://localhost:3000/r/hello-world.json
    ```
 
+## Storybook
+
+Start Storybook
+
+```bash
+pnpm storybook
+```
+
 ## License
 
 Everything in this repository is licensed under the [MIT License](https://github.com/Mirascope/ui/blob/main/LICENSE) except for "Williams-Handwriting-Regular-v1.{x}.tff", which is a closed license font and not available for use without express permission.
