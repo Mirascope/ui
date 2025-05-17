@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "lilypad-theme",
+  "type": "registry:block",
+  "title": "Lilypad Color Theme",
+  "description": "ThemeProvider to switch between dark/light",
+  "files": [
+    {
+      "path": "registry/blocks/theme-provider.tsx",
+      "content": "import { createContext, useContext, useEffect, useState } from \"react\";\n\ntype Theme = \"dark\" | \"light\" | \"system\";\n\ninterface ThemeProviderProps {\n  children: React.ReactNode;\n  defaultTheme?: Theme;\n  storageKey?: string;\n}\n\ninterface ThemeProviderState {\n  theme: Theme;\n  setTheme: (theme: Theme) => void;\n}\n\nconst initialState: ThemeProviderState = {\n  theme: \"system\",\n  setTheme: () => null,\n};\n\nconst ThemeProviderContext = createContext<ThemeProviderState>(initialState);\n\nexport function ThemeProvider({\n  children,\n  defaultTheme = \"system\",\n  storageKey = \"vite-ui-theme\",\n  ...props\n}: ThemeProviderProps) {\n  const [theme, setTheme] = useState<Theme>(\n    () => (localStorage.getItem(storageKey) as Theme) || defaultTheme\n  );\n\n  useEffect(() => {\n    const root = window.document.documentElement;\n\n    root.classList.remove(\"light\", \"dark\");\n\n    if (theme === \"system\") {\n      const systemTheme = window.matchMedia(\"(prefers-color-scheme: light)\")\n        .matches\n        ? \"dark\"\n        : \"light\";\n\n      root.classList.add(systemTheme);\n      return;\n    }\n\n    root.classList.add(theme);\n  }, [theme]);\n\n  const value = {\n    theme,\n    setTheme: (theme: Theme) => {\n      localStorage.setItem(storageKey, theme);\n      setTheme(theme);\n    },\n  };\n\n  return (\n    <ThemeProviderContext.Provider {...props} value={value}>\n      {children}\n    </ThemeProviderContext.Provider>\n  );\n}\n\nexport const useTheme = () => {\n  const context = useContext(ThemeProviderContext);\n\n  if (context === undefined)\n    throw new Error(\"useTheme must be used within a ThemeProvider\");\n\n  return context;\n};\n",
+      "type": "registry:block"
+    },
+    {
+      "path": "registry/blocks/mode-toggle.tsx",
+      "content": "import { Moon, Sun } from \"lucide-react\";\n\nimport { useTheme } from \"@/registry/blocks/theme-provider\";\nimport { Button } from \"@/registry/ui/button\";\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuItem,\n  DropdownMenuTrigger,\n} from \"@/registry/ui/dropdown-menu\";\n\nexport const ModeToggle = () => {\n  const { setTheme } = useTheme();\n\n  return (\n    <DropdownMenu>\n      <DropdownMenuTrigger asChild>\n        <Button variant='outline' size='icon'>\n          <Sun className='h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />\n          <Moon className='absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />\n          <span className='sr-only'>Toggle theme</span>\n        </Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent align='end'>\n        <DropdownMenuItem onClick={() => setTheme(\"light\")}>\n          Light\n        </DropdownMenuItem>\n        <DropdownMenuItem onClick={() => setTheme(\"dark\")}>\n          Dark\n        </DropdownMenuItem>\n        <DropdownMenuItem onClick={() => setTheme(\"system\")}>\n          System\n        </DropdownMenuItem>\n      </DropdownMenuContent>\n    </DropdownMenu>\n  );\n};\n",
+      "type": "registry:block"
+    }
+  ]
+}

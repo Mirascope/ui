@@ -1,0 +1,219 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "mirascope",
+  "homepage": "https://mirascope.com",
+  "items": [
+    {
+      "name": "williams-handwriting",
+      "type": "registry:file",
+      "title": "William's Handwriting",
+      "description": "Williams-Handwriting-Font-v1.9.tff",
+      "files": [
+        {
+          "path": "registry/files/Williams-Handwriting-Font-v1.9.ttf",
+          "type": "registry:file",
+          "target": "~/public/fonts/Williams-Handwriting-Font-v1.9.tff"
+        }
+      ]
+    },
+    {
+      "name": "lilypad-logo",
+      "type": "registry:block",
+      "title": "Lilypad Logo",
+      "description": "The lilypad logo component",
+      "files": [
+        {
+          "path": "registry/blocks/lilypad-logo.tsx",
+          "type": "registry:block"
+        }
+      ]
+    },
+    {
+      "name": "lilypad-theme",
+      "type": "registry:block",
+      "title": "Lilypad Color Theme",
+      "description": "ThemeProvider to switch between dark/light",
+      "files": [
+        {
+          "path": "registry/blocks/theme-provider.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/mode-toggle.tsx",
+          "type": "registry:block"
+        }
+      ]
+    },
+    {
+      "name": "basic-ui",
+      "type": "registry:ui",
+      "title": "Basic UI",
+      "description": "A simple basic UI component",
+      "dependencies": [
+        "@radix-ui/react-avatar",
+        "@radix-ui/react-slot",
+        "@radix-ui/react-alert-dialog",
+        "@radix-ui/react-checkbox",
+        "@radix-ui/react-collapsible",
+        "@radix-ui/react-tabs",
+        "@radix-ui/react-tooltip",
+        "@radix-ui/react-toggle",
+        "@radix-ui/react-icons",
+        "@radix-ui/react-slider",
+        "@radix-ui/react-switch",
+        "@radix-ui/react-select",
+        "@radix-ui/react-separator",
+        "@radix-ui/react-scroll-area",
+        "@radix-ui/react-popover",
+        "@radix-ui/react-dropdown-menu",
+        "next-themes",
+        "zod",
+        "@hookform/resolvers",
+        "cmdk",
+        "recharts",
+        "react-hook-form",
+        "react-resizable-panels",
+        "vaul",
+        "sonner"
+      ],
+      "files": [
+        {
+          "path": "registry/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/alert.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/avatar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/badge.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/button.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/calendar.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/chart.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/checkbox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/collapsible.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/combobox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/command.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/dialog.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/drawer.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/emoji-picker.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/form.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/input.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/label.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/model-combobox.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/popover.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/resizable.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/select.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/separator.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/sheet.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/skeleton.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/slider.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/sonner.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/switch.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/table.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/tabs.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/textarea.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/toggle.tsx",
+          "type": "registry:ui"
+        },
+        {
+          "path": "registry/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    }
+  ]
+}
