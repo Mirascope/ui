@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { ThemeProvider } from "../registry/blocks/theme-provider";
 import { ModeToggle } from "../registry/blocks/mode-toggle";
 import { Toaster } from "sonner";

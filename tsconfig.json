@@ -27,6 +27,14 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "**/*.css"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "**/*.css",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx"
+  ],
   "exclude": ["node_modules"]
 }
