@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { CodeBlock } from "@/registry/blocks/code-block";
+import { CodeBlock } from "./code-block";
 
 const meta = {
   title: "Components/CodeBlock",

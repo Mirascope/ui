@@ -4,7 +4,7 @@ import {
   stripHighlightMarkers,
   type HighlightResult,
   initialHighlight,
-} from "@/registry/lib/code-highlight";
+} from "./code-highlight";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 
