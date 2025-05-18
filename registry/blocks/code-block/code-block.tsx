@@ -14,6 +14,7 @@ interface CodeBlockProps {
   meta?: string;
   className?: string;
   showLineNumbers?: boolean;
+  onCopy?: (content: string) => void;
 }
 
 export function CodeBlock({
@@ -22,6 +23,7 @@ export function CodeBlock({
   meta = "",
   className = "",
   showLineNumbers = true,
+  onCopy,
 }: CodeBlockProps) {
   const [highlightedCode, setHighlightedCode] = useState<HighlightResult>(
     initialHighlight(code, language, meta)
@@ -74,7 +76,7 @@ export function CodeBlock({
           isSmallBlock ? "top-1/2 right-3 flex -translate-y-1/2 space-x-1" : "top-3 right-3"
         )}
       >
-        <CopyButton content={stripHighlightMarkers(code)} />
+        <CopyButton content={stripHighlightMarkers(code)} onCopy={onCopy} />
       </div>
 
       <div className="highlight-container w-full overflow-auto">

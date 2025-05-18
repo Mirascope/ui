@@ -13,6 +13,9 @@ const meta = {
       },
     },
   },
+  args: {
+    onCopy: (content: string) => console.log("Code copied:", content),
+  },
   tags: ["autodocs"],
   argTypes: {
     code: {
@@ -52,6 +55,10 @@ const meta = {
     showLineNumbers: {
       control: "boolean",
       description: "Whether to display line numbers",
+    },
+    onCopy: {
+      action: "copied",
+      description: "Callback function triggered when code is copied",
     },
   },
 } satisfies Meta<typeof CodeBlock>;
