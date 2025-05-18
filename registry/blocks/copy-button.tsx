@@ -14,7 +14,7 @@ export const CopyButton = ({ content, onCopy }: CopyButtonProps) => {
     setIsCopied(true);
     toast.success("Successfully copied to clipboard");
     setTimeout(() => setIsCopied(false), 2000);
-    if (onCopy) onCopy(content);
+    onCopy?.(content);
   };
   return (
     <button
