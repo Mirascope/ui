@@ -13,7 +13,7 @@ https://ui.shadcn.com/docs/registry
 3. Build registry
 
 ```bash
-bun registry:build
+bun build
 ```
 
 ## Typechecking

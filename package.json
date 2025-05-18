@@ -3,11 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
+    "dev": "bun run build && next dev --turbopack",
+    "build": "shadcn build",
     "start": "next start",
     "lint": "next lint",
-    "registry:build": "shadcn build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "typecheck": "bun run tsc --noEmit",
