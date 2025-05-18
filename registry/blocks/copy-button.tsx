@@ -12,12 +12,12 @@ export const CopyButton = ({ content }: { content: string }) => {
   };
   return (
     <button
-      className='bg-background hover:bg-muted relative cursor-pointer rounded-md border p-1.5'
+      className="bg-background hover:bg-muted relative cursor-pointer rounded-md border p-1.5"
       onClick={copyToClipboard}
-      aria-label='Copy code'
-      title='Copy code'
+      aria-label="Copy code"
+      title="Copy code"
     >
-      {isCopied ? <Check className='size-4' /> : <Copy className='size-4' />}
+      {isCopied ? <Check className="size-4" /> : <Copy className="size-4" />}
     </button>
   );
 };

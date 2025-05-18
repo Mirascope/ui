@@ -54,12 +54,7 @@ export const SingleSelection: Story = {
   render: () => {
     const [date, setDate] = useState<Date | undefined>(new Date());
     return (
-      <Calendar
-        mode="single"
-        selected={date}
-        onSelect={setDate}
-        className="rounded-md border"
-      />
+      <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border" />
     );
   },
 };
@@ -118,10 +113,10 @@ export const MultipleSelection: Story = {
 export const DisabledDates: Story = {
   render: () => {
     const [date, setDate] = useState<Date | undefined>(new Date());
-    
+
     // Disable weekends
     const disabledDays = { dayOfWeek: [0, 6] };
-    
+
     return (
       <Calendar
         mode="single"
@@ -158,10 +153,7 @@ export const CustomSized: Story = {
 export const MultiMonth: Story = {
   render: () => (
     <div className="space-y-4">
-      <Calendar 
-        numberOfMonths={2}
-        className="rounded-md border"
-      />
+      <Calendar numberOfMonths={2} className="rounded-md border" />
     </div>
   ),
 };

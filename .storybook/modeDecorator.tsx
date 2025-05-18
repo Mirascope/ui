@@ -13,7 +13,7 @@ export const ModeDecorator = (Story: any) => {
 const StoryContainer = ({ Story }: { Story: any }) => {
   return (
     <>
-      <div className='fixed top-1 right-1 z-9999'>
+      <div className="fixed top-1 right-1 z-9999">
         <ModeToggle />
       </div>
       <Story />

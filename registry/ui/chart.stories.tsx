@@ -101,31 +101,28 @@ export const StackedAreaChart: Story = {
       >
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey='month'
+          dataKey="month"
           tickLine={false}
           axisLine={false}
           tickMargin={8}
           tickFormatter={(value) => value.slice(0, 3)}
         />
-        <ChartTooltip
-          cursor={false}
-          content={<ChartTooltipContent indicator='dot' />}
+        <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+        <Area
+          dataKey="mobile"
+          type="natural"
+          fill="var(--color-mobile)"
+          fillOpacity={0.4}
+          stroke="var(--color-mobile)"
+          stackId="a"
         />
         <Area
-          dataKey='mobile'
-          type='natural'
-          fill='var(--color-mobile)'
+          dataKey="desktop"
+          type="natural"
+          fill="var(--color-desktop)"
           fillOpacity={0.4}
-          stroke='var(--color-mobile)'
-          stackId='a'
-        />
-        <Area
-          dataKey='desktop'
-          type='natural'
-          fill='var(--color-desktop)'
-          fillOpacity={0.4}
-          stroke='var(--color-desktop)'
-          stackId='a'
+          stroke="var(--color-desktop)"
+          stackId="a"
         />
       </AreaChart>
     </ChartContainer>
@@ -144,18 +141,15 @@ export const StackedBarChart: Story = {
       <BarChart accessibilityLayer data={multiSeriesData}>
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey='month'
+          dataKey="month"
           tickLine={false}
           tickMargin={10}
           axisLine={false}
           tickFormatter={(value) => value.slice(0, 3)}
         />
-        <ChartTooltip
-          cursor={false}
-          content={<ChartTooltipContent indicator='dashed' />}
-        />
-        <Bar dataKey='desktop' fill='var(--color-desktop)' radius={4} />
-        <Bar dataKey='mobile' fill='var(--color-mobile)' radius={4} />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent indicator="dashed" />} />
+        <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+        <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
       </BarChart>
     </ChartContainer>
   ),
@@ -180,27 +174,24 @@ export const MultiLineChart: Story = {
       >
         <CartesianGrid vertical={false} />
         <XAxis
-          dataKey='month'
+          dataKey="month"
           tickLine={false}
           axisLine={false}
           tickMargin={8}
           tickFormatter={(value) => value.slice(0, 3)}
         />
-        <ChartTooltip
-          cursor={false}
-          content={<ChartTooltipContent hideLabel />}
-        />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
         <Line
-          dataKey='desktop'
-          type='natural'
-          stroke='var(--color-desktop)'
+          dataKey="desktop"
+          type="natural"
+          stroke="var(--color-desktop)"
           strokeWidth={2}
           dot={false}
         />
         <Line
-          dataKey='mobile'
-          type='natural'
-          stroke='var(--color-mobile)'
+          dataKey="mobile"
+          type="natural"
+          stroke="var(--color-mobile)"
           strokeWidth={2}
           dot={false}
         />
@@ -223,14 +214,11 @@ export const DoughnutChart: Story = {
     return (
       <ChartContainer {...args}>
         <PieChart>
-          <ChartTooltip
-            cursor={false}
-            content={<ChartTooltipContent hideLabel />}
-          />
+          <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
           <Pie
             data={singleSeriesData}
-            dataKey='visitors'
-            nameKey='browser'
+            dataKey="visitors"
+            nameKey="browser"
             innerRadius={48}
             strokeWidth={5}
           >
@@ -241,20 +229,20 @@ export const DoughnutChart: Story = {
                     <text
                       x={viewBox.cx}
                       y={viewBox.cy}
-                      textAnchor='middle'
-                      dominantBaseline='middle'
+                      textAnchor="middle"
+                      dominantBaseline="middle"
                     >
                       <tspan
                         x={viewBox.cx}
                         y={viewBox.cy}
-                        className='fill-foreground text-3xl font-bold'
+                        className="fill-foreground text-3xl font-bold"
                       >
                         {totalVisitors.toLocaleString()}
                       </tspan>
                       <tspan
                         x={viewBox.cx}
                         y={(viewBox.cy || 0) + 24}
-                        className='fill-muted-foreground'
+                        className="fill-muted-foreground"
                       >
                         Visitors
                       </tspan>

@@ -41,31 +41,31 @@ const DropdownMenuDemo = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' size='sm'>
-          Open Menu <ChevronDown className='ml-2 h-4 w-4' />
+        <Button variant="outline" size="sm">
+          Open Menu <ChevronDown className="ml-2 h-4 w-4" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-56'>
+      <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>My Account</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <User className='mr-2 h-4 w-4' />
+            <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
             <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <CreditCard className='mr-2 h-4 w-4' />
+            <CreditCard className="mr-2 h-4 w-4" />
             <span>Billing</span>
             <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Settings className='mr-2 h-4 w-4' />
+            <Settings className="mr-2 h-4 w-4" />
             <span>Settings</span>
             <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
           </DropdownMenuItem>
           <DropdownMenuItem>
-            <Keyboard className='mr-2 h-4 w-4' />
+            <Keyboard className="mr-2 h-4 w-4" />
             <span>Keyboard shortcuts</span>
             <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
           </DropdownMenuItem>
@@ -73,54 +73,54 @@ const DropdownMenuDemo = () => {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Users className='mr-2 h-4 w-4' />
+            <Users className="mr-2 h-4 w-4" />
             <span>Team</span>
           </DropdownMenuItem>
           <DropdownMenuSub>
             <DropdownMenuSubTrigger>
-              <UserPlus className='mr-2 h-4 w-4' />
+              <UserPlus className="mr-2 h-4 w-4" />
               <span>Invite users</span>
             </DropdownMenuSubTrigger>
             <DropdownMenuPortal>
               <DropdownMenuSubContent>
                 <DropdownMenuItem>
-                  <Mail className='mr-2 h-4 w-4' />
+                  <Mail className="mr-2 h-4 w-4" />
                   <span>Email</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <MessageSquare className='mr-2 h-4 w-4' />
+                  <MessageSquare className="mr-2 h-4 w-4" />
                   <span>Message</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
-                  <PlusCircle className='mr-2 h-4 w-4' />
+                  <PlusCircle className="mr-2 h-4 w-4" />
                   <span>More...</span>
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
           </DropdownMenuSub>
           <DropdownMenuItem>
-            <Plus className='mr-2 h-4 w-4' />
+            <Plus className="mr-2 h-4 w-4" />
             <span>New Team</span>
             <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <Github className='mr-2 h-4 w-4' />
+          <Github className="mr-2 h-4 w-4" />
           <span>GitHub</span>
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <LifeBuoy className='mr-2 h-4 w-4' />
+          <LifeBuoy className="mr-2 h-4 w-4" />
           <span>Support</span>
         </DropdownMenuItem>
         <DropdownMenuItem disabled>
-          <Cloud className='mr-2 h-4 w-4' />
+          <Cloud className="mr-2 h-4 w-4" />
           <span>API</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <LogOut className='mr-2 h-4 w-4' />
+          <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
@@ -139,34 +139,28 @@ const CheckboxDemo = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' size='sm'>
+        <Button variant="outline" size="sm">
           Checkboxes
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-56'>
+      <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Preferences</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuCheckboxItem
           checked={checked.notifications}
-          onCheckedChange={(value) =>
-            setChecked({ ...checked, notifications: !!value })
-          }
+          onCheckedChange={(value) => setChecked({ ...checked, notifications: !!value })}
         >
           <span>Notifications</span>
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={checked.comments}
-          onCheckedChange={(value) =>
-            setChecked({ ...checked, comments: !!value })
-          }
+          onCheckedChange={(value) => setChecked({ ...checked, comments: !!value })}
         >
           <span>Comments</span>
         </DropdownMenuCheckboxItem>
         <DropdownMenuCheckboxItem
           checked={checked.mentions}
-          onCheckedChange={(value) =>
-            setChecked({ ...checked, mentions: !!value })
-          }
+          onCheckedChange={(value) => setChecked({ ...checked, mentions: !!value })}
         >
           <span>Mentions</span>
         </DropdownMenuCheckboxItem>
@@ -181,18 +175,18 @@ const RadioGroupDemo = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' size='sm'>
+        <Button variant="outline" size="sm">
           Radio Group
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-56'>
+      <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuRadioGroup value={position} onValueChange={setPosition}>
-          <DropdownMenuRadioItem value='top'>Top</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value='bottom'>Bottom</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value='left'>Left</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value='right'>Right</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="top">Top</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="bottom">Bottom</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="left">Left</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="right">Right</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
@@ -223,8 +217,7 @@ export const Default: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "A comprehensive dropdown menu showing various menu items, groups, and shortcuts.",
+        story: "A comprehensive dropdown menu showing various menu items, groups, and shortcuts.",
       },
     },
   },
@@ -247,8 +240,7 @@ export const RadioItems: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Dropdown menu with radio items for mutually exclusive selections.",
+        story: "Dropdown menu with radio items for mutually exclusive selections.",
       },
     },
   },
@@ -258,11 +250,11 @@ export const InsetItems: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' size='sm'>
+        <Button variant="outline" size="sm">
           Inset Items
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className='w-56'>
+      <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Items</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem inset>Regular Item</DropdownMenuItem>
@@ -277,8 +269,7 @@ export const InsetItems: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Dropdown menu items with the inset prop, which adds left padding for alignment.",
+        story: "Dropdown menu items with the inset prop, which adds left padding for alignment.",
       },
     },
   },
@@ -288,7 +279,7 @@ export const SubMenus: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' size='sm'>
+        <Button variant="outline" size="sm">
           Nested Menus
         </Button>
       </DropdownMenuTrigger>
@@ -319,8 +310,7 @@ export const SubMenus: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Nested dropdown submenus for hierarchical organization of options.",
+        story: "Nested dropdown submenus for hierarchical organization of options.",
       },
     },
   },
@@ -330,7 +320,7 @@ export const WithShortcuts: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' size='sm'>
+        <Button variant="outline" size="sm">
           With Shortcuts
         </Button>
       </DropdownMenuTrigger>
@@ -358,8 +348,7 @@ export const WithShortcuts: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Dropdown menu items with keyboard shortcuts displayed on the right.",
+        story: "Dropdown menu items with keyboard shortcuts displayed on the right.",
       },
     },
   },
@@ -370,7 +359,7 @@ export const DisabledItems: Story = {
   render: () => (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant='outline' size='sm'>
+        <Button variant="outline" size="sm">
           Disabled Items
         </Button>
       </DropdownMenuTrigger>
@@ -385,9 +374,9 @@ export const DisabledItems: Story = {
           Disabled Unchecked
         </DropdownMenuCheckboxItem>
         <DropdownMenuSeparator />
-        <DropdownMenuRadioGroup value='disabled'>
-          <DropdownMenuRadioItem value='enabled'>Enabled</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value='disabled' disabled>
+        <DropdownMenuRadioGroup value="disabled">
+          <DropdownMenuRadioItem value="enabled">Enabled</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="disabled" disabled>
             Disabled
           </DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
@@ -405,14 +394,14 @@ export const DisabledItems: Story = {
 
 export const AlignmentVariations: Story = {
   render: () => (
-    <div className='flex space-x-4'>
+    <div className="flex space-x-4">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant='outline' size='sm'>
+          <Button variant="outline" size="sm">
             Align Start
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align='start'>
+        <DropdownMenuContent align="start">
           <DropdownMenuItem>Item 1</DropdownMenuItem>
           <DropdownMenuItem>Item 2</DropdownMenuItem>
           <DropdownMenuItem>Item 3</DropdownMenuItem>
@@ -421,11 +410,11 @@ export const AlignmentVariations: Story = {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant='outline' size='sm'>
+          <Button variant="outline" size="sm">
             Align Center
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align='center'>
+        <DropdownMenuContent align="center">
           <DropdownMenuItem>Item 1</DropdownMenuItem>
           <DropdownMenuItem>Item 2</DropdownMenuItem>
           <DropdownMenuItem>Item 3</DropdownMenuItem>
@@ -434,11 +423,11 @@ export const AlignmentVariations: Story = {
 
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant='outline' size='sm'>
+          <Button variant="outline" size="sm">
             Align End
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align='end'>
+        <DropdownMenuContent align="end">
           <DropdownMenuItem>Item 1</DropdownMenuItem>
           <DropdownMenuItem>Item 2</DropdownMenuItem>
           <DropdownMenuItem>Item 3</DropdownMenuItem>
@@ -449,8 +438,7 @@ export const AlignmentVariations: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "Different alignment options for the dropdown menu (start, center, end).",
+        story: "Different alignment options for the dropdown menu (start, center, end).",
       },
     },
   },
