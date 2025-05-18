@@ -11,7 +11,6 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "typecheck": "bun run tsc --noEmit",
-    "typecheck-wrapper": "node scripts/typecheck.js",
     "prepare": "husky",
     "lint-staged": "lint-staged"
   },
@@ -98,8 +97,7 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
-      "bun run typecheck-wrapper",
-      "bun test"
+      "bun run scripts/check-ts.js"
     ]
   }
 }
