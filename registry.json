@@ -45,6 +45,31 @@
       ]
     },
     {
+      "name": "code-block",
+      "type": "registry:block",
+      "title": "Code Block",
+      "description": "A code block component",
+      "dependencies": ["@shikijs/transformers", "shiki", "sonner"],
+      "files": [
+        {
+          "path": "registry/blocks/code-block/code-block.tsx",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/blocks/code-block/code-block.css",
+          "type": "registry:block"
+        },
+        {
+          "path": "registry/lib/code-highlight.ts",
+          "type": "registry:lib"
+        },
+        {
+          "path": "registry/blocks/copy-button.tsx",
+          "type": "registry:block"
+        }
+      ]
+    },
+    {
       "name": "basic-ui",
       "type": "registry:ui",
       "title": "Basic UI",
