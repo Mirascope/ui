@@ -12,7 +12,9 @@
     "build-storybook": "storybook build",
     "typecheck": "bun run tsc --noEmit",
     "prepare": "husky",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "prettier": "prettier --write .",
+    "prettier:check": "prettier --check ."
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -97,7 +99,11 @@
   },
   "lint-staged": {
     "**/*.{ts,tsx}": [
-      "bun run scripts/check-ts.js"
+      "bun run scripts/check-ts.js",
+      "prettier --write"
+    ],
+    "**/*.{js,jsx,json,css,md}": [
+      "prettier --write"
     ]
   }
 }
