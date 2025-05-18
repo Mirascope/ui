@@ -1,5 +1,10 @@
 import { CopyButton } from "@/registry/blocks/copy-button";
-import { highlightCode, stripHighlightMarkers } from "@/registry/lib/code-highlight";
+import {
+  highlightCode,
+  stripHighlightMarkers,
+  type HighlightResult,
+  initialHighlight,
+} from "@/registry/lib/code-highlight";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 
@@ -18,35 +23,33 @@ export function CodeBlock({
   className = "",
   showLineNumbers = true,
 }: CodeBlockProps) {
-  const [html, setHtml] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [highlightedCode, setHighlightedCode] = useState<HighlightResult>(
+    initialHighlight(code, language, meta)
+  );
   const codeRef = useRef<HTMLDivElement>(null);
   const [isSmallBlock, setIsSmallBlock] = useState<boolean>(false);
 
+  // Base styles for code block container
+  const codeBlockBaseStyles =
+    "code-block-wrapper border-card relative m-0 mb-2 rounded-md overflow-hidden border p-0 text-xs group";
+
   useEffect(() => {
-    async function highlight() {
-      setIsLoading(true);
-      try {
-        const { themeHtml } = await highlightCode(code, language, meta);
-        setHtml(themeHtml);
-      } catch (error) {
-        console.error("Error highlighting code:", error);
-        // Fallback to plain pre/code in case of error
-        const escapedCode = code
-          .replace(/&/g, "&amp;")
-          .replace(/</g, "&lt;")
-          .replace(/>/g, "&gt;")
-          .replace(/"/g, "&quot;")
-          .replace(/'/g, "&#039;");
+    // If code changed, use the initial highlighter for the first render
+    const result = initialHighlight(code, language, meta);
+    setHighlightedCode(result);
 
-        const fallbackHtml = `<pre class="language-${language}"><code>${escapedCode}</code></pre>`;
-        setHtml(fallbackHtml);
-      } finally {
-        setIsLoading(false);
+    // Only do async highlighting if the initial highlight didn't already do a full highlight
+    if (!result.highlighted) {
+      async function highlight() {
+        try {
+          setHighlightedCode(await highlightCode(code, language, meta));
+        } catch (error) {
+          console.error("Error highlighting code:", error);
+          // Leave the fallback code
+        }
       }
+      highlight();
     }
-
-    highlight();
   }, [code, language, meta]);
 
   // Check if code block is small after rendering
@@ -57,28 +60,12 @@ export function CodeBlock({
       // Consider blocks less than 100px as small
       setIsSmallBlock(height < 100);
     }
-  }, [isLoading, html]);
-
-  // If loading, just show the code without syntax highlighting to maintain size
-  if (isLoading) {
-    return (
-      <div className={`code-block-wrapper relative m-0 overflow-hidden p-0 text-sm ${className}`}>
-        <pre className="m-0 p-4">
-          <code className="opacity-0">{code}</code>
-        </pre>
-      </div>
-    );
-  }
+  }, [highlightedCode]);
 
   return (
     <div
       ref={codeRef}
-      className={cn(
-        `code-block-wrapper ${
-          showLineNumbers && "show-line-numbers"
-        } group relative m-0 rounded-md border p-0 text-sm`,
-        className
-      )}
+      className={cn(codeBlockBaseStyles, `${showLineNumbers && "show-line-numbers"}`, className)}
     >
       {/* Buttons - positioned based on block size */}
       <div
@@ -91,7 +78,10 @@ export function CodeBlock({
       </div>
 
       <div className="highlight-container w-full overflow-auto">
-        <div className="w-full text-sm" dangerouslySetInnerHTML={{ __html: html }} />
+        <div
+          className="w-full text-sm"
+          dangerouslySetInnerHTML={{ __html: highlightedCode.themeHtml }}
+        />
       </div>
     </div>
   );
