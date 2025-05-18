@@ -28,3 +28,6 @@ jobs:
 
       - name: Run tests
         run: bun test
+
+      - name: Build registry
+        run: bun run build
