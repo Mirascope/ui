@@ -32,7 +32,6 @@ export async function highlightCode(
   language = "text",
   meta = ""
 ): Promise<HighlightResult> {
-  console.log("Highlighting code:", { code, language, meta });
   try {
     // Process the code with meta information for line highlighting
     const processedCode = processCodeWithMetaHighlighting(code.trim(), meta, language);
