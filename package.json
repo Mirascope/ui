@@ -10,7 +10,10 @@
     "registry:build": "shadcn build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "typecheck": "bun run tsc --noEmit"
+    "typecheck": "bun run tsc --noEmit",
+    "typecheck-wrapper": "node scripts/typecheck.js",
+    "prepare": "husky",
+    "lint-staged": "lint-staged"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.0.1",
@@ -75,8 +78,11 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.1",
     "eslint-plugin-storybook": "^0.12.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
     "storybook": "^8.6.14",
     "tailwindcss": "^4",
+    "tsc-files": "^1.1.4",
     "typescript": "^5"
   },
   "pnpm": {
@@ -88,6 +94,12 @@
   "eslintConfig": {
     "extends": [
       "plugin:storybook/recommended"
+    ]
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "bun run typecheck-wrapper",
+      "bun test"
     ]
   }
 }
