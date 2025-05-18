@@ -1,5 +1,5 @@
 import { CopyButton } from "@/registry/blocks/copy-button";
-import { highlightCode, stripHighlightMarkers } from "@/registry/lib/code-highlights";
+import { highlightCode, stripHighlightMarkers } from "@/registry/lib/code-highlight";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 

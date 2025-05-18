@@ -10,24 +10,34 @@ export function stripHighlightMarkers(code: string): string {
 
   // Process lines individually to better handle edge cases
   const lines = code.split("\n");
-  const processedLines = lines.map((line) => {
-    // Case 1: Line contains only a highlight marker with no code
-    if (/^\s*(?:\/\/|#|\/\*|<!--|--)\s*\[!code highlight\](?:\s*\*\/|\s*-->)?\s*$/.test(line)) {
-      return ""; // Replace with empty line to preserve line numbers
-    }
+  const processedLines = lines
+    .map((line) => {
+      // Case 1: Line contains only a highlight marker with no code
+      if (
+        /^\s*(?:\/\/|#|\/\*|\<\!--|\-\-)\s*\[!code highlight:?\d*\](?:\s*\*\/|\s*--\>)?\s*$/.test(
+          line
+        )
+      ) {
+        return null; // Remove line for consistency with rendered code
+      }
 
-    // Case 2: Line contains code followed by a highlight marker
-    if (/\S.*\s*(?:\/\/|#|\/\*|<!--|--)\s*\[!code highlight\](?:\s*\*\/|\s*-->)?\s*$/.test(line)) {
-      // Remove the highlight marker but keep the code
-      return line.replace(
-        /\s*(?:\/\/|#|\/\*|<!--|--)\s*\[!code highlight\](?:\s*\*\/|\s*-->)?\s*$/,
-        ""
-      );
-    }
+      // Case 2: Line contains code followed by a highlight marker
+      if (
+        /\S.*\s*(?:\/\/|#|\/\*|\<\!--|\-\-)\s*\[!code highlight\](?:\s*\*\/|\s*--\>)?\s*$/.test(
+          line
+        )
+      ) {
+        // Remove the highlight marker but keep the code
+        return line.replace(
+          /\s*(?:\/\/|#|\/\*|\<\!--|\-\-)\s*\[!code highlight\](?:\s*\*\/|\s*--\>)?\s*$/,
+          ""
+        );
+      }
 
-    // Case 3: Regular line with no highlight marker
-    return line;
-  });
+      // Case 3: Regular line with no highlight marker
+      return line;
+    })
+    .filter((x) => x != null);
 
   // Join the lines back together, preserving the original line endings
   return processedLines.join("\n");
