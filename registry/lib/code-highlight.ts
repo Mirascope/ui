@@ -73,9 +73,9 @@ export function fallbackHighlighter(
   const codeHtml = `<code>${lines.join("\n")}</code>`;
 
   const shikiClass = `shiki shiki-themes ${THEME_LIGHT} ${THEME_DARK} has-highlighted`;
-  const shikiBgStyle = "background-color:#fff--shiki-dark-bg:#0d1117;";
+  const shikiBgStyle = "background-color:#fff;--shiki-dark-bg:#0d1117;";
   const shikiColorStyle = "color:#24292e;--shiki-dark-color:#e6edf3;";
-  const fallbackHtml = `<pre class="${shikiClass}" style=${shikiBgStyle}${shikiColorStyle}>${codeHtml}</pre>`;
+  const fallbackHtml = `<pre class="${shikiClass}" style="${shikiBgStyle}${shikiColorStyle}">${codeHtml}</pre>`;
   return { themeHtml: fallbackHtml, code, language, meta, highlighted: false };
 }
 
