@@ -11,14 +11,7 @@ const meta = {
   argTypes: {
     variant: {
       control: "select",
-      options: [
-        "default",
-        "destructive",
-        "outline",
-        "secondary",
-        "ghost",
-        "link",
-      ],
+      options: ["default", "destructive", "outline", "secondary", "ghost", "link"],
       description: "The visual style of the button",
     },
     size: {
@@ -147,7 +140,7 @@ export const AsLink: Story = {
   args: {
     variant: "link",
     asChild: true,
-    children: <a href='#'>Link styled as button</a>,
+    children: <a href="#">Link styled as button</a>,
   },
 };
 
@@ -156,10 +149,10 @@ export const AsLink: Story = {
  */
 export const ButtonGroup: Story = {
   render: () => (
-    <div className='flex flex-row gap-2'>
-      <Button variant='default'>Default</Button>
-      <Button variant='destructive'>Delete</Button>
-      <Button variant='outline'>Cancel</Button>
+    <div className="flex flex-row gap-2">
+      <Button variant="default">Default</Button>
+      <Button variant="destructive">Delete</Button>
+      <Button variant="outline">Cancel</Button>
     </div>
   ),
   parameters: {
@@ -176,32 +169,32 @@ export const ButtonGroup: Story = {
  */
 export const ControlStates: Story = {
   render: () => (
-    <div className='flex flex-col gap-4'>
-      <div className='grid grid-cols-4 gap-4'>
+    <div className="flex flex-col gap-4">
+      <div className="grid grid-cols-4 gap-4">
         <Button>Default</Button>
         <Button disabled>Disabled</Button>
-        <Button variant='destructive'>Destructive</Button>
-        <Button variant='destructive' disabled>
+        <Button variant="destructive">Destructive</Button>
+        <Button variant="destructive" disabled>
           Destructive Disabled
         </Button>
       </div>
-      <div className='grid grid-cols-4 gap-4'>
-        <Button variant='outline'>Outline</Button>
-        <Button variant='outline' disabled>
+      <div className="grid grid-cols-4 gap-4">
+        <Button variant="outline">Outline</Button>
+        <Button variant="outline" disabled>
           Outline Disabled
         </Button>
-        <Button variant='secondary'>Secondary</Button>
-        <Button variant='secondary' disabled>
+        <Button variant="secondary">Secondary</Button>
+        <Button variant="secondary" disabled>
           Secondary Disabled
         </Button>
       </div>
-      <div className='grid grid-cols-4 gap-4'>
-        <Button variant='ghost'>Ghost</Button>
-        <Button variant='ghost' disabled>
+      <div className="grid grid-cols-4 gap-4">
+        <Button variant="ghost">Ghost</Button>
+        <Button variant="ghost" disabled>
           Ghost Disabled
         </Button>
-        <Button variant='link'>Link</Button>
-        <Button variant='link' disabled>
+        <Button variant="link">Link</Button>
+        <Button variant="link" disabled>
           Link Disabled
         </Button>
       </div>
@@ -210,8 +203,7 @@ export const ControlStates: Story = {
   parameters: {
     docs: {
       description: {
-        story:
-          "A grid showing all button variants in their default and disabled states.",
+        story: "A grid showing all button variants in their default and disabled states.",
       },
     },
   },

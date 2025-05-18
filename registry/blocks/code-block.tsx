@@ -1,8 +1,5 @@
 import { CopyButton } from "@/registry/blocks/copy-button";
-import {
-  highlightCode,
-  stripHighlightMarkers,
-} from "@/registry/lib/code-highlights";
+import { highlightCode, stripHighlightMarkers } from "@/registry/lib/code-highlights";
 import { cn } from "@/lib/utils";
 import { useEffect, useRef, useState } from "react";
 
@@ -65,11 +62,9 @@ export function CodeBlock({
   // If loading, just show the code without syntax highlighting to maintain size
   if (isLoading) {
     return (
-      <div
-        className={`code-block-wrapper relative m-0 overflow-hidden p-0 text-sm ${className}`}
-      >
-        <pre className='m-0 p-4'>
-          <code className='opacity-0'>{code}</code>
+      <div className={`code-block-wrapper relative m-0 overflow-hidden p-0 text-sm ${className}`}>
+        <pre className="m-0 p-4">
+          <code className="opacity-0">{code}</code>
         </pre>
       </div>
     );
@@ -81,7 +76,7 @@ export function CodeBlock({
       className={cn(
         `code-block-wrapper ${
           showLineNumbers && "show-line-numbers"
-        } group relative m-0 p-0 text-sm border rounded-md`,
+        } group relative m-0 rounded-md border p-0 text-sm`,
         className
       )}
     >
@@ -89,19 +84,14 @@ export function CodeBlock({
       <div
         className={cn(
           "absolute z-10 opacity-0 transition-opacity group-hover:opacity-100 max-sm:opacity-80 sm:opacity-0",
-          isSmallBlock
-            ? "top-1/2 right-3 flex -translate-y-1/2 space-x-1"
-            : "top-3 right-3"
+          isSmallBlock ? "top-1/2 right-3 flex -translate-y-1/2 space-x-1" : "top-3 right-3"
         )}
       >
         <CopyButton content={stripHighlightMarkers(code)} />
       </div>
 
-      <div className='highlight-container w-full overflow-auto'>
-        <div
-          className='w-full text-sm'
-          dangerouslySetInnerHTML={{ __html: html }}
-        />
+      <div className="highlight-container w-full overflow-auto">
+        <div className="w-full text-sm" dangerouslySetInnerHTML={{ __html: html }} />
       </div>
     </div>
   );

@@ -47,31 +47,26 @@ const ProfileForm = (args: Story["args"]) => {
   }
   return (
     <Form {...args} {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-8'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
         <FormField
           control={form.control}
-          name='username'
+          name="username"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Username</FormLabel>
               <FormControl>
                 <input
-                  className='w-full rounded-md border border-input bg-background px-3 py-2'
-                  placeholder='username'
+                  className="border-input bg-background w-full rounded-md border px-3 py-2"
+                  placeholder="username"
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              <FormDescription>This is your public display name.</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
-        <button
-          className='rounded bg-primary px-4 py-2 text-primary-foreground'
-          type='submit'
-        >
+        <button className="bg-primary text-primary-foreground rounded px-4 py-2" type="submit">
           Submit
         </button>
       </form>

@@ -37,17 +37,15 @@ const meta: Meta<typeof SheetContent> = {
         <SheetHeader>
           <SheetTitle>Are you absolutely sure?</SheetTitle>
           <SheetDescription>
-            This action cannot be undone. This will permanently delete your
-            account and remove your data from our servers.
+            This action cannot be undone. This will permanently delete your account and remove your
+            data from our servers.
           </SheetDescription>
         </SheetHeader>
         <SheetFooter>
           <SheetClose>
-            <button className='hover:underline'>Cancel</button>
+            <button className="hover:underline">Cancel</button>
           </SheetClose>
-          <button className='rounded bg-primary px-4 py-2 text-primary-foreground'>
-            Submit
-          </button>
+          <button className="bg-primary text-primary-foreground rounded px-4 py-2">Submit</button>
         </SheetFooter>
       </SheetContent>
     </Sheet>

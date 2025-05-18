@@ -4,7 +4,7 @@ import * as React from "react";
 
 export default function Home() {
   return (
-    <div className='max-w-3xl mx-auto flex flex-col min-h-svh px-4 py-8 gap-8'>
+    <div className="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 px-4 py-8">
       <h1>Mirascope UI</h1>
     </div>
   );

@@ -13,19 +13,27 @@ https://ui.shadcn.com/docs/registry
 3. Build registry
 
 ```bash
-pnpm registry:build
+bun registry:build
 ```
+
+## Typechecking
+
+`bun run typecheck`
+
+## Testing
+
+`bun test`
 
 ## How to pull components
 
 1. Start the server
 
-   `pnpm dev`
+   `bun dev`
 
 2. Use the `shadcn` CLI add command to install a registry item, assuming the registry item is named `hello-world` :
 
    ```bash
-   pnpm dlx shadcn@latest add http://localhost:3000/r/hello-world.json
+   bunx --bun shadcn@latest add http://localhost:3000/r/hello-world.json
    ```
 
 ## Storybook
@@ -33,7 +41,7 @@ pnpm registry:build
 Start Storybook
 
 ```bash
-pnpm storybook
+bun storybook
 ```
 
 ## License
