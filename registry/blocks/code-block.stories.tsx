@@ -63,7 +63,7 @@ type Story = StoryObj<typeof meta>;
 export const JavaScript: Story = {
   args: {
     code: `function hello() {
-  console.log("Hello, world!");
+  console.log("Hello, world!"); // [!code highlight]
   return true;
 }`,
     language: "javascript",
@@ -113,7 +113,7 @@ function getUser(id: number): Promise<User> {
       if (!response.ok) {
         throw new Error('User not found');
       }
-      return response.json();
+      return response.json(); // [!code highlight]
     });
 }`,
     language: "typescript",
