@@ -241,14 +241,13 @@ pre,
 }
 
 /* Basic split view diff styles */
-.shiki .highlighted,
-.shiki [data-highlighted],
-.shiki .line[data-highlighted="true"] {
+.shiki .highlighted {
   background-color: rgba(124, 58, 237, 0.07) !important;
-  border-left: 3px solid #6366f1 !important;
-  margin-left: -1rem !important;
-  padding-left: calc(1rem - 3px) !important;
+  padding-left: 1rem !important;
   display: inline-block !important;
+  margin-left: -1rem !important;
+  margin-right: -0.75rem !important;
+  width: calc(100% + 1.75rem) !important; /* Full width + left margin + right margin */
 }
 
 html.dark .shiki,
