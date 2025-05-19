@@ -52,7 +52,7 @@ pre,
 
 /* Basic split view diff styles */
 .shiki .highlighted {
-  background-color: rgba(124, 58, 237, 0.07) !important;
+  background-color: rgba(124, 58, 237, 0.108) !important;
   padding-left: 1rem !important;
   display: inline-block !important;
   margin-left: -1rem !important;
@@ -60,8 +60,8 @@ pre,
   width: calc(100% + 1.75rem) !important; /* Full width + left margin + right margin */
 }
 
-.dark-theme-code .shiki .highlighted {
-  background-color: rgba(139, 92, 246, 0.1) !important; /* Dark mode purple */
+html.dark .shiki .highlighted {
+  background-color: rgba(138, 92, 246, 0.209) !important; /* Dark mode purple */
 }
 
 html.dark .shiki {
