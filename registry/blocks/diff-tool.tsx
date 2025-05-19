@@ -1,4 +1,4 @@
-import { CodeBlock } from "@/registry/blocks/code-block";
+import { CodeBlock } from "@/registry/blocks/code-block/code-block";
 import { Button } from "@/registry/ui/button";
 import { diffArrays } from "diff";
 import { useState } from "react";

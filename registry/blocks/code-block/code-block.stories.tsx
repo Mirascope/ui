@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { CodeBlock } from "@/registry/blocks/code-block";
+import { CodeBlock } from "./code-block";
 
 const meta = {
   title: "Components/CodeBlock",
@@ -12,6 +12,9 @@ const meta = {
           "A versatile code display component that renders syntax-highlighted code with both light and dark theme support, copy functionality, and adaptive UI based on code block size.",
       },
     },
+  },
+  args: {
+    onCopy: (content: string) => console.log("Code copied:", content),
   },
   tags: ["autodocs"],
   argTypes: {
@@ -53,6 +56,10 @@ const meta = {
       control: "boolean",
       description: "Whether to display line numbers",
     },
+    onCopy: {
+      action: "copied",
+      description: "Callback function triggered when code is copied",
+    },
   },
 } satisfies Meta<typeof CodeBlock>;
 
@@ -63,7 +70,7 @@ type Story = StoryObj<typeof meta>;
 export const JavaScript: Story = {
   args: {
     code: `function hello() {
-  console.log("Hello, world!");
+  console.log("Hello, world!"); // [!code highlight]
   return true;
 }`,
     language: "javascript",
@@ -113,7 +120,7 @@ function getUser(id: number): Promise<User> {
       if (!response.ok) {
         throw new Error('User not found');
       }
-      return response.json();
+      return response.json(); // [!code highlight]
     });
 }`,
     language: "typescript",
