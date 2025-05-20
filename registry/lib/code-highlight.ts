@@ -61,15 +61,33 @@ export function fallbackHighlighter(
   language: string = "text",
   meta: string = ""
 ): HighlightResult {
-  const escapedCode = stripHighlightMarkers(code)
+  // Process the code with meta information for line highlighting (just like highlightCode does)
+  const processedCode = meta ? processCodeWithMetaHighlighting(code.trim(), meta, language) : code;
+
+  // Then strip highlight markers (this helps with consistent behavior)
+  const escapedCode = stripHighlightMarkers(processedCode)
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;")
     .replace(/'/g, "&#039;");
 
-  const lines = escapedCode.split("\n").map((s) => `<span class="line">${s}`);
-  const codeHtml = `<code>${lines.join("\n")}</code>`;
+  // Handle blank lines to match Shiki's behavior
+  let lines = escapedCode.split("\n");
+
+  // Trim leading whitespace lines (Shiki behavior)
+  while (lines.length > 0 && lines[0].trim() === "") {
+    lines.shift();
+  }
+
+  // Trim trailing whitespace lines (Shiki behavior)
+  while (lines.length > 0 && lines[lines.length - 1].trim() === "") {
+    lines.pop();
+  }
+
+  // Map the remaining lines to HTML spans
+  const htmlLines = lines.map((line) => `<span class="line">${line}</span>`);
+  const codeHtml = `<code>${htmlLines.join("\n")}</code>`;
 
   const shikiClass = `shiki shiki-themes ${THEME_LIGHT} ${THEME_DARK} has-highlighted`;
   const shikiBgStyle = "background-color:#fff;--shiki-dark-bg:#0d1117;";
