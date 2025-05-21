@@ -81,7 +81,7 @@ export function CodeBlock({
 
       <div className="highlight-container w-full overflow-auto">
         <div
-          className="w-full text-sm"
+          className="text-sm [&_code]:block [&_code]:w-fit [&_code]:min-w-full [&>pre]:overflow-x-auto [&>pre]:py-3 [&>pre]:pr-5 [&>pre]:pl-4"
           dangerouslySetInnerHTML={{ __html: highlightedCode.themeHtml }}
         />
       </div>
