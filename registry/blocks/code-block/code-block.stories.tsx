@@ -78,13 +78,25 @@ export const JavaScript: Story = {
   },
 };
 
+// Basic JavaScript example without line numbers
+export const JavaScriptNoLineNumbers: Story = {
+  args: {
+    code: `function hello() {
+  console.log("Hello, world!"); // [!code highlight]
+  return true;
+}`,
+    language: "javascript",
+    showLineNumbers: false,
+  },
+};
+
 // Basic JavaScript example
 export const JavaScriptHighlighting: Story = {
   args: {
     code: `function hello() {
-      console.log("This is a really really really long line of code that should be highlighted");
-      return true;
-    }`,
+  console.log("This is a really really really long line of code that should be highlighted");
+  return true;
+}`,
     language: "javascript",
     showLineNumbers: true,
     meta: "{1-3}",
