@@ -303,3 +303,12 @@ console.log(greeting);`,
     className: "border-2 border-blue-500 rounded-xl shadow-lg",
   },
 };
+
+// Check that the code stays aligned as the # of lines increases
+export const LineNumberWidth: Story = {
+  args: {
+    code: `x\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\n`,
+    language: "typescript",
+    showLineNumbers: true,
+  },
+};
