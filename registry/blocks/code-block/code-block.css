@@ -54,6 +54,7 @@ pre,
   content: counter(step);
   counter-increment: step;
   margin-right: 1rem;
+  width: 1rem;
   display: inline-block;
   text-align: right;
   color: rgba(115, 138, 148, 0.4);
