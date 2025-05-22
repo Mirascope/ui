@@ -1,4 +1,4 @@
-import { stripHighlightMarkers } from "./code-highlight";
+import { stripHighlightMarkers, highlightCode, fallbackHighlighter } from "./code-highlight";
 import { describe, expect, it } from "bun:test";
 
 // Test cases for different comment styles and highlighting patterns
@@ -138,4 +138,105 @@ const y = 10;
     // Just a highlight marker
     expect(stripHighlightMarkers("// [!code highlight]")).toBe("");
   });
+});
+
+describe("code lines parity", () => {
+  // Helper function to test line parity
+  async function testLineParity(code: string, language = "python", meta = "") {
+    // Get both versions of highlighted code
+    const actual = (await highlightCode(code, language, meta)).themeHtml;
+    const fallback = fallbackHighlighter(code, language, meta).themeHtml;
+
+    // Extract just the opening tags of span class="line" as a more reliable way to count code lines
+    function countCodeLines(html: string): number {
+      // Count all occurrences of span class="line"
+      const matches = html.match(/<span class="line[^>]*>/g) || [];
+      return matches.length;
+    }
+
+    const actualCodeLines = countCodeLines(actual);
+    const fallbackCodeLines = countCodeLines(fallback);
+
+    // Helper function to format HTML for better readability
+    function formatHtml(html: string): string {
+      let formatted = html;
+
+      // Insert newlines before important tags for better readability
+      formatted = formatted.replace(/<code>/g, "\n\t<code>");
+      formatted = formatted.replace(/<span class="line[^>]*>/g, '\n\t<span class="line">');
+
+      return "\t" + formatted;
+    }
+
+    if (actualCodeLines !== fallbackCodeLines) {
+      console.log(`MISMATCH: Expected ${fallbackCodeLines} code lines, got ${actualCodeLines}`);
+      console.log(`Code from:\n${code}`);
+      console.log(`Meta: "${meta}"`);
+
+      // Format and log HTML for better inspection
+      console.log(`\nFormatted HTML Comparison:`);
+      console.log(`Actual HTML: \n${formatHtml(actual)}`);
+      console.log(`\nFallback HTML: \n${formatHtml(fallback)}`);
+    }
+
+    // Compare the actual code line count
+    expect(actualCodeLines).toBe(fallbackCodeLines);
+  }
+
+  // Simple function test
+  it("should maintain line parity for simple function", async () => {
+    const code = `def hello():
+    print("World")`;
+
+    await testLineParity(code, "python", "");
+  });
+
+  it("should maintain line parity for a fn with trailing newlines", async () => {
+    const code = `def hello():
+    print("World")
+    
+    `;
+
+    await testLineParity(code, "python", "");
+  });
+
+  it("should maintain line parity for a fn with intermediate newlines", async () => {
+    const code = `def hello():
+    print("World")
+    
+    
+    bar = 42
+    `;
+
+    await testLineParity(code, "python", "");
+  });
+
+  it("should maintain parity for a fn with a leading highlight comment", async () => {
+    const code = `
+    # [!code highlight:3]
+    def hello():
+      print("World")
+
+    bar = 42
+    `;
+
+    await testLineParity(code, "python", "");
+  });
+
+  const complexExample = `
+def hello():
+    print("Knock knock")
+
+
+def world():
+    print("Who's there?")
+    `;
+
+  const metas = ["", "{1}", "{1,2}", "{1-3}", "{1-4}"];
+
+  for (const meta of metas) {
+    it(`should maintain line parity with meta "${meta}"`, async () => {
+      await testLineParity(complexExample, "python", meta);
+    });
+  }
 });
