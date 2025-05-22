@@ -307,7 +307,7 @@ console.log(greeting);`,
 // Check that the code stays aligned as the # of lines increases
 export const LineNumberWidth: Story = {
   args: {
-    code: `x\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\nx\n`,
+    code: `${"x\n".repeat(1001)}`,
     language: "typescript",
     showLineNumbers: true,
   },

@@ -25,6 +25,17 @@ pre,
   position: relative !important;
 }
 
+.shiki .line {
+  display: inline-block !important;
+  line-height: 1.5 !important;
+  min-height: 1.5em !important;
+  padding-right: 1rem;
+  padding-left: 1rem !important;
+  margin-left: -1rem !important;
+  margin-right: -0.75rem !important;
+  width: calc(100% + 1.75rem) !important; /* Full width + left margin + right margin */
+}
+
 /* Ensure the code doesn't get additional styling */
 .shiki code {
   background: transparent !important;
@@ -32,14 +43,6 @@ pre,
   counter-reset: step;
   counter-increment: step 0;
 }
-
-/* Ensure consistent line heights */
-.shiki .line {
-  line-height: 1.5 !important;
-  min-height: 1.5em !important;
-  padding-right: 0.5rem;
-}
-
 .has-diff {
   /* Line numbers */
   & .show-line-numbers .shiki .line::before {
@@ -63,15 +66,6 @@ pre,
 
 .show-line-numbers .has-diff.shiki .line::before {
   margin-right: 2rem;
-}
-
-/* Basic split view diff styles */
-.shiki .line {
-  padding-left: 1rem !important;
-  display: inline-block !important;
-  margin-left: -1rem !important;
-  margin-right: -0.75rem !important;
-  width: calc(100% + 1.75rem) !important; /* Full width + left margin + right margin */
 }
 
 .shiki .line.diff.add span:first-child::before,
