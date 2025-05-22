@@ -78,6 +78,20 @@ export const JavaScript: Story = {
   },
 };
 
+// Highlight inside a multiline string
+export const PythonMultiline: Story = {
+  args: {
+    code: `a = inspect.cleandoc("""
+    foo # [!code highlight]
+    bar
+    """)
+}`,
+    language: "python",
+    showLineNumbers: true,
+    meta: "{2}",
+  },
+};
+
 // Basic JavaScript example without line numbers
 export const JavaScriptNoLineNumbers: Story = {
   args: {
