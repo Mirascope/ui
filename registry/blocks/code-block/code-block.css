@@ -83,7 +83,7 @@ pre,
   background-color: rgba(124, 58, 237, 0.108) !important;
 }
 .shiki .line.diff.add {
-  background-color: #409b4533 !important;
+  background-color: #409b4519 !important;
 }
 
 .shiki .line.diff.add span:first-child::before {
@@ -92,7 +92,7 @@ pre,
   content: "+";
 }
 .shiki .line.diff.remove {
-  background-color: color-mix(in oklch, var(--color-destructive) 20%, transparent);
+  background-color: color-mix(in oklch, var(--color-destructive) 10%, transparent);
 }
 
 .shiki .line.diff.remove span:first-child::before {
