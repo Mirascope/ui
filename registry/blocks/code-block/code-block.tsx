@@ -31,6 +31,11 @@ export function CodeBlock({
   const codeRef = useRef<HTMLDivElement>(null);
   const [isSmallBlock, setIsSmallBlock] = useState<boolean>(false);
 
+  // Calculate dynamic padding for line numbers
+  const lineCount = code.split("\n").length;
+  const extraPadding = 1 + Math.max(0, Math.floor(Math.log10(lineCount))) * 0.2;
+  const lineNumberPadding = `${extraPadding}rem`;
+
   // Base styles for code block container
   const codeBlockBaseStyles =
     "code-block-wrapper border-card relative m-0 mb-2 rounded-md overflow-hidden border p-0 text-xs group";
@@ -68,6 +73,7 @@ export function CodeBlock({
     <div
       ref={codeRef}
       className={cn(codeBlockBaseStyles, `${showLineNumbers && "show-line-numbers"}`, className)}
+      style={{ "--line-number-padding": lineNumberPadding } as React.CSSProperties}
     >
       {/* Buttons - positioned based on block size */}
       <div
