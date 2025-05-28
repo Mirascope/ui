@@ -464,54 +464,67 @@
       ]
     },
     {
-      "name": "basic-ui",
+      "name": "combobox",
       "type": "registry:ui",
-      "title": "Basic UI",
-      "description": "A simple basic UI component",
-      "dependencies": [
-        "@radix-ui/react-avatar",
-        "@radix-ui/react-slot",
-        "@radix-ui/react-alert-dialog",
-        "@radix-ui/react-checkbox",
-        "@radix-ui/react-collapsible",
-        "@radix-ui/react-tabs",
-        "@radix-ui/react-tooltip",
-        "@radix-ui/react-toggle",
-        "@radix-ui/react-icons",
-        "@radix-ui/react-slider",
-        "@radix-ui/react-switch",
-        "@radix-ui/react-select",
-        "@radix-ui/react-separator",
-        "@radix-ui/react-scroll-area",
-        "@radix-ui/react-popover",
-        "@radix-ui/react-dropdown-menu",
-        "next-themes",
-        "zod",
-        "@hookform/resolvers",
-        "cmdk",
-        "recharts",
-        "react-hook-form",
-        "react-resizable-panels",
-        "vaul",
-        "sonner"
-      ],
+      "title": "Combobox",
+      "description": "Autocomplete input and command palette with a list of suggestions.",
+      "dependencies": ["@radix-ui/react-icons", "frimousse", "lucide-react"],
+      "registryDependencies": ["button", "command", "emoji-picker", "popover"],
       "files": [
         {
           "path": "registry/ui/combobox.tsx",
           "type": "registry:ui"
-        },
+        }
+      ]
+    },
+    {
+      "name": "emoji-picker",
+      "type": "registry:ui",
+      "title": "Emoji Picker",
+      "description": "A popover for selecting emojis.",
+      "dependencies": ["frimousse", "lucide-react"],
+      "files": [
         {
           "path": "registry/ui/emoji-picker.tsx",
           "type": "registry:ui"
-        },
+        }
+      ]
+    },
+    {
+      "name": "form",
+      "type": "registry:ui",
+      "title": "Form",
+      "description": "Building forms with validation and accessibility.",
+      "dependencies": ["@radix-ui/react-label", "@radix-ui/react-slot", "react-hook-form"],
+      "registryDependencies": ["label"],
+      "files": [
         {
           "path": "registry/ui/form.tsx",
           "type": "registry:ui"
-        },
+        }
+      ]
+    },
+    {
+      "name": "model-combobox",
+      "type": "registry:ui",
+      "title": "Model Combobox",
+      "description": "A form-integrated combobox component for model selection.",
+      "dependencies": ["lucide-react", "react-hook-form"],
+      "registryDependencies": ["button", "command", "form", "popover"],
+      "files": [
         {
           "path": "registry/ui/model-combobox.tsx",
           "type": "registry:ui"
-        },
+        }
+      ]
+    },
+    {
+      "name": "resizable",
+      "type": "registry:ui",
+      "title": "Resizable",
+      "description": "Accessible resizable panel groups and layouts.",
+      "dependencies": ["@radix-ui/react-icons", "react-resizable-panels"],
+      "files": [
         {
           "path": "registry/ui/resizable.tsx",
           "type": "registry:ui"
