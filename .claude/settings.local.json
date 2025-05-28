@@ -4,7 +4,8 @@
       "WebFetch(domain:storybook.js.org)",
       "Bash(grep:*)",
       "Bash(mkdir:*)",
-      "Bash(bun test)"
+      "Bash(bun test)",
+      "Bash(bun test:*)"
     ],
     "deny": []
   }
