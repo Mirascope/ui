@@ -397,6 +397,73 @@
       ]
     },
     {
+      "name": "calendar",
+      "type": "registry:ui",
+      "title": "Calendar",
+      "description": "A date picker component built on top of react-day-picker.",
+      "dependencies": ["react-day-picker", "lucide-react"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/ui/calendar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "chart",
+      "type": "registry:ui",
+      "title": "Chart",
+      "description": "Recharts components for building charts and data visualizations.",
+      "dependencies": ["recharts"],
+      "files": [
+        {
+          "path": "registry/ui/chart.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "command",
+      "type": "registry:ui",
+      "title": "Command",
+      "description": "Fast, composable, unstyled command menu for React.",
+      "dependencies": ["cmdk", "@radix-ui/react-icons"],
+      "registryDependencies": ["dialog"],
+      "files": [
+        {
+          "path": "registry/ui/command.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "drawer",
+      "type": "registry:ui",
+      "title": "Drawer",
+      "description": "A drawer component for mobile devices.",
+      "dependencies": ["vaul"],
+      "files": [
+        {
+          "path": "registry/ui/drawer.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dropdown-menu",
+      "type": "registry:ui",
+      "title": "Dropdown Menu",
+      "description": "Displays a menu to the user — such as a set of actions or functions — triggered by a button.",
+      "dependencies": ["@radix-ui/react-dropdown-menu", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/ui/dropdown-menu.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "basic-ui",
       "type": "registry:ui",
       "title": "Basic UI",
@@ -430,27 +497,7 @@
       ],
       "files": [
         {
-          "path": "registry/ui/calendar.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/chart.tsx",
-          "type": "registry:ui"
-        },
-        {
           "path": "registry/ui/combobox.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/command.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/drawer.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/dropdown-menu.tsx",
           "type": "registry:ui"
         },
         {
