@@ -14,6 +14,8 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "typecheck": "bun run tsc --noEmit",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
     "prepare": "husky",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write .",
