@@ -267,6 +267,71 @@
       ]
     },
     {
+      "name": "tabs",
+      "type": "registry:ui",
+      "title": "Tabs",
+      "description": "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
+      "dependencies": ["@radix-ui/react-tabs"],
+      "files": [
+        {
+          "path": "registry/ui/tabs.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "tooltip",
+      "type": "registry:ui",
+      "title": "Tooltip",
+      "description": "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
+      "dependencies": ["@radix-ui/react-tooltip"],
+      "files": [
+        {
+          "path": "registry/ui/tooltip.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "toggle",
+      "type": "registry:ui",
+      "title": "Toggle",
+      "description": "A two-state button that can be either on or off.",
+      "dependencies": ["@radix-ui/react-toggle", "class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/ui/toggle.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "slider",
+      "type": "registry:ui",
+      "title": "Slider",
+      "description": "An input where the user selects a value from within a given range.",
+      "dependencies": ["@radix-ui/react-slider"],
+      "files": [
+        {
+          "path": "registry/ui/slider.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "table",
+      "type": "registry:ui",
+      "title": "Table",
+      "description": "A responsive table component.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/table.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "basic-ui",
       "type": "registry:ui",
       "title": "Basic UI",
@@ -356,27 +421,7 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/slider.tsx",
-          "type": "registry:ui"
-        },
-        {
           "path": "registry/ui/sonner.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/table.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/tabs.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/toggle.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/tooltip.tsx",
           "type": "registry:ui"
         }
       ]
