@@ -202,6 +202,71 @@
       ]
     },
     {
+      "name": "skeleton",
+      "type": "registry:ui",
+      "title": "Skeleton",
+      "description": "Use to show a placeholder while content is loading.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/skeleton.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "separator",
+      "type": "registry:ui",
+      "title": "Separator",
+      "description": "Visually or semantically separates content.",
+      "dependencies": ["@radix-ui/react-separator"],
+      "files": [
+        {
+          "path": "registry/ui/separator.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "card",
+      "type": "registry:ui",
+      "title": "Card",
+      "description": "Displays a card with header, content, and footer.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/card.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "switch",
+      "type": "registry:ui",
+      "title": "Switch",
+      "description": "A control that allows the user to toggle between checked and not checked.",
+      "dependencies": ["@radix-ui/react-switch"],
+      "files": [
+        {
+          "path": "registry/ui/switch.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "textarea",
+      "type": "registry:ui",
+      "title": "Textarea",
+      "description": "Displays a form textarea or a component that looks like a textarea.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/textarea.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "basic-ui",
       "type": "registry:ui",
       "title": "Basic UI",
@@ -287,15 +352,7 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/separator.tsx",
-          "type": "registry:ui"
-        },
-        {
           "path": "registry/ui/sheet.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/skeleton.tsx",
           "type": "registry:ui"
         },
         {
@@ -307,19 +364,11 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/switch.tsx",
-          "type": "registry:ui"
-        },
-        {
           "path": "registry/ui/table.tsx",
           "type": "registry:ui"
         },
         {
           "path": "registry/ui/tabs.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/textarea.tsx",
           "type": "registry:ui"
         },
         {
