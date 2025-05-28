@@ -1,7 +1,10 @@
 {
-  "name": "registry",
+  "name": "@mirascope/ui",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "bin": {
+    "mirascope-ui": "./bin/cli.ts"
+  },
   "scripts": {
     "dev": "bun run build && next dev --turbopack",
     "build": "shadcn build",
