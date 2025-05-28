@@ -332,6 +332,71 @@
       ]
     },
     {
+      "name": "scroll-area",
+      "type": "registry:ui",
+      "title": "Scroll Area",
+      "description": "Augments native scroll functionality for custom, cross-browser styling.",
+      "dependencies": ["@radix-ui/react-scroll-area"],
+      "files": [
+        {
+          "path": "registry/ui/scroll-area.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "popover",
+      "type": "registry:ui",
+      "title": "Popover",
+      "description": "Displays rich content in a portal, triggered by a button.",
+      "dependencies": ["@radix-ui/react-popover"],
+      "files": [
+        {
+          "path": "registry/ui/popover.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sonner",
+      "type": "registry:ui",
+      "title": "Sonner",
+      "description": "An opinionated toast component for React.",
+      "dependencies": ["sonner", "next-themes"],
+      "files": [
+        {
+          "path": "registry/ui/sonner.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "sheet",
+      "type": "registry:ui",
+      "title": "Sheet",
+      "description": "Extends the Dialog component to display content that complements the main content of the screen.",
+      "dependencies": ["@radix-ui/react-dialog", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/ui/sheet.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "select",
+      "type": "registry:ui",
+      "title": "Select",
+      "description": "Displays a list of options for the user to pick from—triggered by a button.",
+      "dependencies": ["@radix-ui/react-select", "@radix-ui/react-icons"],
+      "files": [
+        {
+          "path": "registry/ui/select.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "basic-ui",
       "type": "registry:ui",
       "title": "Basic UI",
@@ -401,27 +466,7 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/popover.tsx",
-          "type": "registry:ui"
-        },
-        {
           "path": "registry/ui/resizable.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/scroll-area.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/select.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/sheet.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/sonner.tsx",
           "type": "registry:ui"
         }
       ]
