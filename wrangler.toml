@@ -1,4 +1,4 @@
 name = "ui-storybook"
 compatibility_date = "2025-01-01"
 [assets]
-directory = "./storybook-static"
+directory = "./dist"

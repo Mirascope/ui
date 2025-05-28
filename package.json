@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "bun run build && next dev --turbopack",
     "build": "shadcn build",
+    "build:full": "mkdir -p dist; shadcn build; mv public/* dist; rm -r public; storybook build; mv storybook-static/* dist; rm -r storybook-static",
     "start": "next start",
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
