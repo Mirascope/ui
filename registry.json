@@ -70,6 +70,71 @@
       ]
     },
     {
+      "name": "button",
+      "type": "registry:ui",
+      "title": "Button",
+      "description": "Displays a button or a component that looks like a button.",
+      "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
+      "files": [
+        {
+          "path": "registry/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "input",
+      "type": "registry:ui",
+      "title": "Input",
+      "description": "Displays a form input field or a component that looks like an input field.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/input.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "label",
+      "type": "registry:ui",
+      "title": "Label",
+      "description": "Renders an accessible label associated with controls.",
+      "dependencies": ["@radix-ui/react-label", "class-variance-authority"],
+      "files": [
+        {
+          "path": "registry/ui/label.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "badge",
+      "type": "registry:ui",
+      "title": "Badge",
+      "description": "Displays a badge or a component that looks like a badge.",
+      "dependencies": [],
+      "files": [
+        {
+          "path": "registry/ui/badge.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "dialog",
+      "type": "registry:ui",
+      "title": "Dialog",
+      "description": "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.",
+      "dependencies": ["@radix-ui/react-dialog", "@radix-ui/react-icons"],
+      "files": [
+        {
+          "path": "registry/ui/dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "basic-ui",
       "type": "registry:ui",
       "title": "Basic UI",
@@ -115,14 +180,6 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/badge.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/button.tsx",
-          "type": "registry:ui"
-        },
-        {
           "path": "registry/ui/calendar.tsx",
           "type": "registry:ui"
         },
@@ -147,10 +204,6 @@
           "type": "registry:ui"
         },
         {
-          "path": "registry/ui/dialog.tsx",
-          "type": "registry:ui"
-        },
-        {
           "path": "registry/ui/drawer.tsx",
           "type": "registry:ui"
         },
@@ -164,14 +217,6 @@
         },
         {
           "path": "registry/ui/form.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/input.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/label.tsx",
           "type": "registry:ui"
         },
         {
