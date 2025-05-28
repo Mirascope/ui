@@ -135,6 +135,73 @@
       ]
     },
     {
+      "name": "alert-dialog",
+      "type": "registry:ui",
+      "title": "Alert Dialog",
+      "description": "A modal dialog that interrupts the user with important content and expects a response.",
+      "dependencies": ["@radix-ui/react-alert-dialog"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/ui/alert-dialog.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "alert",
+      "type": "registry:ui",
+      "title": "Alert",
+      "description": "Displays a callout for user attention.",
+      "dependencies": ["class-variance-authority", "lucide-react"],
+      "registryDependencies": ["button"],
+      "files": [
+        {
+          "path": "registry/ui/alert.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "avatar",
+      "type": "registry:ui",
+      "title": "Avatar",
+      "description": "An image element with a fallback for representing the user.",
+      "dependencies": ["@radix-ui/react-avatar"],
+      "files": [
+        {
+          "path": "registry/ui/avatar.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "checkbox",
+      "type": "registry:ui",
+      "title": "Checkbox",
+      "description": "A control that allows the user to toggle between checked and not checked.",
+      "dependencies": ["@radix-ui/react-checkbox", "@radix-ui/react-icons"],
+      "files": [
+        {
+          "path": "registry/ui/checkbox.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "collapsible",
+      "type": "registry:ui",
+      "title": "Collapsible",
+      "description": "An interactive component which expands/collapses a panel.",
+      "dependencies": ["@radix-ui/react-collapsible"],
+      "files": [
+        {
+          "path": "registry/ui/collapsible.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "basic-ui",
       "type": "registry:ui",
       "title": "Basic UI",
@@ -168,31 +235,11 @@
       ],
       "files": [
         {
-          "path": "registry/ui/alert-dialog.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/alert.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/avatar.tsx",
-          "type": "registry:ui"
-        },
-        {
           "path": "registry/ui/calendar.tsx",
           "type": "registry:ui"
         },
         {
           "path": "registry/ui/chart.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/checkbox.tsx",
-          "type": "registry:ui"
-        },
-        {
-          "path": "registry/ui/collapsible.tsx",
           "type": "registry:ui"
         },
         {
