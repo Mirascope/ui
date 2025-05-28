@@ -16,6 +16,7 @@
     "typecheck": "bun run tsc --noEmit",
     "test": "bun test",
     "test:watch": "bun test --watch",
+    "cli": "bun bin/cli.ts",
     "prepare": "husky",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write .",
