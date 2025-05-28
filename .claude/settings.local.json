@@ -6,7 +6,8 @@
       "Bash(mkdir:*)",
       "Bash(bun test)",
       "Bash(bun test:*)",
-      "Bash(bun run cli:*)"
+      "Bash(bun run test-cli:*)",
+      "Bash(rg:*)"
     ],
     "deny": []
   }
