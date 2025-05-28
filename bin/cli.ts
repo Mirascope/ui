@@ -1,6 +1,5 @@
 #!/usr/bin/env bun
 
-import { parseArgs } from "util";
 import { InitCommand } from "../src/commands/init";
 import { SyncCommand } from "../src/commands/sync";
 import { AddCommand } from "../src/commands/add";
@@ -18,14 +17,17 @@ const COMMANDS = {
 type Command = keyof typeof COMMANDS;
 
 async function main() {
-  const { positionals } = parseArgs({
-    allowPositionals: true,
-    args: process.argv.slice(2),
-  });
+  const rawArgs = process.argv.slice(2);
 
-  const [command, ...args] = positionals;
+  if (rawArgs.length === 0) {
+    console.error("Usage: mirascope-ui <command> [args]");
+    console.error("Commands: init, sync, add, remove, status");
+    process.exit(1);
+  }
 
-  if (!command || !(command in COMMANDS)) {
+  const [command, ...args] = rawArgs;
+
+  if (!(command in COMMANDS)) {
     console.error("Usage: mirascope-ui <command> [args]");
     console.error("Commands: init, sync, add, remove, status");
     process.exit(1);

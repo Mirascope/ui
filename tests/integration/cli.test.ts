@@ -112,12 +112,11 @@ describe("CLI Integration", () => {
       expect(result.stderr).toContain("Usage: mirascope-ui add");
     });
 
-    test("add command should show stub message", async () => {
+    test("add command should require manifest", async () => {
       const result = await runCLI(["add", "button", "dialog"], projectPath);
 
-      expect(result.exitCode).toBe(0);
-      expect(result.stdout).toContain("Add command not implemented yet");
-      expect(result.stdout).toContain("Would add: button, dialog");
+      expect(result.exitCode).toBe(1);
+      expect(result.stderr).toContain("Manifest not found. Run 'mirascope-ui init' first.");
     });
 
     test("remove command should validate arguments", async () => {

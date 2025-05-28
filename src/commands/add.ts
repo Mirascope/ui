@@ -1,14 +1,164 @@
 import { BaseCommand } from "./base";
+import { ManifestManager } from "../manifest";
+import { RegistryFetcher, RegistryOptions } from "../registry";
+import { writeFile, mkdir } from "fs/promises";
+import { join, dirname } from "path";
+import { parseArgs } from "util";
 
 export class AddCommand extends BaseCommand {
   async execute(args: string[]): Promise<void> {
-    if (args.length === 0) {
+    const { values, positionals } = parseArgs({
+      args,
+      allowPositionals: true,
+      options: {
+        local: { type: "boolean" },
+        "local-path": { type: "string" },
+        "registry-url": { type: "string" },
+        help: { type: "boolean" },
+      },
+    });
+
+    const componentNames = positionals;
+
+    if (values.help) {
+      console.log(
+        "Usage: mirascope-ui add [--local] [--local-path <path>] [--registry-url <url>] <component1> [component2] ..."
+      );
+      console.log("");
+      console.log("Options:");
+      console.log("  --local              Use local registry.json in current directory");
+      console.log("  --local-path <path>  Use local registry.json at specified path");
+      console.log(
+        "  --registry-url <url> Override registry URL (default: https://ui.mirascope.com)"
+      );
+      process.exit(0);
+    }
+
+    if (componentNames.length === 0) {
       console.error("❌ No components specified");
-      console.error("Usage: mirascope-ui add <component1> [component2] ...");
+      console.error(
+        "Usage: mirascope-ui add [--local] [--local-path <path>] [--registry-url <url>] <component1> [component2] ..."
+      );
       process.exit(1);
     }
 
-    console.log("🚧 Add command not implemented yet");
-    console.log(`   Would add: ${args.join(", ")}`);
+    const registryOptions: RegistryOptions = {
+      local: values.local,
+      registryUrl: values["registry-url"],
+    };
+
+    try {
+      console.log(`🔍 Fetching components: ${componentNames.join(", ")}`);
+
+      const manifest = new ManifestManager();
+      if (!(await manifest.exists())) {
+        console.error("❌ Manifest not found. Run 'mirascope-ui init' first.");
+        process.exit(1);
+      }
+
+      const registry = new RegistryFetcher(registryOptions);
+      const components = await registry.findComponents(componentNames);
+
+      // Check for already tracked components
+      const manifestData = await manifest.read();
+      const alreadyTracked = components.filter((c) => c.name in manifestData.components);
+      if (alreadyTracked.length > 0) {
+        console.log(`⚠️  Already tracking: ${alreadyTracked.map((c) => c.name).join(", ")}`);
+        console.log("   Use 'mirascope-ui sync' to update them");
+      }
+
+      const newComponents = components.filter((c) => !(c.name in manifestData.components));
+      if (newComponents.length === 0) {
+        console.log("✅ All components already tracked");
+        return;
+      }
+
+      // Collect all dependencies (including registry dependencies)
+      const allDeps = new Set<string>();
+      const registryDeps = new Set<string>();
+
+      for (const component of newComponents) {
+        component.dependencies?.forEach((dep) => allDeps.add(dep));
+        component.registryDependencies?.forEach((dep) => registryDeps.add(dep));
+      }
+
+      // Resolve registry dependencies
+      if (registryDeps.size > 0) {
+        console.log(`🔗 Resolving registry dependencies: ${Array.from(registryDeps).join(", ")}`);
+        const depComponents = await registry.findComponents(Array.from(registryDeps));
+        for (const dep of depComponents) {
+          if (!(dep.name in manifestData.components)) {
+            newComponents.push(dep);
+            dep.dependencies?.forEach((d) => allDeps.add(d));
+          }
+        }
+      }
+
+      // Download and save all component files
+      for (const component of newComponents) {
+        console.log(`📦 Adding ${component.name}...`);
+
+        const files: string[] = [];
+        for (const file of component.files) {
+          const content = await registry.fetchComponentFile(file.path);
+
+          // Determine target path
+          const targetPath = file.target || this.getDefaultTargetPath(file.path);
+          const fullTargetPath = join(process.cwd(), targetPath);
+
+          // Ensure directory exists
+          await mkdir(dirname(fullTargetPath), { recursive: true });
+
+          // Write file
+          await writeFile(fullTargetPath, content, "utf-8");
+          files.push(targetPath);
+        }
+
+        // Add to manifest
+        await manifest.addComponent(component.name, files);
+      }
+
+      // Install npm dependencies if any
+      if (allDeps.size > 0) {
+        console.log(`📦 Installing dependencies: ${Array.from(allDeps).join(", ")}`);
+        await this.installDependencies(Array.from(allDeps));
+      }
+
+      console.log(
+        `✅ Added ${newComponents.length} component${newComponents.length === 1 ? "" : "s"}`
+      );
+      newComponents.forEach((c) => console.log(`   • ${c.name}`));
+    } catch (error) {
+      console.error(`❌ ${error instanceof Error ? error.message : String(error)}`);
+      process.exit(1);
+    }
+  }
+
+  private getDefaultTargetPath(sourcePath: string): string {
+    // Convert registry/ui/button.tsx -> src/mirascope-ui/ui/button.tsx
+    const relativePath = sourcePath.replace(/^registry\//, "");
+    return join("src", "mirascope-ui", relativePath);
+  }
+
+  private async installDependencies(dependencies: string[]): Promise<void> {
+    const { spawn } = await import("child_process");
+
+    return new Promise((resolve, reject) => {
+      const proc = spawn("bun", ["add", ...dependencies], {
+        stdio: "inherit",
+      });
+
+      proc.on("close", (code) => {
+        if (code === 0) {
+          resolve();
+        } else {
+          reject(new Error(`Dependency installation failed with code ${code}`));
+        }
+      });
+
+      proc.on("error", (error) => {
+        reject(new Error(`Failed to run bun add: ${error.message}`));
+      });
+    });
   }
 }
