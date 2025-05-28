@@ -1,12 +1,14 @@
 #!/usr/bin/env bun
 
 import { parseArgs } from "util";
+import { InitCommand } from "../src/commands/init";
 import { SyncCommand } from "../src/commands/sync";
 import { AddCommand } from "../src/commands/add";
 import { RemoveCommand } from "../src/commands/remove";
 import { StatusCommand } from "../src/commands/status";
 
 const COMMANDS = {
+  init: InitCommand,
   sync: SyncCommand,
   add: AddCommand,
   remove: RemoveCommand,
@@ -25,7 +27,7 @@ async function main() {
 
   if (!command || !(command in COMMANDS)) {
     console.error("Usage: mirascope-ui <command> [args]");
-    console.error("Commands: sync, add, remove, status");
+    console.error("Commands: init, sync, add, remove, status");
     process.exit(1);
   }
 

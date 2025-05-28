@@ -45,3 +45,6 @@ next-env.d.ts
 storybook-static
 
 dist
+
+# Test project for CLI testing
+test-project/
