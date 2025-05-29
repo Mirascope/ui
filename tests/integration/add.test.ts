@@ -278,13 +278,6 @@ describe("Add Command Integration", () => {
   });
 
   describe("error handling", () => {
-    test("fails when manifest doesn't exist", async () => {
-      const result = await runCLI(["add", "button"], projectPath);
-
-      expect(result.exitCode).toBe(1);
-      expect(result.stderr).toContain("❌ Manifest not found. Run 'mirascope-ui init' first.");
-    });
-
     test("fails for non-existent component", async () => {
       // Create empty registry
       await writeFile(join(projectPath, "registry.json"), JSON.stringify({ items: [] }));

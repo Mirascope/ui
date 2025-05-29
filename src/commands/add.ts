@@ -4,6 +4,7 @@ import { findComponents } from "../registry";
 import { writeFile, mkdir } from "fs/promises";
 import { join, dirname } from "path";
 import { parseArgs } from "util";
+import { InitCommand } from "./init";
 
 export class AddCommand extends BaseCommand {
   async execute(args: string[], context: ExecutionContext): Promise<void> {
@@ -47,8 +48,9 @@ export class AddCommand extends BaseCommand {
 
       const manifest = new ManifestManager(context.targetPath);
       if (!(await manifest.exists())) {
-        console.error("❌ Manifest not found. Run 'mirascope-ui init' first.");
-        process.exit(1);
+        console.log("🚀 No manifest found. Initializing project...");
+        const initCommand = new InitCommand();
+        await initCommand.execute([], context);
       }
 
       const components = await findComponents(context.registry, componentNames);

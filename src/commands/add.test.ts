@@ -73,14 +73,40 @@ describe("AddCommand", () => {
   });
 
   describe("manifest validation", () => {
-    test("shows error if manifest doesn't exist", async () => {
-      const command = new AddCommand();
-      const context = createTestContext([], {}, tempDir);
+    test("auto-initializes project when manifest doesn't exist", async () => {
+      const buttonComponent: RegistryComponent = {
+        name: "button",
+        type: "registry:ui" as const,
+        files: [{ path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+      };
 
-      await expect(command.execute(["button"], context)).rejects.toThrow("process.exit called");
-      expect(errorSpy).toHaveBeenCalledWith(
-        "❌ Manifest not found. Run 'mirascope-ui init' first."
-      );
+      const files = {
+        "mirascope-ui/ui/button.tsx": "export const Button = () => <button>Click me</button>;",
+      };
+
+      const context = createTestContext([buttonComponent], files, tempDir);
+      const command = new AddCommand();
+
+      await command.execute(["button"], context);
+
+      // Check that auto-init happened
+      expect(logSpy).toHaveBeenCalledWith("🚀 No manifest found. Initializing project...");
+      expect(logSpy).toHaveBeenCalledWith("🚀 Initializing Mirascope UI Registry");
+      expect(logSpy).toHaveBeenCalledWith("✅ Created manifest at mirascope-ui/manifest.json");
+
+      // Check that the component was added after init
+      expect(logSpy).toHaveBeenCalledWith("📦 Adding button...");
+      expect(logSpy).toHaveBeenCalledWith("✅ Added 1 component");
+
+      // Verify manifest was created and component added
+      const manifestContent = await readFile("mirascope-ui/manifest.json", "utf-8");
+      const manifest = JSON.parse(manifestContent);
+      expect(manifest.components.button).toBeDefined();
+      expect(manifest.components.button.files).toEqual(["mirascope-ui/ui/button.tsx"]);
+
+      // Verify component file was created
+      const buttonContent = await readFile("mirascope-ui/ui/button.tsx", "utf-8");
+      expect(buttonContent).toBe("export const Button = () => <button>Click me</button>;");
     });
   });
 

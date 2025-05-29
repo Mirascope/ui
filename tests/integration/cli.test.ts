@@ -116,13 +116,6 @@ describe("CLI Integration", () => {
       );
     });
 
-    test("add command should require manifest", async () => {
-      const result = await runCLI(["add", "button", "dialog"], projectPath);
-
-      expect(result.exitCode).toBe(1);
-      expect(result.stderr).toContain("Manifest not found. Run 'mirascope-ui init' first.");
-    });
-
     test("remove command should validate arguments", async () => {
       const result = await runCLI(["remove"], projectPath);
 
