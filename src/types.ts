@@ -1,3 +1,14 @@
+export type RegistryItem =
+  | "registry:lib"
+  | "registry:block"
+  | "registry:component"
+  | "registry:ui"
+  | "registry:hook"
+  | "registry:theme"
+  | "registry:page"
+  | "registry:file"
+  | "registry:style";
+
 export interface ComponentManifest {
   version: string;
   lastSync: string;
@@ -12,13 +23,13 @@ export interface Manifest {
 
 export interface RegistryComponent {
   name: string;
-  type: "registry:ui" | "registry:block" | "registry:lib";
+  type: RegistryItem;
   dependencies?: string[];
   registryDependencies?: string[];
   files: Array<{
     path: string;
     content: string;
-    type: "registry:ui" | "registry:block" | "registry:lib";
+    type: RegistryItem;
     target?: string;
   }>;
 }
