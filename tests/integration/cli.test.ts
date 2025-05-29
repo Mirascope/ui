@@ -130,6 +130,13 @@ describe("CLI Integration", () => {
       expect(result.stderr).toContain("No components specified");
     });
 
+    test("remove command should require manifest", async () => {
+      const result = await runCLI(["remove", "button"], projectPath);
+
+      expect(result.exitCode).toBe(1);
+      expect(result.stderr).toContain("Manifest not found. Run 'mirascope-ui init' first.");
+    });
+
     test("sync command should require manifest", async () => {
       const result = await runCLI(["sync", "button"], projectPath);
 
