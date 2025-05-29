@@ -3,6 +3,7 @@ import { mkdir, writeFile, rm } from "fs/promises";
 import { join } from "path";
 import { StatusCommand } from "./status";
 import { createTestContext } from "../test-utils";
+import { REGISTRY_URL } from "../constants";
 
 describe("StatusCommand", () => {
   const testDir = join(process.cwd(), "test-temp-status");
@@ -50,7 +51,7 @@ describe("StatusCommand", () => {
     await writeFile(
       manifestPath,
       JSON.stringify({
-        registryUrl: "https://ui.mirascope.com",
+        registryUrl: REGISTRY_URL,
         components: {},
         lastFullSync: "",
       })
@@ -73,7 +74,7 @@ describe("StatusCommand", () => {
     await writeFile(
       manifestPath,
       JSON.stringify({
-        registryUrl: "https://ui.mirascope.com",
+        registryUrl: REGISTRY_URL,
         components: {
           button: {
             version: "main",

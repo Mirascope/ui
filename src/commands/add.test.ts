@@ -4,6 +4,7 @@ import { mkdir, writeFile, rm, readFile } from "fs/promises";
 import { join } from "path";
 import { createTestContext } from "../test-utils";
 import { RegistryComponent } from "../types";
+import { REGISTRY_URL } from "../constants";
 
 describe("AddCommand", () => {
   const tempDir = join(process.cwd(), "test-temp-add");
@@ -59,7 +60,7 @@ describe("AddCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {},
           lastFullSync: "",
         })
@@ -138,7 +139,7 @@ describe("AddCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {},
           lastFullSync: "",
         })
@@ -172,7 +173,7 @@ describe("AddCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {
             button: {
               version: "main",
@@ -219,7 +220,7 @@ describe("AddCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {},
           lastFullSync: "",
         })
@@ -272,7 +273,7 @@ describe("AddCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {},
           lastFullSync: "",
         })
@@ -305,7 +306,7 @@ describe("AddCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {},
           lastFullSync: "",
         })

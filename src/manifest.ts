@@ -2,6 +2,7 @@ import { existsSync } from "fs";
 import { readFile, writeFile, mkdir } from "fs/promises";
 import { join, dirname } from "path";
 import type { Manifest } from "./types";
+import { REGISTRY_URL } from "./constants";
 
 export class ManifestManager {
   private manifestPath: string;
@@ -64,7 +65,7 @@ export class ManifestManager {
 
   private createDefault(): Manifest {
     return {
-      registryUrl: "https://ui.mirascope.com",
+      registryUrl: REGISTRY_URL,
       components: {},
       lastFullSync: "",
     };

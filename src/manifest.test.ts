@@ -3,6 +3,7 @@ import { mkdir, writeFile, rm, readFile } from "fs/promises";
 import { join } from "path";
 import { ManifestManager } from "./manifest";
 import type { Manifest } from "./types";
+import { REGISTRY_URL } from "./constants";
 
 describe("ManifestManager", () => {
   const testDir = join(process.cwd(), "test-temp-manifest");
@@ -52,7 +53,7 @@ describe("ManifestManager", () => {
       const manifest = await manager.read();
 
       expect(manifest).toEqual({
-        registryUrl: "https://ui.mirascope.com",
+        registryUrl: REGISTRY_URL,
         components: {},
         lastFullSync: "",
       });
@@ -112,7 +113,7 @@ describe("ManifestManager", () => {
 
       expect(await manager.exists()).toBe(true);
       const manifest = await manager.read();
-      expect(manifest.registryUrl).toBe("https://ui.mirascope.com");
+      expect(manifest.registryUrl).toBe(REGISTRY_URL);
       expect(manifest.components).toEqual({});
     });
 

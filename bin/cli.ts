@@ -9,6 +9,7 @@ import { ExecutionContext } from "../src/commands/base";
 import { FileRegistry, RemoteRegistry } from "../src/registry";
 import { existsSync } from "fs";
 import { join } from "path";
+import { REGISTRY_URL } from "@/src/constants";
 
 const COMMANDS = {
   init: InitCommand,
@@ -95,7 +96,7 @@ async function main() {
   const registry = globalFlags.local
     ? new FileRegistry(globalFlags.localPath || process.cwd())
     : new RemoteRegistry(
-        globalFlags.registryUrl || process.env.MIRASCOPE_REGISTRY_URL || "https://ui.mirascope.com"
+        globalFlags.registryUrl || process.env.MIRASCOPE_REGISTRY_URL || REGISTRY_URL
       );
 
   const context: ExecutionContext = { registry, targetPath };

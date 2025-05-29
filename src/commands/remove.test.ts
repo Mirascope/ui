@@ -4,6 +4,7 @@ import { mkdir, writeFile, rm, readFile } from "fs/promises";
 import { existsSync } from "fs";
 import { join } from "path";
 import { createTestContext } from "../test-utils";
+import { REGISTRY_URL } from "../constants";
 
 describe("RemoveCommand", () => {
   const tempDir = join(process.cwd(), "test-temp-remove");
@@ -72,7 +73,7 @@ describe("RemoveCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {},
           lastFullSync: "",
         })
@@ -100,7 +101,7 @@ describe("RemoveCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {
             button: {
               version: "main",
@@ -139,7 +140,7 @@ describe("RemoveCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {
             button: {
               version: "main",
@@ -179,7 +180,7 @@ describe("RemoveCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {
             button: {
               version: "main",
@@ -205,7 +206,7 @@ describe("RemoveCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {
             button: {
               version: "main",
@@ -239,7 +240,7 @@ describe("RemoveCommand", () => {
       await writeFile(
         "mirascope-ui/manifest.json",
         JSON.stringify({
-          registryUrl: "https://ui.mirascope.com",
+          registryUrl: REGISTRY_URL,
           components: {
             complex: {
               version: "main",
