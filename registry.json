@@ -24,7 +24,7 @@
         {
           "path": "mirascope-ui/files/Williams-Handwriting-Font-v1.9.ttf",
           "type": "registry:file",
-          "target": "~/public/fonts/Williams-Handwriting-Font-v1.9.tff"
+          "target": "~/public/fonts/Williams-Handwriting-Font-v1.9.ttf"
         }
       ]
     },

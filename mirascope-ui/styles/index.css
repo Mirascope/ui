@@ -1,27 +1,12 @@
-/* Google Fonts Import */
-@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&family=Comic+Neue:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
+@import url("@/mirascope-ui/styles/fonts.css");
+@plugin "tailwindcss-animate";
+@plugin '@tailwindcss/typography';
+@custom-variant dark (&:is(.dark *));
 
 /* Import code styling from code-block.css */
 @import url("@/mirascope-ui/blocks/code-block/code-block.css");
 
-/* Williams Handwriting Font Import - All styles */
-@font-face {
-  font-family: "Williams Handwriting";
-  src: url("/fonts/Williams-Handwriting-Font-v1.9.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-  descent-override: 10%;
-}
-
-@import "tailwindcss";
-@plugin "tailwindcss-animate";
-@plugin '@tailwindcss/typography';
-@custom-variant dark (&:is(.dark *));
-@custom-variant fun (&:is(.fun *));
-@custom-variant professional (&:is(.professional *));
-@custom-variant default (&:is(.default *));
 @utility no-scrollbar {
   @apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
@@ -160,24 +145,6 @@
 }
 body {
   @apply m-0;
-  font-family:
-    "Williams Handwriting",
-    "Geist Sans",
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    "Open Sans",
-    "Helvetica Neue",
-    sans-serif;
-  font-size: 1rem; /* Default size - will be overridden by mono/sans classes */
-  font-weight: 400; /* Normal weight */
-  letter-spacing: 0.01em; /* Slight letter spacing */
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 /* Paper texture overlay for the entire app */
 body::before {
@@ -213,23 +180,6 @@ body::before {
   }
   body {
     @apply bg-background text-foreground;
-  }
-  .font-default {
-    font-family:
-      "Geist Sans",
-      -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      Roboto,
-      Oxygen,
-      Ubuntu,
-      Cantarell,
-      "Open Sans",
-      "Helvetica Neue",
-      sans-serif;
-  }
-  .font-handwriting {
-    font-family: "Williams Handwriting", cursive !important;
   }
 }
 
