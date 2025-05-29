@@ -2,6 +2,7 @@ import { describe, test, expect, beforeEach, afterEach } from "bun:test";
 import { mkdir, writeFile, rm } from "fs/promises";
 import { join } from "path";
 import { StatusCommand } from "./status";
+import { createTestContext } from "../test-utils";
 
 describe("StatusCommand", () => {
   const testDir = join(process.cwd(), "test-temp-status");
@@ -33,9 +34,10 @@ describe("StatusCommand", () => {
 
   test("should show no manifest message when manifest doesn't exist", async () => {
     const command = new StatusCommand();
+    const context = createTestContext();
     const { logs, restore } = captureConsoleOutput();
 
-    await command.execute([]);
+    await command.execute([], context);
 
     restore();
 
@@ -44,7 +46,6 @@ describe("StatusCommand", () => {
   });
 
   test("should show empty manifest state", async () => {
-    // Create empty manifest
     await mkdir(join(testDir, "src", "mirascope-ui"), { recursive: true });
     await writeFile(
       manifestPath,
@@ -56,9 +57,10 @@ describe("StatusCommand", () => {
     );
 
     const command = new StatusCommand();
+    const context = createTestContext();
     const { logs, restore } = captureConsoleOutput();
 
-    await command.execute([]);
+    await command.execute([], context);
 
     restore();
 
@@ -67,7 +69,6 @@ describe("StatusCommand", () => {
   });
 
   test("should show populated manifest", async () => {
-    // Create manifest with components
     await mkdir(join(testDir, "src", "mirascope-ui"), { recursive: true });
     await writeFile(
       manifestPath,
@@ -90,9 +91,10 @@ describe("StatusCommand", () => {
     );
 
     const command = new StatusCommand();
+    const context = createTestContext();
     const { logs, restore } = captureConsoleOutput();
 
-    await command.execute([]);
+    await command.execute([], context);
 
     restore();
 

@@ -91,7 +91,9 @@ describe("CLI Integration", () => {
       const result = await runCLI(["invalid"], projectPath);
 
       expect(result.exitCode).toBe(1);
-      expect(result.stderr).toContain("Usage: mirascope-ui <command> [args]");
+      expect(result.stderr).toContain(
+        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] <command> [args]"
+      );
       expect(result.stderr).toContain("Commands: init, sync, add, remove, status");
     });
 
@@ -109,7 +111,9 @@ describe("CLI Integration", () => {
 
       expect(result.exitCode).toBe(1);
       expect(result.stderr).toContain("No components specified");
-      expect(result.stderr).toContain("Usage: mirascope-ui add");
+      expect(result.stderr).toContain(
+        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] add"
+      );
     });
 
     test("add command should require manifest", async () => {

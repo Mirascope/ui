@@ -1,7 +1,7 @@
-import { BaseCommand } from "./base";
+import { BaseCommand, ExecutionContext } from "./base";
 
 export class RemoveCommand extends BaseCommand {
-  async execute(args: string[]): Promise<void> {
+  async execute(args: string[], _context: ExecutionContext): Promise<void> {
     if (args.length === 0) {
       console.error("❌ No components specified");
       console.error("Usage: mirascope-ui remove <component1> [component2] ...");

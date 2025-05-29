@@ -1,19 +1,16 @@
-import { BaseCommand } from "./base";
+import { BaseCommand, ExecutionContext } from "./base";
 import { ManifestManager } from "../manifest";
-import { RegistryFetcher, RegistryOptions } from "../registry";
+import { findComponents } from "../registry";
 import { writeFile, mkdir } from "fs/promises";
 import { join, dirname } from "path";
 import { parseArgs } from "util";
 
 export class AddCommand extends BaseCommand {
-  async execute(args: string[]): Promise<void> {
+  async execute(args: string[], context: ExecutionContext): Promise<void> {
     const { values, positionals } = parseArgs({
       args,
       allowPositionals: true,
       options: {
-        local: { type: "boolean" },
-        "local-path": { type: "string" },
-        "registry-url": { type: "string" },
         help: { type: "boolean" },
       },
     });
@@ -22,10 +19,10 @@ export class AddCommand extends BaseCommand {
 
     if (values.help) {
       console.log(
-        "Usage: mirascope-ui add [--local] [--local-path <path>] [--registry-url <url>] <component1> [component2] ..."
+        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] add <component1> [component2] ..."
       );
       console.log("");
-      console.log("Options:");
+      console.log("Global Options:");
       console.log("  --local              Use local registry.json in current directory");
       console.log("  --local-path <path>  Use local registry.json at specified path");
       console.log(
@@ -37,15 +34,10 @@ export class AddCommand extends BaseCommand {
     if (componentNames.length === 0) {
       console.error("❌ No components specified");
       console.error(
-        "Usage: mirascope-ui add [--local] [--local-path <path>] [--registry-url <url>] <component1> [component2] ..."
+        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] add <component1> [component2] ..."
       );
       process.exit(1);
     }
-
-    const registryOptions: RegistryOptions = {
-      local: values.local,
-      registryUrl: values["registry-url"],
-    };
 
     try {
       console.log(`🔍 Fetching components: ${componentNames.join(", ")}`);
@@ -56,8 +48,7 @@ export class AddCommand extends BaseCommand {
         process.exit(1);
       }
 
-      const registry = new RegistryFetcher(registryOptions);
-      const components = await registry.findComponents(componentNames);
+      const components = await findComponents(context.registry, componentNames);
 
       // Check for already tracked components
       const manifestData = await manifest.read();
@@ -85,7 +76,7 @@ export class AddCommand extends BaseCommand {
       // Resolve registry dependencies
       if (registryDeps.size > 0) {
         console.log(`🔗 Resolving registry dependencies: ${Array.from(registryDeps).join(", ")}`);
-        const depComponents = await registry.findComponents(Array.from(registryDeps));
+        const depComponents = await findComponents(context.registry, Array.from(registryDeps));
         for (const dep of depComponents) {
           if (!(dep.name in manifestData.components)) {
             newComponents.push(dep);
@@ -100,7 +91,7 @@ export class AddCommand extends BaseCommand {
 
         const files: string[] = [];
         for (const file of component.files) {
-          const content = await registry.fetchComponentFile(file.path);
+          const content = await context.registry.fetchComponentFile(file.path);
 
           // Determine target path
           const targetPath = file.target || this.getDefaultTargetPath(file.path);

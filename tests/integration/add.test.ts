@@ -315,7 +315,9 @@ describe("Add Command Integration", () => {
 
       expect(result.exitCode).toBe(1);
       expect(result.stderr).toContain("❌ No components specified");
-      expect(result.stderr).toContain("Usage: mirascope-ui add");
+      expect(result.stderr).toContain(
+        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] add"
+      );
     });
   });
 

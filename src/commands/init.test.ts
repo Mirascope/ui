@@ -2,6 +2,7 @@ import { describe, test, expect, beforeEach, afterEach } from "bun:test";
 import { mkdir, writeFile, rm } from "fs/promises";
 import { join } from "path";
 import { InitCommand } from "./init";
+import { createTestContext } from "../test-utils";
 
 describe("InitCommand", () => {
   const testDir = join(process.cwd(), "test-temp-init");
@@ -12,29 +13,26 @@ describe("InitCommand", () => {
     await mkdir(testDir, { recursive: true });
     await writeFile(packageJsonPath, JSON.stringify({ name: "test" }));
 
-    // Change working directory for ManifestManager
     process.chdir(testDir);
   });
 
   afterEach(async () => {
-    // Change back to original directory
     process.chdir(join(testDir, ".."));
     await rm(testDir, { recursive: true, force: true });
   });
 
   test("should create manifest successfully", async () => {
     const command = new InitCommand();
+    const context = createTestContext();
 
-    // Capture console output
     const consoleLogs: string[] = [];
     const originalLog = console.log;
     console.log = (...args) => consoleLogs.push(args.join(" "));
 
-    await command.execute([]);
+    await command.execute([], context);
 
     console.log = originalLog;
 
-    // Check that manifest was created
     const fs = await import("fs/promises");
     const manifestExists = await fs
       .access(manifestPath)
@@ -42,7 +40,6 @@ describe("InitCommand", () => {
       .catch(() => false);
     expect(manifestExists).toBe(true);
 
-    // Check console output
     expect(consoleLogs.some((log) => log.includes("Initializing Mirascope UI Registry"))).toBe(
       true
     );
@@ -50,25 +47,23 @@ describe("InitCommand", () => {
   });
 
   test("should fail when manifest already exists", async () => {
-    // Create manifest first
     await mkdir(join(testDir, "src", "mirascope-ui"), { recursive: true });
     await writeFile(manifestPath, JSON.stringify({ registryUrl: "test" }));
 
     const command = new InitCommand();
+    const context = createTestContext();
 
-    // Capture console output
     const consoleErrors: string[] = [];
     const originalError = console.error;
     console.error = (...args) => consoleErrors.push(args.join(" "));
 
-    // Mock process.exit to prevent test from actually exiting
     const originalExit = process.exit;
     let exitCode: number | undefined;
     process.exit = ((code: number) => {
       exitCode = code;
     }) as any;
 
-    await command.execute([]);
+    await command.execute([], context);
 
     console.error = originalError;
     process.exit = originalExit;

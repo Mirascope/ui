@@ -1,8 +1,8 @@
-import { BaseCommand } from "./base";
+import { BaseCommand, ExecutionContext } from "./base";
 import { ManifestManager } from "../manifest";
 
 export class StatusCommand extends BaseCommand {
-  async execute(_args: string[]): Promise<void> {
+  async execute(_args: string[], _context: ExecutionContext): Promise<void> {
     const manifest = new ManifestManager();
 
     console.log("📋 Mirascope UI Registry Status");

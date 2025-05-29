@@ -1,9 +1,10 @@
 import { describe, test, expect, beforeEach, afterEach } from "bun:test";
-import { RegistryFetcher } from "./registry";
+import { FileRegistry, RemoteRegistry, findComponent, findComponents } from "./registry";
 import { mkdir, writeFile, rm } from "fs/promises";
 import { join } from "path";
+import { TestRegistry } from "./test-utils";
 
-describe("RegistryFetcher", () => {
+describe("Registry", () => {
   const tempDir = join(process.cwd(), "test-temp-registry");
 
   beforeEach(async () => {
@@ -16,22 +17,7 @@ describe("RegistryFetcher", () => {
     await rm(tempDir, { recursive: true, force: true });
   });
 
-  describe("constructor", () => {
-    test("creates fetcher with default options", () => {
-      const fetcher = new RegistryFetcher();
-      expect(fetcher).toBeDefined();
-    });
-
-    test("creates fetcher with custom options", () => {
-      const fetcher = new RegistryFetcher({
-        local: true,
-        registryUrl: "http://localhost:3000",
-      });
-      expect(fetcher).toBeDefined();
-    });
-  });
-
-  describe("fetchLocalRegistry", () => {
+  describe("FileRegistry", () => {
     test("reads local registry.json", async () => {
       const registryData = {
         items: [
@@ -45,132 +31,151 @@ describe("RegistryFetcher", () => {
 
       await writeFile("registry.json", JSON.stringify(registryData));
 
-      const fetcher = new RegistryFetcher({ local: true });
-      const result = await fetcher.fetchRegistry();
+      const registry = new FileRegistry(process.cwd());
+      const result = await registry.fetchRegistry();
 
       expect(result).toEqual(registryData);
     });
 
     test("throws error for missing local registry", async () => {
-      const fetcher = new RegistryFetcher({ local: true });
+      const registry = new FileRegistry(process.cwd());
 
-      await expect(fetcher.fetchRegistry()).rejects.toThrow("Failed to read local registry");
+      await expect(registry.fetchRegistry()).rejects.toThrow("Failed to read local registry");
     });
-  });
 
-  describe("fetchLocalFile", () => {
     test("reads local component file", async () => {
       const fileContent = "export const Button = () => <button>Click me</button>;";
       await mkdir("registry/ui", { recursive: true });
       await writeFile("registry/ui/button.tsx", fileContent);
 
-      const fetcher = new RegistryFetcher({ local: true });
-      const result = await fetcher.fetchComponentFile("registry/ui/button.tsx");
+      const registry = new FileRegistry(process.cwd());
+      const result = await registry.fetchComponentFile("registry/ui/button.tsx");
 
       expect(result).toBe(fileContent);
     });
 
     test("throws error for missing local file", async () => {
-      const fetcher = new RegistryFetcher({ local: true });
+      const registry = new FileRegistry(process.cwd());
 
-      await expect(fetcher.fetchComponentFile("registry/ui/nonexistent.tsx")).rejects.toThrow(
+      await expect(registry.fetchComponentFile("registry/ui/nonexistent.tsx")).rejects.toThrow(
         "Failed to read local file"
       );
     });
   });
 
-  describe("findComponent", () => {
-    test("finds existing component", async () => {
-      const registryData = {
-        items: [
-          {
-            name: "button",
-            type: "registry:ui" as const,
-            files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
-          },
-          {
-            name: "input",
-            type: "registry:ui" as const,
-            files: [{ path: "registry/ui/input.tsx", type: "registry:ui" as const, content: "" }],
-          },
-        ],
-      };
-
-      await writeFile("registry.json", JSON.stringify(registryData));
-
-      const fetcher = new RegistryFetcher({ local: true });
-      const result = await fetcher.findComponent("button");
-
-      expect(result).toEqual(registryData.items[0]);
+  describe("RemoteRegistry", () => {
+    test("constructs with base URL", () => {
+      const registry = new RemoteRegistry("https://ui.mirascope.com");
+      expect(registry).toBeDefined();
     });
 
-    test("returns null for non-existent component", async () => {
-      const registryData = { items: [] };
-      await writeFile("registry.json", JSON.stringify(registryData));
-
-      const fetcher = new RegistryFetcher({ local: true });
-      const result = await fetcher.findComponent("nonexistent");
-
-      expect(result).toBeNull();
-    });
+    // Note: We don't test actual HTTP calls since they require network access
+    // In a real project, you'd mock fetch or use a test server
   });
 
-  describe("findComponents", () => {
-    test("finds multiple existing components", async () => {
-      const registryData = {
-        items: [
-          {
-            name: "button",
-            type: "registry:ui" as const,
-            files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
-          },
-          {
-            name: "input",
-            type: "registry:ui" as const,
-            files: [{ path: "registry/ui/input.tsx", type: "registry:ui" as const, content: "" }],
-          },
-        ],
-      };
+  describe("Utility Functions", () => {
+    test("findComponent finds existing component", async () => {
+      const registry = new TestRegistry([
+        {
+          name: "button",
+          type: "registry:ui" as const,
+          files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        },
+        {
+          name: "input",
+          type: "registry:ui" as const,
+          files: [{ path: "registry/ui/input.tsx", type: "registry:ui" as const, content: "" }],
+        },
+      ]);
 
-      await writeFile("registry.json", JSON.stringify(registryData));
-
-      const fetcher = new RegistryFetcher({ local: true });
-      const result = await fetcher.findComponents(["button", "input"]);
-
-      expect(result).toEqual(registryData.items);
+      const result = await findComponent(registry, "button");
+      expect(result?.name).toBe("button");
     });
 
-    test("throws error for non-existent component", async () => {
-      const registryData = {
-        items: [
-          {
-            name: "button",
-            type: "registry:ui" as const,
-            files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
-          },
-        ],
-      };
+    test("findComponent returns null for non-existent component", async () => {
+      const registry = new TestRegistry([]);
+      const result = await findComponent(registry, "nonexistent");
+      expect(result).toBeNull();
+    });
 
-      await writeFile("registry.json", JSON.stringify(registryData));
+    test("findComponents finds multiple existing components", async () => {
+      const components = [
+        {
+          name: "button",
+          type: "registry:ui" as const,
+          files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        },
+        {
+          name: "input",
+          type: "registry:ui" as const,
+          files: [{ path: "registry/ui/input.tsx", type: "registry:ui" as const, content: "" }],
+        },
+      ];
 
-      const fetcher = new RegistryFetcher({ local: true });
+      const registry = new TestRegistry(components);
+      const result = await findComponents(registry, ["button", "input"]);
 
-      await expect(fetcher.findComponents(["button", "nonexistent"])).rejects.toThrow(
+      expect(result).toEqual(components);
+    });
+
+    test("findComponents throws error for non-existent component", async () => {
+      const registry = new TestRegistry([
+        {
+          name: "button",
+          type: "registry:ui" as const,
+          files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        },
+      ]);
+
+      await expect(findComponents(registry, ["button", "nonexistent"])).rejects.toThrow(
         'Component "nonexistent" not found in registry'
       );
     });
   });
 
-  describe("environment variables", () => {
-    test("uses MIRASCOPE_REGISTRY_URL environment variable", () => {
-      const originalEnv = process.env.MIRASCOPE_REGISTRY_URL;
-      process.env.MIRASCOPE_REGISTRY_URL = "http://env.example.com";
+  describe("TestRegistry", () => {
+    test("can add components and files dynamically", async () => {
+      const registry = new TestRegistry();
 
-      const fetcher = new RegistryFetcher();
-      // We can't directly test the private method, but we can ensure it doesn't throw
-      expect(fetcher).toBeDefined();
+      registry.addComponent({
+        name: "button",
+        type: "registry:ui" as const,
+        files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+      });
 
-      process.env.MIRASCOPE_REGISTRY_URL = originalEnv;
+      registry.addFile("registry/ui/button.tsx", "export const Button = () => <button />;");
+
+      const registryData = await registry.fetchRegistry();
+      expect(registryData.items).toHaveLength(1);
+      expect(registryData.items[0].name).toBe("button");
+
+      const fileContent = await registry.fetchComponentFile("registry/ui/button.tsx");
+      expect(fileContent).toBe("export const Button = () => <button />;");
+    });
+
+    test("throws error for missing test file", async () => {
+      const registry = new TestRegistry();
+
+      await expect(registry.fetchComponentFile("nonexistent.tsx")).rejects.toThrow(
+        "Test file not found: nonexistent.tsx"
+      );
+    });
+
+    test("can clear registry data", async () => {
+      const registry = new TestRegistry([
+        {
+          name: "button",
+          type: "registry:ui" as const,
+          files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        },
+      ]);
+
+      let registryData = await registry.fetchRegistry();
+      expect(registryData.items).toHaveLength(1);
+
+      registry.clear();
+      registryData = await registry.fetchRegistry();
+      expect(registryData.items).toHaveLength(0);
     });
   });
 });
