@@ -320,3 +320,171 @@ export const ThousandLineNumbers: Story = {
     showLineNumbers: true,
   },
 };
+
+// Long Python code for scrolling demos
+const longCodeSample = `def process_data(input_file, output_file):
+    """Process data from input file and write results to output file."""
+    print(f"Processing {input_file}...")
+    
+    # Read input data
+    with open(input_file, 'r') as f:
+        lines = f.readlines()
+    
+    # Process each line
+    results = []
+    for i, line in enumerate(lines):
+        # Strip whitespace
+        line = line.strip()
+        
+        # Skip empty lines
+        if not line:
+            continue
+            
+        # Skip comments
+        if line.startswith('#'):
+            continue
+            
+        # Process the line
+        processed = line.upper()
+        results.append(processed)
+        
+        # Print progress every 100 lines
+        if i % 100 == 0:
+            print(f"Processed {i} lines...")
+    
+    # Write results
+    with open(output_file, 'w') as f:
+        for result in results:
+            f.write(result + '\\n')
+    
+    print(f"Finished! Processed {len(results)} lines.")
+    print(f"Results written to {output_file}")
+    
+    return len(results)
+
+
+def calculate_statistics(numbers):
+    """Calculate basic statistics for a list of numbers."""
+    if not numbers:
+        return {
+            'count': 0,
+            'sum': 0,
+            'mean': None,
+            'min': None,
+            'max': None,
+            'median': None
+        }
+    
+    sorted_numbers = sorted(numbers)
+    count = len(numbers)
+    total = sum(numbers)
+    
+    # Calculate median
+    if count % 2 == 0:
+        median = (sorted_numbers[count // 2 - 1] + sorted_numbers[count // 2]) / 2
+    else:
+        median = sorted_numbers[count // 2]
+    
+    return {
+        'count': count,
+        'sum': total,
+        'mean': total / count,
+        'min': min(numbers),
+        'max': max(numbers),
+        'median': median
+    }
+
+
+def main():
+    """Main function to demonstrate usage."""
+    # Example 1: Process a file
+    input_file = 'data.txt'
+    output_file = 'processed_data.txt'
+    
+    try:
+        count = process_data(input_file, output_file)
+        print(f"Successfully processed {count} lines")
+    except FileNotFoundError:
+        print(f"Error: Could not find {input_file}")
+    except Exception as e:
+        print(f"Error: {str(e)}")
+    
+    # Example 2: Calculate statistics
+    test_numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    stats = calculate_statistics(test_numbers)
+    
+    print("\\nStatistics:")
+    print(f"Count: {stats['count']}")
+    print(f"Sum: {stats['sum']}")
+    print(f"Mean: {stats['mean']}")
+    print(f"Min: {stats['min']}")
+    print(f"Max: {stats['max']}")
+    print(f"Median: {stats['median']}")
+
+
+if __name__ == "__main__":
+    main()`;
+
+export const ScrollingIssue: Story = {
+  args: {
+    code: longCodeSample,
+    language: "python",
+    showLineNumbers: true,
+  },
+  decorators: [
+    (Story) => (
+      <div className="flex h-[400px] flex-col rounded-lg border">
+        <div className="border-b bg-gray-50 p-4">
+          <h3 className="font-semibold">Code Panel (Scrolling Issue)</h3>
+          <p className="text-sm text-gray-600">
+            The code below doesn't scroll properly in this flex container
+          </p>
+        </div>
+        <div className="flex-1 overflow-hidden p-4">
+          <Story />
+        </div>
+      </div>
+    ),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This demonstrates the scrolling issue when CodeBlock is placed in a height-constrained flex container. The code overflows and doesn't scroll properly.",
+      },
+    },
+  },
+};
+
+export const ScrollingFixed: Story = {
+  args: {
+    code: longCodeSample,
+    language: "python",
+    showLineNumbers: true,
+    className:
+      "h-full flex flex-col [&_.highlight-container]:flex-1 [&_.highlight-container]:min-h-0",
+  },
+  decorators: [
+    (Story) => (
+      <div className="flex h-[400px] flex-col rounded-lg border">
+        <div className="border-b bg-gray-50 p-4">
+          <h3 className="font-semibold">Code Panel (Fixed)</h3>
+          <p className="text-sm text-gray-600">
+            Pass overflow-auto via className to enable scrolling
+          </p>
+        </div>
+        <div className="flex flex-1 flex-col overflow-hidden p-4">
+          <Story />
+        </div>
+      </div>
+    ),
+  ],
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "This demonstrates the fix: pass flex and overflow classes via className prop to enable internal scrolling. The arbitrary property selector targets the internal highlight-container.",
+      },
+    },
+  },
+};
