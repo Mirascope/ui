@@ -1,16 +1,30 @@
 {
-  "name": "registry",
+  "name": "@mirascope/ui",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "bin": {
+    "mirascope-ui": "bin/cli.js"
+  },
+  "files": [
+    "bin/cli.js",
+    "README.md",
+    "LICENSE",
+    "CLI.md"
+  ],
+  "main": "./bin/cli.js",
   "scripts": {
-    "dev": "bun run build && next dev --turbopack",
-    "build": "shadcn build",
-    "build:full": "mkdir -p dist; shadcn build; mv public/* dist; rm -r public; storybook build; mv storybook-static/* dist; rm -r storybook-static",
-    "start": "next start",
-    "lint": "next lint",
+    "build:registry": "cp registry.json dist/; cp -r mirascope-ui dist/",
+    "build:storybook": "storybook build; mv storybook-static/* dist; rm -r storybook-static",
+    "build": "bun run build:cli && rm -rf dist && mkdir -p dist && bun run build:registry && bun run build:storybook",
+    "build:cli": "bun build bin/cli.ts --outfile=bin/cli.js --target=bun --minify",
+    "build:full": "bun run build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "typecheck": "bun run tsc --noEmit",
+    "test": "bun test",
+    "test:watch": "bun test --watch",
+    "cli": "bun bin/cli.ts",
+    "test-cli": "bun bin/cli.ts --local --target test-project",
     "prepare": "husky",
     "lint-staged": "lint-staged",
     "prettier": "prettier --write .",

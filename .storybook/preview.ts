@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react";
 import { ModeDecorator } from "./modeDecorator";
 export const decorators = [ModeDecorator];
-import "../registry/styles/index.css";
+import "../mirascope-ui/styles/index.css";
 const preview: Preview = {
   parameters: {
     controls: {

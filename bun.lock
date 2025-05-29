@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "registry",
+      "name": "@mirascope/ui",
       "dependencies": {
         "@hookform/resolvers": "^5.0.1",
         "@radix-ui/react-alert-dialog": "^1.1.13",

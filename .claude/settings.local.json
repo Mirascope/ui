@@ -1,6 +1,15 @@
 {
   "permissions": {
-    "allow": ["WebFetch(domain:storybook.js.org)"],
+    "allow": [
+      "WebFetch(domain:storybook.js.org)",
+      "Bash(grep:*)",
+      "Bash(mkdir:*)",
+      "Bash(bun test)",
+      "Bash(bun test:*)",
+      "Bash(bun run test-cli:*)",
+      "Bash(rg:*)",
+      "Bash(find:*)"
+    ],
     "deny": []
   }
 }
