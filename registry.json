@@ -4,6 +4,18 @@
   "homepage": "https://mirascope.com",
   "items": [
     {
+      "name": "utils",
+      "type": "registry:lib",
+      "title": "Utils",
+      "description": "Utility functions including cn for className merging",
+      "files": [
+        {
+          "path": "mirascope-ui/lib/utils.ts",
+          "type": "registry:lib"
+        }
+      ]
+    },
+    {
       "name": "williams-handwriting",
       "type": "registry:file",
       "title": "William's Handwriting (WIP)",
@@ -50,6 +62,7 @@
       "title": "Code Block",
       "description": "A code block component",
       "dependencies": ["@shikijs/transformers", "shiki", "sonner"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/blocks/code-block/code-block.tsx",
@@ -75,6 +88,7 @@
       "title": "Button",
       "description": "Displays a button or a component that looks like a button.",
       "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/button.tsx",
@@ -88,6 +102,7 @@
       "title": "Input",
       "description": "Displays a form input field or a component that looks like an input field.",
       "dependencies": [],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/input.tsx",
@@ -101,6 +116,7 @@
       "title": "Label",
       "description": "Renders an accessible label associated with controls.",
       "dependencies": ["@radix-ui/react-label", "class-variance-authority"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/label.tsx",
@@ -127,6 +143,7 @@
       "title": "Dialog",
       "description": "A window overlaid on either the primary window or another dialog window, rendering the content underneath inert.",
       "dependencies": ["@radix-ui/react-dialog", "@radix-ui/react-icons"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/dialog.tsx",
@@ -140,7 +157,7 @@
       "title": "Alert Dialog",
       "description": "A modal dialog that interrupts the user with important content and expects a response.",
       "dependencies": ["@radix-ui/react-alert-dialog"],
-      "registryDependencies": ["button"],
+      "registryDependencies": ["button", "utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/alert-dialog.tsx",
@@ -154,7 +171,7 @@
       "title": "Alert",
       "description": "Displays a callout for user attention.",
       "dependencies": ["class-variance-authority", "lucide-react"],
-      "registryDependencies": ["button"],
+      "registryDependencies": ["button", "utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/alert.tsx",
@@ -168,6 +185,7 @@
       "title": "Avatar",
       "description": "An image element with a fallback for representing the user.",
       "dependencies": ["@radix-ui/react-avatar"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/avatar.tsx",
@@ -181,6 +199,7 @@
       "title": "Checkbox",
       "description": "A control that allows the user to toggle between checked and not checked.",
       "dependencies": ["@radix-ui/react-checkbox", "@radix-ui/react-icons"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/checkbox.tsx",
@@ -207,6 +226,7 @@
       "title": "Skeleton",
       "description": "Use to show a placeholder while content is loading.",
       "dependencies": [],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/skeleton.tsx",
@@ -220,6 +240,7 @@
       "title": "Separator",
       "description": "Visually or semantically separates content.",
       "dependencies": ["@radix-ui/react-separator"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/separator.tsx",
@@ -233,6 +254,7 @@
       "title": "Card",
       "description": "Displays a card with header, content, and footer.",
       "dependencies": [],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/card.tsx",
@@ -246,6 +268,7 @@
       "title": "Switch",
       "description": "A control that allows the user to toggle between checked and not checked.",
       "dependencies": ["@radix-ui/react-switch"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/switch.tsx",
@@ -259,6 +282,7 @@
       "title": "Textarea",
       "description": "Displays a form textarea or a component that looks like a textarea.",
       "dependencies": [],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/textarea.tsx",
@@ -272,6 +296,7 @@
       "title": "Tabs",
       "description": "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
       "dependencies": ["@radix-ui/react-tabs"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/tabs.tsx",
@@ -285,6 +310,7 @@
       "title": "Tooltip",
       "description": "A popup that displays information related to an element when the element receives keyboard focus or the mouse hovers over it.",
       "dependencies": ["@radix-ui/react-tooltip"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/tooltip.tsx",
@@ -298,6 +324,7 @@
       "title": "Toggle",
       "description": "A two-state button that can be either on or off.",
       "dependencies": ["@radix-ui/react-toggle", "class-variance-authority"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/toggle.tsx",
@@ -311,6 +338,7 @@
       "title": "Slider",
       "description": "An input where the user selects a value from within a given range.",
       "dependencies": ["@radix-ui/react-slider"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/slider.tsx",
@@ -324,6 +352,7 @@
       "title": "Table",
       "description": "A responsive table component.",
       "dependencies": [],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/table.tsx",
@@ -337,6 +366,7 @@
       "title": "Scroll Area",
       "description": "Augments native scroll functionality for custom, cross-browser styling.",
       "dependencies": ["@radix-ui/react-scroll-area"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/scroll-area.tsx",
@@ -350,6 +380,7 @@
       "title": "Popover",
       "description": "Displays rich content in a portal, triggered by a button.",
       "dependencies": ["@radix-ui/react-popover"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/popover.tsx",
@@ -376,6 +407,7 @@
       "title": "Sheet",
       "description": "Extends the Dialog component to display content that complements the main content of the screen.",
       "dependencies": ["@radix-ui/react-dialog", "lucide-react"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/sheet.tsx",
@@ -389,6 +421,7 @@
       "title": "Select",
       "description": "Displays a list of options for the user to pick from—triggered by a button.",
       "dependencies": ["@radix-ui/react-select", "@radix-ui/react-icons"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/select.tsx",
@@ -402,7 +435,7 @@
       "title": "Calendar",
       "description": "A date picker component built on top of react-day-picker.",
       "dependencies": ["react-day-picker", "lucide-react"],
-      "registryDependencies": ["button"],
+      "registryDependencies": ["button", "utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/calendar.tsx",
@@ -416,6 +449,7 @@
       "title": "Chart",
       "description": "Recharts components for building charts and data visualizations.",
       "dependencies": ["recharts"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/chart.tsx",
@@ -429,7 +463,7 @@
       "title": "Command",
       "description": "Fast, composable, unstyled command menu for React.",
       "dependencies": ["cmdk", "@radix-ui/react-icons"],
-      "registryDependencies": ["dialog"],
+      "registryDependencies": ["dialog", "utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/command.tsx",
@@ -443,6 +477,7 @@
       "title": "Drawer",
       "description": "A drawer component for mobile devices.",
       "dependencies": ["vaul"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/drawer.tsx",
@@ -456,6 +491,7 @@
       "title": "Dropdown Menu",
       "description": "Displays a menu to the user — such as a set of actions or functions — triggered by a button.",
       "dependencies": ["@radix-ui/react-dropdown-menu", "lucide-react"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/dropdown-menu.tsx",
@@ -469,7 +505,7 @@
       "title": "Combobox",
       "description": "Autocomplete input and command palette with a list of suggestions.",
       "dependencies": ["@radix-ui/react-icons", "frimousse", "lucide-react"],
-      "registryDependencies": ["button", "command", "emoji-picker", "popover"],
+      "registryDependencies": ["button", "command", "emoji-picker", "popover", "utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/combobox.tsx",
@@ -483,6 +519,7 @@
       "title": "Emoji Picker",
       "description": "A popover for selecting emojis.",
       "dependencies": ["frimousse", "lucide-react"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/emoji-picker.tsx",
@@ -496,7 +533,7 @@
       "title": "Form",
       "description": "Building forms with validation and accessibility.",
       "dependencies": ["@radix-ui/react-label", "@radix-ui/react-slot", "react-hook-form"],
-      "registryDependencies": ["label"],
+      "registryDependencies": ["label", "utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/form.tsx",
@@ -510,7 +547,7 @@
       "title": "Model Combobox",
       "description": "A form-integrated combobox component for model selection.",
       "dependencies": ["lucide-react", "react-hook-form"],
-      "registryDependencies": ["button", "command", "form", "popover"],
+      "registryDependencies": ["button", "command", "form", "popover", "utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/model-combobox.tsx",
@@ -524,6 +561,7 @@
       "title": "Resizable",
       "description": "Accessible resizable panel groups and layouts.",
       "dependencies": ["@radix-ui/react-icons", "react-resizable-panels"],
+      "registryDependencies": ["utils"],
       "files": [
         {
           "path": "mirascope-ui/ui/resizable.tsx",

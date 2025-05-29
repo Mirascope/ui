@@ -9,7 +9,7 @@ import {
 } from "@/mirascope-ui/ui/command";
 import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/mirascope-ui/ui/form";
 import { Popover, PopoverContent, PopoverTrigger } from "@/mirascope-ui/ui/popover";
-import { cn } from "@/lib/utils";
+import { cn } from "@/mirascope-ui/lib/utils";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Control, FieldPath, FieldValues, PathValue } from "react-hook-form";

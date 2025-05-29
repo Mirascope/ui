@@ -10,7 +10,7 @@ import {
   useFormContext,
 } from "react-hook-form";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/mirascope-ui/lib/utils";
 import { Label } from "@/mirascope-ui/ui/label";
 
 const Form = FormProvider;

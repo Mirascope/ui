@@ -9,7 +9,7 @@ import {
 } from "@/mirascope-ui/ui/command";
 import { EmojiPicker, EmojiPickerContent } from "@/mirascope-ui/ui/emoji-picker";
 import { Popover, PopoverContent, PopoverTrigger } from "@/mirascope-ui/ui/popover";
-import { cn } from "@/lib/utils";
+import { cn } from "@/mirascope-ui/lib/utils";
 import { CheckIcon } from "@radix-ui/react-icons";
 import { Emoji } from "frimousse";
 import { SmileIcon } from "lucide-react";

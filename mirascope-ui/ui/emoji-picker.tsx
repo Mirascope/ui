@@ -7,7 +7,7 @@ import {
 import { LoaderIcon, SearchIcon } from "lucide-react";
 import type * as React from "react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/mirascope-ui/lib/utils";
 
 function EmojiPicker({
   className,

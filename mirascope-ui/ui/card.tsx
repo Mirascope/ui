@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from "@/mirascope-ui/lib/utils";
 import { forwardRef } from "react";
 
 type CardVariant = "default" | "primary";

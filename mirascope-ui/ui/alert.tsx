@@ -3,7 +3,7 @@ import { X } from "lucide-react";
 import * as React from "react";
 
 import { Button } from "@/mirascope-ui/ui/button";
-import { cn } from "@/lib/utils";
+import { cn } from "@/mirascope-ui/lib/utils";
 
 const alertVariants = cva(
   "relative w-full rounded-lg border px-4 py-3 text-sm [&:has(svg)]:pl-11 [&>svg]:absolute [&>svg]:left-4 [&>svg]:top-4 [&>svg]:text-foreground",
