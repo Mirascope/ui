@@ -6,11 +6,10 @@
     "mirascope-ui": "./bin/cli.ts"
   },
   "scripts": {
-    "dev": "bun run build && next dev --turbopack",
-    "build": "shadcn build",
-    "build:full": "rm -rf dist; mkdir -p dist; shadcn build; mv public/* dist; rm -r public; storybook build; mv storybook-static/* dist; rm -r storybook-static",
-    "start": "next start",
-    "lint": "next lint",
+    "build:registry": "cp registry.json dist/; cp -r mirascope-ui dist/",
+    "build:storybook": "storybook build; mv storybook-static/* dist; rm -r storybook-static",
+    "build": "rm -rf dist; mkdir -p dist; bun run build:registry; bun run build:storybook",
+    "build:full": "bun run build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "typecheck": "bun run tsc --noEmit",
