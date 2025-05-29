@@ -1,6 +1,4 @@
-# build `mirascope-ui` registry sync tool
-
-# Mirascope Registry Sync Tool Spec
+# Mirascope Registry Sync Tool
 
 ## Purpose
 
@@ -24,13 +22,15 @@ Enable consuming projects to maintain automatic synchronization with mirascope/u
 ### File Organization (in consuming projects)
 
 ```
-src/
-├── components/ui/          # Local components
+project-root/
+├── src/
+│   └── components/ui/      # Local components
 ├── mirascope-ui/          # Synced from mirascope/ui
-    ├── manifest.json      # Tracking file
-    ├── ui/                # Registry UI components
-    ├── blocks/            # Registry blocks
-    └── lib/               # Registry utilities
+│   ├── manifest.json      # Tracking file
+│   ├── ui/                # Registry UI components
+│   ├── blocks/            # Registry blocks
+│   └── lib/               # Registry utilities
+└── package.json
 ```
 
 ## Manifest File Format
@@ -56,54 +56,111 @@ src/
 
 ## Command Interface
 
-### `mirascope-ui init`
+All commands support global flags that can be specified before the command name:
 
-- Creates initial manifest.json file
+```bash
+mirascope-ui [global-flags] <command> [command-args]
+```
+
+### Global Flags
+
+- `--local` - Use local registry.json file in current directory
+- `--local-path <path>` - Use local registry.json file at specified path
+- `--registry-url <url>` - Override registry URL (default: https://ui.mirascope.com)
+- `--target <path>` - Target directory for file operations (default: current directory)
+
+### Commands
+
+#### `mirascope-ui init`
+
+Creates initial manifest.json file and sets up mirascope-ui/ directory structure.
+
 - Validates project has package.json
-- Sets up mirascope-ui/ directory structure
+- Creates `mirascope-ui/manifest.json` with default configuration
+- Only runs if manifest doesn't already exist
 
-### `mirascope-ui sync`
+#### `mirascope-ui add <component1> [component2] ...`
 
-- Reads manifest
-- Syncs all tracked components to latest
+Adds new components to the project.
+
+- Downloads component files from registry to `mirascope-ui/`
+- Resolves and includes registry dependencies (e.g., components using `cn` util automatically get `utils`)
+- Installs npm dependencies via `bun add`
+- Updates manifest to track new components
+- Skips components already tracked (use `sync` to update them)
+
+#### `mirascope-ui sync [component1] [component2] ...]`
+
+Updates existing tracked components to latest versions.
+
+- **No components specified**: Syncs all tracked components
+- **Components specified**: Syncs only named components
+- **Implementation**: Runs `remove` then `add` commands to ensure clean updates
+- Resolves new dependencies that may have been added to components
 - Updates manifest timestamps
-- Reports what changed
 
-### `mirascope-ui sync button dialogue`
+#### `mirascope-ui remove <component1> [component2] ...`
 
-- Reads manifest
-- Syncs only named components to latest
-- Updates manifest timestamps
-- Reports what changed
+Removes components from the project.
 
-### `mirascope-ui add button dialog`
+- Deletes component files from filesystem
+- Removes components from manifest tracking
+- Does not remove npm dependencies (to avoid breaking other code)
 
-- Adds new components to manifest
-- Downloads component files
-- Installs any npm dependencies
-- Updates manifest
+#### `mirascope-ui status`
 
-### `mirascope-ui remove button`
+Shows current state of tracked components.
 
-- Removes component files
-- Updates manifest
-- (Optional) Warns about unused dependencies
+- Lists all tracked components with last sync times
+- Shows registry URL being used
+- Reports last full sync timestamp
+- Provides guidance for next steps if no components tracked
 
-### `mirascope-ui status`
+## Registry Configuration
 
-- Shows what's tracked
-- Shows last sync times
-- Checks for available updates (without applying)
+### Default Behavior
 
-## Sync Process
+Commands fetch components from the registry URL specified in `manifest.json` (default: `https://ui.mirascope.com`).
 
-1. **Read manifest** - determine what should be synced
-2. **Fetch registry** - get latest component definitions
-3. **Download files** - pull latest versions of tracked components
-4. **Install dependencies** - run npm/bun install for new deps
-5. **Update files** - overwrite existing registry files
-6. **Update manifest** - record new sync timestamps
-7. **Report changes** - show what was updated
+### Local Development
+
+For testing registry changes during development:
+
+#### `--local` flag
+
+```bash
+mirascope-ui --local add button
+```
+
+- Reads `registry.json` from current directory
+- Useful when working within the registry project itself
+
+#### `--local-path` flag
+
+```bash
+mirascope-ui --local-path /path/to/registry add button
+```
+
+- Reads `registry.json` from specified path
+- Useful when registry source is in a different location
+
+#### `--registry-url` flag
+
+```bash
+mirascope-ui --registry-url http://localhost:3000 add button
+```
+
+- Overrides registry URL (e.g., local dev server)
+- Useful for testing against staging/development registry endpoints
+
+#### `--target` flag
+
+```bash
+mirascope-ui --target /path/to/project add button
+```
+
+- Changes where files are written (default: current directory)
+- Useful for testing or scripting operations on other projects
 
 ## Integration Points
 
@@ -133,91 +190,87 @@ src/
 - No merge conflicts - mirascope/ui wins
 - Clear separation from local components prevents accidental modifications
 
+### Registry Dependencies
+
+Components can declare dependencies on other registry components using `registryDependencies`. For example, most UI components depend on the `utils` component for the `cn()` utility function.
+
+When adding or syncing components, registry dependencies are automatically resolved and included. This ensures all required utilities and base components are available.
+
 ### Dependency Management
 
-- Sync tool installs npm dependencies (via bun) declared in registry
-- Doesn't remove dependencies (to avoid breaking local code)
-- Could warn about potentially unused registry dependencies
+- Installs npm dependencies via `bun add` for new components
+- Registry dependencies automatically resolved and included
+- Does not remove npm dependencies when removing components (to avoid breaking local code)
 
-### Error Handling
+### Overwrite Strategy
 
-- Network failures: retry with backoff
-- File permission issues: clear error messages
-- Invalid manifest: Fail noisily
-- Missing components in registry: skip with warning
+- Registry files are **always overwritten** during sync operations
+- No merge conflicts - registry version always wins
+- Clear separation between registry files (`mirascope-ui/`) and local components (`src/`) prevents accidental modifications
 
-### Registry Source Configuration
+## Examples
 
-#### Default Behavior
+### Basic Usage
 
-- Fetches from `registryUrl` in manifest.json (https://ui.mirascope.com)
-- Downloads component files from remote registry
-- Uses production registry.json structure
+```bash
+# Initialize project
+mirascope-ui init
 
-#### Local Development Overrides
+# Add components
+mirascope-ui add button dialog
 
-- `--local` flag: Fetch from local filesystem registry
-- `--registry-url <url>` flag: Override registry URL (e.g., localhost:3000)
-- Environment variable: `MIRASCOPE_REGISTRY_URL`
-- Useful for testing registry changes before deployment
+# Check status
+mirascope-ui status
 
-#### Registry Structure
+# Update all components
+mirascope-ui sync
 
-- Remote: Fetches from `/registry.json` endpoint
-- Local: Reads from `./registry.json` in registry project
-- Component files: Downloaded from `/registry/ui/`, `/registry/blocks/`, etc.
+# Update specific components
+mirascope-ui sync button
 
-## Implementation Status
+# Remove components
+mirascope-ui remove dialog
+```
 
-### ✅ Completed
+### Development Workflows
 
-- CLI scaffolding with command parsing
-- `init` command - creates manifest.json and directory structure
-- `status` command - shows tracked components and sync status
-- Package.json validation and project root detection
-- Comprehensive test suite (53 tests) with unit and integration coverage
-- ManifestManager for reading/writing manifest files
+```bash
+# Test against local registry during development
+mirascope-ui --local add button
 
-### 🚧 In Progress
+# Test against dev server
+mirascope-ui --registry-url http://localhost:3000 add button
 
-- `add` command - fetch and download components from registry
+# Use registry from different path
+mirascope-ui --local-path ../ui-registry add button
 
-### 📋 Planned
+# Install to different target directory
+mirascope-ui --target ./my-project add button
+```
 
-- `sync` command - update existing tracked components
-- `remove` command - remove components and clean up files
-- Registry fetching from remote URLs
-- Dependency installation via bun
-- Error handling and retry logic
+### CI/CD Integration
 
-## Testing Strategy
+```json
+{
+  "scripts": {
+    "sync-registry": "mirascope-ui sync",
+    "sync-registry:check": "mirascope-ui status"
+  }
+}
+```
 
-### Local Development Testing
+GitHub Actions workflow:
 
-- **test-project/**: Git-ignored directory for manual CLI testing
-- **Local registry**: Use `--local` flag to test against local registry.json
-- **Dev server**: Test against `bun dev` registry endpoint with `--registry-url http://localhost:3000`
+```yaml
+- name: Sync UI Registry
+  run: |
+    bun mirascope-ui status
+    bun mirascope-ui sync
+```
 
-### Unit & Integration Tests
+## Architecture Notes
 
-- **ManifestManager**: File operations, validation, component tracking
-- **CLI Commands**: Argument parsing, error handling, output formatting
-- **Registry Fetching**: Mock HTTP responses, component parsing
-- **File Operations**: Component download, directory creation, dependency installation
-
-### Test Fixtures
-
-- Sample registry.json responses
-- Mock component files for different types (ui, blocks, lib)
-- Various manifest states for testing sync scenarios
-
-### CI/CD Testing
-
-- Test against deployed registry (staging environment)
-- Validate CLI works in fresh projects
-- Test dependency installation in clean environments
-
-## Potential Future Enhancements
-
-- **Version pinning**: Pin components to specific commits/tags instead of "main"
-- **Conflict detection**: Warn if local modifications detected in registry files
+- **Command delegation**: `sync` command delegates to `remove` + `add` for clean updates
+- **Atomic operations**: All file operations are atomic - either fully succeed or fail cleanly
+- **Comprehensive testing**: 100+ tests covering all commands and edge cases
+- **TypeScript**: Full type safety throughout codebase
