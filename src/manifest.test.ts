@@ -7,7 +7,7 @@ import type { Manifest } from "./types";
 describe("ManifestManager", () => {
   const testDir = join(process.cwd(), "test-temp-manifest");
   const packageJsonPath = join(testDir, "package.json");
-  const manifestPath = join(testDir, "src", "mirascope-ui", "manifest.json");
+  const manifestPath = join(testDir, "mirascope-ui", "manifest.json");
 
   beforeEach(async () => {
     await mkdir(testDir, { recursive: true });
@@ -38,7 +38,7 @@ describe("ManifestManager", () => {
     });
 
     test("should return true when manifest exists", async () => {
-      await mkdir(join(testDir, "src", "mirascope-ui"), { recursive: true });
+      await mkdir(join(testDir, "mirascope-ui"), { recursive: true });
       await writeFile(manifestPath, "{}");
 
       const manager = new ManifestManager(testDir);
@@ -65,13 +65,13 @@ describe("ManifestManager", () => {
           button: {
             version: "main",
             lastSync: "2025-01-15T10:30:00Z",
-            files: ["src/mirascope-ui/ui/button.tsx"],
+            files: ["mirascope-ui/ui/button.tsx"],
           },
         },
         lastFullSync: "2025-01-15T10:30:00Z",
       };
 
-      await mkdir(join(testDir, "src", "mirascope-ui"), { recursive: true });
+      await mkdir(join(testDir, "mirascope-ui"), { recursive: true });
       await writeFile(manifestPath, JSON.stringify(testManifest));
 
       const manager = new ManifestManager(testDir);
@@ -81,7 +81,7 @@ describe("ManifestManager", () => {
     });
 
     test("should throw on invalid JSON", async () => {
-      await mkdir(join(testDir, "src", "mirascope-ui"), { recursive: true });
+      await mkdir(join(testDir, "mirascope-ui"), { recursive: true });
       await writeFile(manifestPath, "invalid json");
 
       const manager = new ManifestManager(testDir);
@@ -129,11 +129,11 @@ describe("ManifestManager", () => {
       const manager = new ManifestManager(testDir);
       await manager.init();
 
-      await manager.addComponent("button", ["src/mirascope-ui/ui/button.tsx"]);
+      await manager.addComponent("button", ["mirascope-ui/ui/button.tsx"]);
 
       const manifest = await manager.read();
       expect(manifest.components.button).toBeDefined();
-      expect(manifest.components.button.files).toEqual(["src/mirascope-ui/ui/button.tsx"]);
+      expect(manifest.components.button.files).toEqual(["mirascope-ui/ui/button.tsx"]);
       expect(manifest.components.button.version).toBe("main");
       expect(manifest.components.button.lastSync).toMatch(/^\d{4}-\d{2}-\d{2}T/);
     });
@@ -143,7 +143,7 @@ describe("ManifestManager", () => {
     test("should remove component from manifest", async () => {
       const manager = new ManifestManager(testDir);
       await manager.init();
-      await manager.addComponent("button", ["src/mirascope-ui/ui/button.tsx"]);
+      await manager.addComponent("button", ["mirascope-ui/ui/button.tsx"]);
 
       await manager.removeComponent("button");
 
@@ -156,7 +156,7 @@ describe("ManifestManager", () => {
     test("should update component lastSync timestamp", async () => {
       const manager = new ManifestManager(testDir);
       await manager.init();
-      await manager.addComponent("button", ["src/mirascope-ui/ui/button.tsx"]);
+      await manager.addComponent("button", ["mirascope-ui/ui/button.tsx"]);
 
       const beforeUpdate = await manager.read();
       const originalSync = beforeUpdate.components.button.lastSync;

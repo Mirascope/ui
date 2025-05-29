@@ -45,9 +45,9 @@ describe("SyncCommand", () => {
     });
 
     test("shows message if no components tracked", async () => {
-      await mkdir("src/mirascope-ui", { recursive: true });
+      await mkdir("mirascope-ui", { recursive: true });
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {},
@@ -67,43 +67,44 @@ describe("SyncCommand", () => {
 
   describe("component syncing", () => {
     beforeEach(async () => {
-      await mkdir("src/mirascope-ui", { recursive: true });
+      await mkdir("mirascope-ui", { recursive: true });
     });
 
     test("syncs all tracked components when no args provided", async () => {
       const buttonComponent: RegistryComponent = {
         name: "button",
         type: "registry:ui" as const,
-        files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        files: [{ path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" }],
       };
 
       const cardComponent: RegistryComponent = {
         name: "card",
         type: "registry:ui" as const,
-        files: [{ path: "registry/ui/card.tsx", type: "registry:ui" as const, content: "" }],
+        files: [{ path: "mirascope-ui/ui/card.tsx", type: "registry:ui" as const, content: "" }],
       };
 
       const files = {
-        "registry/ui/button.tsx": "export const Button = () => <button>Updated Button</button>;",
-        "registry/ui/card.tsx": "export const Card = () => <div>Updated Card</div>;",
+        "mirascope-ui/ui/button.tsx":
+          "export const Button = () => <button>Updated Button</button>;",
+        "mirascope-ui/ui/card.tsx": "export const Card = () => <div>Updated Card</div>;",
       };
 
       const context = createTestContext([buttonComponent, cardComponent], files, tempDir);
 
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             button: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/button.tsx"],
+              files: ["mirascope-ui/ui/button.tsx"],
             },
             card: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/card.tsx"],
+              files: ["mirascope-ui/ui/card.tsx"],
             },
           },
           lastFullSync: "",
@@ -118,10 +119,10 @@ describe("SyncCommand", () => {
       expect(logSpy).toHaveBeenCalledWith("📦 Updating card...");
       expect(logSpy).toHaveBeenCalledWith("✅ Synced 2 components");
 
-      const buttonContent = await readFile("src/mirascope-ui/ui/button.tsx", "utf-8");
+      const buttonContent = await readFile("mirascope-ui/ui/button.tsx", "utf-8");
       expect(buttonContent).toBe("export const Button = () => <button>Updated Button</button>;");
 
-      const cardContent = await readFile("src/mirascope-ui/ui/card.tsx", "utf-8");
+      const cardContent = await readFile("mirascope-ui/ui/card.tsx", "utf-8");
       expect(cardContent).toBe("export const Card = () => <div>Updated Card</div>;");
     });
 
@@ -129,29 +130,30 @@ describe("SyncCommand", () => {
       const buttonComponent: RegistryComponent = {
         name: "button",
         type: "registry:ui" as const,
-        files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        files: [{ path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" }],
       };
 
       const files = {
-        "registry/ui/button.tsx": "export const Button = () => <button>Updated Button</button>;",
+        "mirascope-ui/ui/button.tsx":
+          "export const Button = () => <button>Updated Button</button>;",
       };
 
       const context = createTestContext([buttonComponent], files, tempDir);
 
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             button: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/button.tsx"],
+              files: ["mirascope-ui/ui/button.tsx"],
             },
             card: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/card.tsx"],
+              files: ["mirascope-ui/ui/card.tsx"],
             },
           },
           lastFullSync: "",
@@ -168,14 +170,14 @@ describe("SyncCommand", () => {
 
     test("shows error for untracked components", async () => {
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             button: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/button.tsx"],
+              files: ["mirascope-ui/ui/button.tsx"],
             },
           },
           lastFullSync: "",
@@ -196,24 +198,25 @@ describe("SyncCommand", () => {
       const buttonComponent: RegistryComponent = {
         name: "button",
         type: "registry:ui" as const,
-        files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        files: [{ path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" }],
       };
 
       const files = {
-        "registry/ui/button.tsx": "export const Button = () => <button>Updated Button</button>;",
+        "mirascope-ui/ui/button.tsx":
+          "export const Button = () => <button>Updated Button</button>;",
       };
 
       const context = createTestContext([buttonComponent], files, tempDir);
 
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             button: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/button.tsx"],
+              files: ["mirascope-ui/ui/button.tsx"],
             },
           },
           lastFullSync: "",
@@ -223,7 +226,7 @@ describe("SyncCommand", () => {
       const command = new SyncCommand();
       await command.execute(["button"], context);
 
-      const manifestContent = await readFile("src/mirascope-ui/manifest.json", "utf-8");
+      const manifestContent = await readFile("mirascope-ui/manifest.json", "utf-8");
       const manifest = JSON.parse(manifestContent);
 
       expect(manifest.components.button.lastSync).not.toBe("2023-01-01T00:00:00.000Z");
@@ -234,24 +237,25 @@ describe("SyncCommand", () => {
       const buttonComponent: RegistryComponent = {
         name: "button",
         type: "registry:ui" as const,
-        files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        files: [{ path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" }],
       };
 
       const files = {
-        "registry/ui/button.tsx": "export const Button = () => <button>Updated Button</button>;",
+        "mirascope-ui/ui/button.tsx":
+          "export const Button = () => <button>Updated Button</button>;",
       };
 
       const context = createTestContext([buttonComponent], files, tempDir);
 
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             button: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/button.tsx"],
+              files: ["mirascope-ui/ui/button.tsx"],
             },
           },
           lastFullSync: "2023-01-01T00:00:00.000Z",
@@ -261,7 +265,7 @@ describe("SyncCommand", () => {
       const command = new SyncCommand();
       await command.execute([], context);
 
-      const manifestContent = await readFile("src/mirascope-ui/manifest.json", "utf-8");
+      const manifestContent = await readFile("mirascope-ui/manifest.json", "utf-8");
       const manifest = JSON.parse(manifestContent);
 
       expect(manifest.lastFullSync).not.toBe("2023-01-01T00:00:00.000Z");

@@ -46,18 +46,18 @@ describe("AddCommand", () => {
       const buttonComponent: RegistryComponent = {
         name: "button",
         type: "registry:ui" as const,
-        files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        files: [{ path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" }],
       };
 
       const files = {
-        "registry/ui/button.tsx": "export const Button = () => <button>Click me</button>;",
+        "mirascope-ui/ui/button.tsx": "export const Button = () => <button>Click me</button>;",
       };
 
       const context = createTestContext([buttonComponent], files, tempDir);
 
-      await mkdir("src/mirascope-ui", { recursive: true });
+      await mkdir("mirascope-ui", { recursive: true });
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {},
@@ -86,7 +86,7 @@ describe("AddCommand", () => {
 
   describe("component tracking", () => {
     beforeEach(async () => {
-      await mkdir("src/mirascope-ui", { recursive: true });
+      await mkdir("mirascope-ui", { recursive: true });
     });
 
     test("adds new component", async () => {
@@ -96,7 +96,7 @@ describe("AddCommand", () => {
         dependencies: ["@radix-ui/react-slot"],
         files: [
           {
-            path: "registry/ui/button.tsx",
+            path: "mirascope-ui/ui/button.tsx",
             type: "registry:ui" as const,
             content: "",
           },
@@ -104,13 +104,13 @@ describe("AddCommand", () => {
       };
 
       const files = {
-        "registry/ui/button.tsx": "export const Button = () => <button>Click me</button>;",
+        "mirascope-ui/ui/button.tsx": "export const Button = () => <button>Click me</button>;",
       };
 
       const context = createTestContext([buttonComponent], files, tempDir);
 
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {},
@@ -123,11 +123,11 @@ describe("AddCommand", () => {
 
       await command.execute(["button"], context);
 
-      const manifest = JSON.parse(await readFile("src/mirascope-ui/manifest.json", "utf-8"));
+      const manifest = JSON.parse(await readFile("mirascope-ui/manifest.json", "utf-8"));
       expect(manifest.components.button).toBeDefined();
-      expect(manifest.components.button.files).toEqual(["src/mirascope-ui/ui/button.tsx"]);
+      expect(manifest.components.button.files).toEqual(["mirascope-ui/ui/button.tsx"]);
 
-      const buttonContent = await readFile("src/mirascope-ui/ui/button.tsx", "utf-8");
+      const buttonContent = await readFile("mirascope-ui/ui/button.tsx", "utf-8");
       expect(buttonContent).toBe("export const Button = () => <button>Click me</button>;");
 
       expect(installSpy).toHaveBeenCalledWith(["@radix-ui/react-slot"], tempDir);
@@ -138,20 +138,20 @@ describe("AddCommand", () => {
       const buttonComponent: RegistryComponent = {
         name: "button",
         type: "registry:ui" as const,
-        files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        files: [{ path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" }],
       };
 
       const context = createTestContext([buttonComponent], {}, tempDir);
 
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             button: {
               version: "main",
               lastSync: "2025-01-01T00:00:00Z",
-              files: ["src/mirascope-ui/ui/button.tsx"],
+              files: ["mirascope-ui/ui/button.tsx"],
             },
           },
           lastFullSync: "",
@@ -172,24 +172,26 @@ describe("AddCommand", () => {
           name: "button",
           type: "registry:ui" as const,
           dependencies: ["@radix-ui/react-slot"],
-          files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+          files: [
+            { path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" },
+          ],
         },
         {
           name: "input",
           type: "registry:ui" as const,
-          files: [{ path: "registry/ui/input.tsx", type: "registry:ui" as const, content: "" }],
+          files: [{ path: "mirascope-ui/ui/input.tsx", type: "registry:ui" as const, content: "" }],
         },
       ];
 
       const files = {
-        "registry/ui/button.tsx": "export const Button = () => <button>Click me</button>;",
-        "registry/ui/input.tsx": "export const Input = () => <input />;",
+        "mirascope-ui/ui/button.tsx": "export const Button = () => <button>Click me</button>;",
+        "mirascope-ui/ui/input.tsx": "export const Input = () => <input />;",
       };
 
       const context = createTestContext(components, files, tempDir);
 
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {},
@@ -202,7 +204,7 @@ describe("AddCommand", () => {
 
       await command.execute(["button", "input"], context);
 
-      const manifest = JSON.parse(await readFile("src/mirascope-ui/manifest.json", "utf-8"));
+      const manifest = JSON.parse(await readFile("mirascope-ui/manifest.json", "utf-8"));
       expect(manifest.components.button).toBeDefined();
       expect(manifest.components.input).toBeDefined();
 
@@ -220,27 +222,29 @@ describe("AddCommand", () => {
           dependencies: ["@radix-ui/react-alert-dialog"],
           registryDependencies: ["button"],
           files: [
-            { path: "registry/ui/alert-dialog.tsx", type: "registry:ui" as const, content: "" },
+            { path: "mirascope-ui/ui/alert-dialog.tsx", type: "registry:ui" as const, content: "" },
           ],
         },
         {
           name: "button",
           type: "registry:ui" as const,
           dependencies: ["@radix-ui/react-slot"],
-          files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+          files: [
+            { path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" },
+          ],
         },
       ];
 
       const files = {
-        "registry/ui/alert-dialog.tsx": "export const AlertDialog = () => null;",
-        "registry/ui/button.tsx": "export const Button = () => <button />;",
+        "mirascope-ui/ui/alert-dialog.tsx": "export const AlertDialog = () => null;",
+        "mirascope-ui/ui/button.tsx": "export const Button = () => <button />;",
       };
 
       const context = createTestContext(components, files, tempDir);
 
-      await mkdir("src/mirascope-ui", { recursive: true });
+      await mkdir("mirascope-ui", { recursive: true });
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {},
@@ -253,7 +257,7 @@ describe("AddCommand", () => {
 
       await command.execute(["alert-dialog"], context);
 
-      const manifest = JSON.parse(await readFile("src/mirascope-ui/manifest.json", "utf-8"));
+      const manifest = JSON.parse(await readFile("mirascope-ui/manifest.json", "utf-8"));
       expect(manifest.components["alert-dialog"]).toBeDefined();
       expect(manifest.components.button).toBeDefined();
 
@@ -271,9 +275,9 @@ describe("AddCommand", () => {
     test("handles registry fetch errors", async () => {
       const context = createTestContext([], {}, tempDir); // Empty registry
 
-      await mkdir("src/mirascope-ui", { recursive: true });
+      await mkdir("mirascope-ui", { recursive: true });
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {},

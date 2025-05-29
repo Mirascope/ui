@@ -23,7 +23,7 @@ describe("CLI Integration", () => {
       expect(result.stdout).toContain("Initializing Mirascope UI Registry");
       expect(result.stdout).toContain("Created manifest");
 
-      const manifestPath = join(projectPath, "src", "mirascope-ui", "manifest.json");
+      const manifestPath = join(projectPath, "mirascope-ui", "manifest.json");
       expect(existsSync(manifestPath)).toBe(true);
     });
 

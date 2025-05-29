@@ -10,7 +10,7 @@
       "description": "Williams-Handwriting-Font-v1.9.tff",
       "files": [
         {
-          "path": "registry/files/Williams-Handwriting-Font-v1.9.ttf",
+          "path": "mirascope-ui/files/Williams-Handwriting-Font-v1.9.ttf",
           "type": "registry:file",
           "target": "~/public/fonts/Williams-Handwriting-Font-v1.9.tff"
         }
@@ -23,7 +23,7 @@
       "description": "The lilypad logo component",
       "files": [
         {
-          "path": "registry/blocks/lilypad-logo.tsx",
+          "path": "mirascope-ui/blocks/lilypad-logo.tsx",
           "type": "registry:block"
         }
       ]
@@ -35,11 +35,11 @@
       "description": "ThemeProvider to switch between dark/light",
       "files": [
         {
-          "path": "registry/blocks/theme-provider.tsx",
+          "path": "mirascope-ui/blocks/theme-provider.tsx",
           "type": "registry:block"
         },
         {
-          "path": "registry/blocks/mode-toggle.tsx",
+          "path": "mirascope-ui/blocks/mode-toggle.tsx",
           "type": "registry:block"
         }
       ]
@@ -52,19 +52,19 @@
       "dependencies": ["@shikijs/transformers", "shiki", "sonner"],
       "files": [
         {
-          "path": "registry/blocks/code-block/code-block.tsx",
+          "path": "mirascope-ui/blocks/code-block/code-block.tsx",
           "type": "registry:block"
         },
         {
-          "path": "registry/blocks/code-block/code-block.css",
+          "path": "mirascope-ui/blocks/code-block/code-block.css",
           "type": "registry:block"
         },
         {
-          "path": "registry/lib/code-highlight.ts",
+          "path": "mirascope-ui/lib/code-highlight.ts",
           "type": "registry:lib"
         },
         {
-          "path": "registry/blocks/copy-button.tsx",
+          "path": "mirascope-ui/blocks/copy-button.tsx",
           "type": "registry:block"
         }
       ]
@@ -77,7 +77,7 @@
       "dependencies": ["@radix-ui/react-slot", "class-variance-authority", "lucide-react"],
       "files": [
         {
-          "path": "registry/ui/button.tsx",
+          "path": "mirascope-ui/ui/button.tsx",
           "type": "registry:ui"
         }
       ]
@@ -90,7 +90,7 @@
       "dependencies": [],
       "files": [
         {
-          "path": "registry/ui/input.tsx",
+          "path": "mirascope-ui/ui/input.tsx",
           "type": "registry:ui"
         }
       ]
@@ -103,7 +103,7 @@
       "dependencies": ["@radix-ui/react-label", "class-variance-authority"],
       "files": [
         {
-          "path": "registry/ui/label.tsx",
+          "path": "mirascope-ui/ui/label.tsx",
           "type": "registry:ui"
         }
       ]
@@ -116,7 +116,7 @@
       "dependencies": [],
       "files": [
         {
-          "path": "registry/ui/badge.tsx",
+          "path": "mirascope-ui/ui/badge.tsx",
           "type": "registry:ui"
         }
       ]
@@ -129,7 +129,7 @@
       "dependencies": ["@radix-ui/react-dialog", "@radix-ui/react-icons"],
       "files": [
         {
-          "path": "registry/ui/dialog.tsx",
+          "path": "mirascope-ui/ui/dialog.tsx",
           "type": "registry:ui"
         }
       ]
@@ -143,7 +143,7 @@
       "registryDependencies": ["button"],
       "files": [
         {
-          "path": "registry/ui/alert-dialog.tsx",
+          "path": "mirascope-ui/ui/alert-dialog.tsx",
           "type": "registry:ui"
         }
       ]
@@ -157,7 +157,7 @@
       "registryDependencies": ["button"],
       "files": [
         {
-          "path": "registry/ui/alert.tsx",
+          "path": "mirascope-ui/ui/alert.tsx",
           "type": "registry:ui"
         }
       ]
@@ -170,7 +170,7 @@
       "dependencies": ["@radix-ui/react-avatar"],
       "files": [
         {
-          "path": "registry/ui/avatar.tsx",
+          "path": "mirascope-ui/ui/avatar.tsx",
           "type": "registry:ui"
         }
       ]
@@ -183,7 +183,7 @@
       "dependencies": ["@radix-ui/react-checkbox", "@radix-ui/react-icons"],
       "files": [
         {
-          "path": "registry/ui/checkbox.tsx",
+          "path": "mirascope-ui/ui/checkbox.tsx",
           "type": "registry:ui"
         }
       ]
@@ -196,7 +196,7 @@
       "dependencies": ["@radix-ui/react-collapsible"],
       "files": [
         {
-          "path": "registry/ui/collapsible.tsx",
+          "path": "mirascope-ui/ui/collapsible.tsx",
           "type": "registry:ui"
         }
       ]
@@ -209,7 +209,7 @@
       "dependencies": [],
       "files": [
         {
-          "path": "registry/ui/skeleton.tsx",
+          "path": "mirascope-ui/ui/skeleton.tsx",
           "type": "registry:ui"
         }
       ]
@@ -222,7 +222,7 @@
       "dependencies": ["@radix-ui/react-separator"],
       "files": [
         {
-          "path": "registry/ui/separator.tsx",
+          "path": "mirascope-ui/ui/separator.tsx",
           "type": "registry:ui"
         }
       ]
@@ -235,7 +235,7 @@
       "dependencies": [],
       "files": [
         {
-          "path": "registry/ui/card.tsx",
+          "path": "mirascope-ui/ui/card.tsx",
           "type": "registry:ui"
         }
       ]
@@ -248,7 +248,7 @@
       "dependencies": ["@radix-ui/react-switch"],
       "files": [
         {
-          "path": "registry/ui/switch.tsx",
+          "path": "mirascope-ui/ui/switch.tsx",
           "type": "registry:ui"
         }
       ]
@@ -261,7 +261,7 @@
       "dependencies": [],
       "files": [
         {
-          "path": "registry/ui/textarea.tsx",
+          "path": "mirascope-ui/ui/textarea.tsx",
           "type": "registry:ui"
         }
       ]
@@ -274,7 +274,7 @@
       "dependencies": ["@radix-ui/react-tabs"],
       "files": [
         {
-          "path": "registry/ui/tabs.tsx",
+          "path": "mirascope-ui/ui/tabs.tsx",
           "type": "registry:ui"
         }
       ]
@@ -287,7 +287,7 @@
       "dependencies": ["@radix-ui/react-tooltip"],
       "files": [
         {
-          "path": "registry/ui/tooltip.tsx",
+          "path": "mirascope-ui/ui/tooltip.tsx",
           "type": "registry:ui"
         }
       ]
@@ -300,7 +300,7 @@
       "dependencies": ["@radix-ui/react-toggle", "class-variance-authority"],
       "files": [
         {
-          "path": "registry/ui/toggle.tsx",
+          "path": "mirascope-ui/ui/toggle.tsx",
           "type": "registry:ui"
         }
       ]
@@ -313,7 +313,7 @@
       "dependencies": ["@radix-ui/react-slider"],
       "files": [
         {
-          "path": "registry/ui/slider.tsx",
+          "path": "mirascope-ui/ui/slider.tsx",
           "type": "registry:ui"
         }
       ]
@@ -326,7 +326,7 @@
       "dependencies": [],
       "files": [
         {
-          "path": "registry/ui/table.tsx",
+          "path": "mirascope-ui/ui/table.tsx",
           "type": "registry:ui"
         }
       ]
@@ -339,7 +339,7 @@
       "dependencies": ["@radix-ui/react-scroll-area"],
       "files": [
         {
-          "path": "registry/ui/scroll-area.tsx",
+          "path": "mirascope-ui/ui/scroll-area.tsx",
           "type": "registry:ui"
         }
       ]
@@ -352,7 +352,7 @@
       "dependencies": ["@radix-ui/react-popover"],
       "files": [
         {
-          "path": "registry/ui/popover.tsx",
+          "path": "mirascope-ui/ui/popover.tsx",
           "type": "registry:ui"
         }
       ]
@@ -365,7 +365,7 @@
       "dependencies": ["sonner", "next-themes"],
       "files": [
         {
-          "path": "registry/ui/sonner.tsx",
+          "path": "mirascope-ui/ui/sonner.tsx",
           "type": "registry:ui"
         }
       ]
@@ -378,7 +378,7 @@
       "dependencies": ["@radix-ui/react-dialog", "lucide-react"],
       "files": [
         {
-          "path": "registry/ui/sheet.tsx",
+          "path": "mirascope-ui/ui/sheet.tsx",
           "type": "registry:ui"
         }
       ]
@@ -391,7 +391,7 @@
       "dependencies": ["@radix-ui/react-select", "@radix-ui/react-icons"],
       "files": [
         {
-          "path": "registry/ui/select.tsx",
+          "path": "mirascope-ui/ui/select.tsx",
           "type": "registry:ui"
         }
       ]
@@ -405,7 +405,7 @@
       "registryDependencies": ["button"],
       "files": [
         {
-          "path": "registry/ui/calendar.tsx",
+          "path": "mirascope-ui/ui/calendar.tsx",
           "type": "registry:ui"
         }
       ]
@@ -418,7 +418,7 @@
       "dependencies": ["recharts"],
       "files": [
         {
-          "path": "registry/ui/chart.tsx",
+          "path": "mirascope-ui/ui/chart.tsx",
           "type": "registry:ui"
         }
       ]
@@ -432,7 +432,7 @@
       "registryDependencies": ["dialog"],
       "files": [
         {
-          "path": "registry/ui/command.tsx",
+          "path": "mirascope-ui/ui/command.tsx",
           "type": "registry:ui"
         }
       ]
@@ -445,7 +445,7 @@
       "dependencies": ["vaul"],
       "files": [
         {
-          "path": "registry/ui/drawer.tsx",
+          "path": "mirascope-ui/ui/drawer.tsx",
           "type": "registry:ui"
         }
       ]
@@ -458,7 +458,7 @@
       "dependencies": ["@radix-ui/react-dropdown-menu", "lucide-react"],
       "files": [
         {
-          "path": "registry/ui/dropdown-menu.tsx",
+          "path": "mirascope-ui/ui/dropdown-menu.tsx",
           "type": "registry:ui"
         }
       ]
@@ -472,7 +472,7 @@
       "registryDependencies": ["button", "command", "emoji-picker", "popover"],
       "files": [
         {
-          "path": "registry/ui/combobox.tsx",
+          "path": "mirascope-ui/ui/combobox.tsx",
           "type": "registry:ui"
         }
       ]
@@ -485,7 +485,7 @@
       "dependencies": ["frimousse", "lucide-react"],
       "files": [
         {
-          "path": "registry/ui/emoji-picker.tsx",
+          "path": "mirascope-ui/ui/emoji-picker.tsx",
           "type": "registry:ui"
         }
       ]
@@ -499,7 +499,7 @@
       "registryDependencies": ["label"],
       "files": [
         {
-          "path": "registry/ui/form.tsx",
+          "path": "mirascope-ui/ui/form.tsx",
           "type": "registry:ui"
         }
       ]
@@ -513,7 +513,7 @@
       "registryDependencies": ["button", "command", "form", "popover"],
       "files": [
         {
-          "path": "registry/ui/model-combobox.tsx",
+          "path": "mirascope-ui/ui/model-combobox.tsx",
           "type": "registry:ui"
         }
       ]
@@ -526,7 +526,7 @@
       "dependencies": ["@radix-ui/react-icons", "react-resizable-panels"],
       "files": [
         {
-          "path": "registry/ui/resizable.tsx",
+          "path": "mirascope-ui/ui/resizable.tsx",
           "type": "registry:ui"
         }
       ]

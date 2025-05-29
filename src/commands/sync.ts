@@ -112,8 +112,6 @@ export class SyncCommand extends BaseCommand {
   }
 
   private getDefaultTargetPath(sourcePath: string): string {
-    // Convert registry/ui/button.tsx -> src/mirascope-ui/ui/button.tsx
-    const relativePath = sourcePath.replace(/^registry\//, "");
-    return join("src", "mirascope-ui", relativePath);
+    return sourcePath;
   }
 }

@@ -42,12 +42,12 @@ src/
     "button": {
       "version": "main",
       "lastSync": "2025-01-15T10:30:00Z",
-      "files": ["src/mirascope-ui/ui/button.tsx"]
+      "files": ["mirascope-ui/ui/button.tsx"]
     },
     "dialog": {
       "version": "main",
       "lastSync": "2025-01-15T10:30:00Z",
-      "files": ["src/mirascope-ui/ui/dialog.tsx"]
+      "files": ["mirascope-ui/ui/dialog.tsx"]
     }
   },
   "lastFullSync": "2025-01-15T10:30:00Z"
@@ -60,7 +60,7 @@ src/
 
 - Creates initial manifest.json file
 - Validates project has package.json
-- Sets up src/mirascope-ui/ directory structure
+- Sets up mirascope-ui/ directory structure
 
 ### `mirascope-ui sync`
 

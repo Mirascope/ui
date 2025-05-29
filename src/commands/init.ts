@@ -9,7 +9,7 @@ export class InitCommand extends BaseCommand {
       const manifest = new ManifestManager(context.targetPath);
       await manifest.init();
 
-      console.log("✅ Created manifest at src/mirascope-ui/manifest.json");
+      console.log("✅ Created manifest at mirascope-ui/manifest.json");
       console.log("🌐 Registry URL: https://ui.mirascope.com");
       console.log("");
       console.log("Next steps:");

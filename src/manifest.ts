@@ -9,7 +9,7 @@ export class ManifestManager {
 
   constructor(cwd: string) {
     this.cwd = cwd;
-    this.manifestPath = join(cwd, "src", "mirascope-ui", "manifest.json");
+    this.manifestPath = join(cwd, "mirascope-ui", "manifest.json");
     this.validateProject();
   }
 

@@ -24,7 +24,9 @@ describe("Registry", () => {
           {
             name: "button",
             type: "registry:ui" as const,
-            files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+            files: [
+              { path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" },
+            ],
           },
         ],
       };
@@ -45,11 +47,11 @@ describe("Registry", () => {
 
     test("reads local component file", async () => {
       const fileContent = "export const Button = () => <button>Click me</button>;";
-      await mkdir("registry/ui", { recursive: true });
-      await writeFile("registry/ui/button.tsx", fileContent);
+      await mkdir("mirascope-ui/ui", { recursive: true });
+      await writeFile("mirascope-ui/ui/button.tsx", fileContent);
 
       const registry = new FileRegistry(process.cwd());
-      const result = await registry.fetchComponentFile("registry/ui/button.tsx");
+      const result = await registry.fetchComponentFile("mirascope-ui/ui/button.tsx");
 
       expect(result).toBe(fileContent);
     });
@@ -57,7 +59,7 @@ describe("Registry", () => {
     test("throws error for missing local file", async () => {
       const registry = new FileRegistry(process.cwd());
 
-      await expect(registry.fetchComponentFile("registry/ui/nonexistent.tsx")).rejects.toThrow(
+      await expect(registry.fetchComponentFile("mirascope-ui/ui/nonexistent.tsx")).rejects.toThrow(
         "Failed to read local file"
       );
     });
@@ -79,12 +81,14 @@ describe("Registry", () => {
         {
           name: "button",
           type: "registry:ui" as const,
-          files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+          files: [
+            { path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" },
+          ],
         },
         {
           name: "input",
           type: "registry:ui" as const,
-          files: [{ path: "registry/ui/input.tsx", type: "registry:ui" as const, content: "" }],
+          files: [{ path: "mirascope-ui/ui/input.tsx", type: "registry:ui" as const, content: "" }],
         },
       ]);
 
@@ -103,12 +107,14 @@ describe("Registry", () => {
         {
           name: "button",
           type: "registry:ui" as const,
-          files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+          files: [
+            { path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" },
+          ],
         },
         {
           name: "input",
           type: "registry:ui" as const,
-          files: [{ path: "registry/ui/input.tsx", type: "registry:ui" as const, content: "" }],
+          files: [{ path: "mirascope-ui/ui/input.tsx", type: "registry:ui" as const, content: "" }],
         },
       ];
 
@@ -123,7 +129,9 @@ describe("Registry", () => {
         {
           name: "button",
           type: "registry:ui" as const,
-          files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+          files: [
+            { path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" },
+          ],
         },
       ]);
 
@@ -140,16 +148,16 @@ describe("Registry", () => {
       registry.addComponent({
         name: "button",
         type: "registry:ui" as const,
-        files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+        files: [{ path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" }],
       });
 
-      registry.addFile("registry/ui/button.tsx", "export const Button = () => <button />;");
+      registry.addFile("mirascope-ui/ui/button.tsx", "export const Button = () => <button />;");
 
       const registryData = await registry.fetchRegistry();
       expect(registryData.items).toHaveLength(1);
       expect(registryData.items[0].name).toBe("button");
 
-      const fileContent = await registry.fetchComponentFile("registry/ui/button.tsx");
+      const fileContent = await registry.fetchComponentFile("mirascope-ui/ui/button.tsx");
       expect(fileContent).toBe("export const Button = () => <button />;");
     });
 
@@ -166,7 +174,9 @@ describe("Registry", () => {
         {
           name: "button",
           type: "registry:ui" as const,
-          files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
+          files: [
+            { path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" },
+          ],
         },
       ]);
 

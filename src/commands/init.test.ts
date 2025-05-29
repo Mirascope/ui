@@ -7,7 +7,7 @@ import { createTestContext } from "../test-utils";
 describe("InitCommand", () => {
   const testDir = join(process.cwd(), "test-temp-init");
   const packageJsonPath = join(testDir, "package.json");
-  const manifestPath = join(testDir, "src", "mirascope-ui", "manifest.json");
+  const manifestPath = join(testDir, "mirascope-ui", "manifest.json");
 
   beforeEach(async () => {
     await mkdir(testDir, { recursive: true });
@@ -47,7 +47,7 @@ describe("InitCommand", () => {
   });
 
   test("should fail when manifest already exists", async () => {
-    await mkdir(join(testDir, "src", "mirascope-ui"), { recursive: true });
+    await mkdir(join(testDir, "mirascope-ui"), { recursive: true });
     await writeFile(manifestPath, JSON.stringify({ registryUrl: "test" }));
 
     const command = new InitCommand();

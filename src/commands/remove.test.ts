@@ -68,9 +68,9 @@ describe("RemoveCommand", () => {
     });
 
     test("shows message if no components tracked", async () => {
-      await mkdir("src/mirascope-ui", { recursive: true });
+      await mkdir("mirascope-ui", { recursive: true });
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {},
@@ -88,24 +88,24 @@ describe("RemoveCommand", () => {
 
   describe("component removal", () => {
     beforeEach(async () => {
-      await mkdir("src/mirascope-ui", { recursive: true });
-      await mkdir("src/mirascope-ui/ui", { recursive: true });
+      await mkdir("mirascope-ui", { recursive: true });
+      await mkdir("mirascope-ui/ui", { recursive: true });
     });
 
     test("removes single component and its files", async () => {
       await writeFile(
-        "src/mirascope-ui/ui/button.tsx",
+        "mirascope-ui/ui/button.tsx",
         "export const Button = () => <button>Click me</button>;"
       );
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             button: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/button.tsx"],
+              files: ["mirascope-ui/ui/button.tsx"],
             },
           },
           lastFullSync: "",
@@ -122,34 +122,34 @@ describe("RemoveCommand", () => {
       expect(logSpy).toHaveBeenCalledWith("✅ Removed 1 component");
 
       // Check file was removed
-      expect(existsSync("src/mirascope-ui/ui/button.tsx")).toBe(false);
+      expect(existsSync("mirascope-ui/ui/button.tsx")).toBe(false);
 
       // Check manifest was updated
-      const manifestContent = await readFile("src/mirascope-ui/manifest.json", "utf-8");
+      const manifestContent = await readFile("mirascope-ui/manifest.json", "utf-8");
       const manifest = JSON.parse(manifestContent);
       expect(manifest.components.button).toBeUndefined();
     });
 
     test("removes multiple components", async () => {
       await writeFile(
-        "src/mirascope-ui/ui/button.tsx",
+        "mirascope-ui/ui/button.tsx",
         "export const Button = () => <button>Click me</button>;"
       );
-      await writeFile("src/mirascope-ui/ui/card.tsx", "export const Card = () => <div>Card</div>;");
+      await writeFile("mirascope-ui/ui/card.tsx", "export const Card = () => <div>Card</div>;");
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             button: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/button.tsx"],
+              files: ["mirascope-ui/ui/button.tsx"],
             },
             card: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/card.tsx"],
+              files: ["mirascope-ui/ui/card.tsx"],
             },
           },
           lastFullSync: "",
@@ -165,11 +165,11 @@ describe("RemoveCommand", () => {
       expect(logSpy).toHaveBeenCalledWith("✅ Removed 2 components");
 
       // Check files were removed
-      expect(existsSync("src/mirascope-ui/ui/button.tsx")).toBe(false);
-      expect(existsSync("src/mirascope-ui/ui/card.tsx")).toBe(false);
+      expect(existsSync("mirascope-ui/ui/button.tsx")).toBe(false);
+      expect(existsSync("mirascope-ui/ui/card.tsx")).toBe(false);
 
       // Check manifest was updated
-      const manifestContent = await readFile("src/mirascope-ui/manifest.json", "utf-8");
+      const manifestContent = await readFile("mirascope-ui/manifest.json", "utf-8");
       const manifest = JSON.parse(manifestContent);
       expect(manifest.components.button).toBeUndefined();
       expect(manifest.components.card).toBeUndefined();
@@ -177,14 +177,14 @@ describe("RemoveCommand", () => {
 
     test("shows error for untracked components", async () => {
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             button: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/button.tsx"],
+              files: ["mirascope-ui/ui/button.tsx"],
             },
           },
           lastFullSync: "",
@@ -203,14 +203,14 @@ describe("RemoveCommand", () => {
 
     test("handles file removal errors gracefully", async () => {
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             button: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/nonexistent.tsx"],
+              files: ["mirascope-ui/ui/nonexistent.tsx"],
             },
           },
           lastFullSync: "",
@@ -225,26 +225,26 @@ describe("RemoveCommand", () => {
       expect(logSpy).toHaveBeenCalledWith("✅ Removed 1 component");
 
       // Check manifest was still updated even though file didn't exist
-      const manifestContent = await readFile("src/mirascope-ui/manifest.json", "utf-8");
+      const manifestContent = await readFile("mirascope-ui/manifest.json", "utf-8");
       const manifest = JSON.parse(manifestContent);
       expect(manifest.components.button).toBeUndefined();
     });
 
     test("removes component with multiple files", async () => {
       await writeFile(
-        "src/mirascope-ui/ui/complex.tsx",
+        "mirascope-ui/ui/complex.tsx",
         "export const Complex = () => <div>Complex</div>;"
       );
-      await writeFile("src/mirascope-ui/ui/complex.module.css", ".complex { color: red; }");
+      await writeFile("mirascope-ui/ui/complex.module.css", ".complex { color: red; }");
       await writeFile(
-        "src/mirascope-ui/manifest.json",
+        "mirascope-ui/manifest.json",
         JSON.stringify({
           registryUrl: "https://ui.mirascope.com",
           components: {
             complex: {
               version: "main",
               lastSync: "2023-01-01T00:00:00.000Z",
-              files: ["src/mirascope-ui/ui/complex.tsx", "src/mirascope-ui/ui/complex.module.css"],
+              files: ["mirascope-ui/ui/complex.tsx", "mirascope-ui/ui/complex.module.css"],
             },
           },
           lastFullSync: "",
@@ -259,11 +259,11 @@ describe("RemoveCommand", () => {
       expect(logSpy).toHaveBeenCalledWith("✅ Removed 1 component");
 
       // Check both files were removed
-      expect(existsSync("src/mirascope-ui/ui/complex.tsx")).toBe(false);
-      expect(existsSync("src/mirascope-ui/ui/complex.module.css")).toBe(false);
+      expect(existsSync("mirascope-ui/ui/complex.tsx")).toBe(false);
+      expect(existsSync("mirascope-ui/ui/complex.module.css")).toBe(false);
 
       // Check manifest was updated
-      const manifestContent = await readFile("src/mirascope-ui/manifest.json", "utf-8");
+      const manifestContent = await readFile("mirascope-ui/manifest.json", "utf-8");
       const manifest = JSON.parse(manifestContent);
       expect(manifest.components.complex).toBeUndefined();
     });

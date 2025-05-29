@@ -1,6 +1,6 @@
 import React from "react";
-import { ThemeProvider } from "../registry/blocks/theme-provider";
-import { ModeToggle } from "../registry/blocks/mode-toggle";
+import { ThemeProvider } from "../mirascope-ui/blocks/theme-provider";
+import { ModeToggle } from "../mirascope-ui/blocks/mode-toggle";
 import { Toaster } from "sonner";
 export const ModeDecorator = (Story: any) => {
   return (

@@ -7,7 +7,7 @@ import { createTestContext } from "../test-utils";
 describe("StatusCommand", () => {
   const testDir = join(process.cwd(), "test-temp-status");
   const packageJsonPath = join(testDir, "package.json");
-  const manifestPath = join(testDir, "src", "mirascope-ui", "manifest.json");
+  const manifestPath = join(testDir, "mirascope-ui", "manifest.json");
 
   beforeEach(async () => {
     await mkdir(testDir, { recursive: true });
@@ -46,7 +46,7 @@ describe("StatusCommand", () => {
   });
 
   test("should show empty manifest state", async () => {
-    await mkdir(join(testDir, "src", "mirascope-ui"), { recursive: true });
+    await mkdir(join(testDir, "mirascope-ui"), { recursive: true });
     await writeFile(
       manifestPath,
       JSON.stringify({
@@ -69,7 +69,7 @@ describe("StatusCommand", () => {
   });
 
   test("should show populated manifest", async () => {
-    await mkdir(join(testDir, "src", "mirascope-ui"), { recursive: true });
+    await mkdir(join(testDir, "mirascope-ui"), { recursive: true });
     await writeFile(
       manifestPath,
       JSON.stringify({
@@ -78,12 +78,12 @@ describe("StatusCommand", () => {
           button: {
             version: "main",
             lastSync: "2025-01-15T10:30:00Z",
-            files: ["src/mirascope-ui/ui/button.tsx"],
+            files: ["mirascope-ui/ui/button.tsx"],
           },
           dialog: {
             version: "main",
             lastSync: "2025-01-15T11:00:00Z",
-            files: ["src/mirascope-ui/ui/dialog.tsx"],
+            files: ["mirascope-ui/ui/dialog.tsx"],
           },
         },
         lastFullSync: "2025-01-15T11:00:00Z",

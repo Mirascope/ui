@@ -26,7 +26,7 @@ describe("Add Command Integration", () => {
             dependencies: ["@radix-ui/react-slot"],
             files: [
               {
-                path: "registry/ui/button.tsx",
+                path: "mirascope-ui/ui/button.tsx",
                 type: "registry:ui",
                 content: "export const Button = () => <button>Click me</button>;",
               },
@@ -38,9 +38,9 @@ describe("Add Command Integration", () => {
       await writeFile(join(projectPath, "registry.json"), JSON.stringify(registryData));
 
       // Create registry files
-      await mkdir(join(projectPath, "registry", "ui"), { recursive: true });
+      await mkdir(join(projectPath, "mirascope-ui", "ui"), { recursive: true });
       await writeFile(
-        join(projectPath, "registry", "ui", "button.tsx"),
+        join(projectPath, "mirascope-ui", "ui", "button.tsx"),
         "export const Button = () => <button>Click me</button>;"
       );
 
@@ -56,13 +56,13 @@ describe("Add Command Integration", () => {
       expect(result.stdout).toContain("✅ Added 1 component");
 
       // Check manifest was updated
-      const manifestPath = join(projectPath, "src", "mirascope-ui", "manifest.json");
+      const manifestPath = join(projectPath, "mirascope-ui", "manifest.json");
       const manifest = JSON.parse(await readFile(manifestPath, "utf-8"));
       expect(manifest.components.button).toBeDefined();
-      expect(manifest.components.button.files).toEqual(["src/mirascope-ui/ui/button.tsx"]);
+      expect(manifest.components.button.files).toEqual(["mirascope-ui/ui/button.tsx"]);
 
       // Check component file was created
-      const componentPath = join(projectPath, "src", "mirascope-ui", "ui", "button.tsx");
+      const componentPath = join(projectPath, "mirascope-ui", "ui", "button.tsx");
       const componentContent = await readFile(componentPath, "utf-8");
       expect(componentContent).toBe("export const Button = () => <button>Click me</button>;");
     });
@@ -76,7 +76,7 @@ describe("Add Command Integration", () => {
             type: "registry:ui",
             files: [
               {
-                path: "registry/ui/button.tsx",
+                path: "mirascope-ui/ui/button.tsx",
                 type: "registry:ui",
                 content: "export const Button = () => <button />;",
               },
@@ -87,7 +87,7 @@ describe("Add Command Integration", () => {
             type: "registry:ui",
             files: [
               {
-                path: "registry/ui/input.tsx",
+                path: "mirascope-ui/ui/input.tsx",
                 type: "registry:ui",
                 content: "export const Input = () => <input />;",
               },
@@ -99,13 +99,13 @@ describe("Add Command Integration", () => {
       await writeFile(join(projectPath, "registry.json"), JSON.stringify(registryData));
 
       // Create registry files
-      await mkdir(join(projectPath, "registry", "ui"), { recursive: true });
+      await mkdir(join(projectPath, "mirascope-ui", "ui"), { recursive: true });
       await writeFile(
-        join(projectPath, "registry", "ui", "button.tsx"),
+        join(projectPath, "mirascope-ui", "ui", "button.tsx"),
         "export const Button = () => <button />;"
       );
       await writeFile(
-        join(projectPath, "registry", "ui", "input.tsx"),
+        join(projectPath, "mirascope-ui", "ui", "input.tsx"),
         "export const Input = () => <input />;"
       );
 
@@ -120,8 +120,8 @@ describe("Add Command Integration", () => {
       expect(result.stdout).toContain("✅ Added 2 components");
 
       // Check both components exist
-      const buttonPath = join(projectPath, "src", "mirascope-ui", "ui", "button.tsx");
-      const inputPath = join(projectPath, "src", "mirascope-ui", "ui", "input.tsx");
+      const buttonPath = join(projectPath, "mirascope-ui", "ui", "button.tsx");
+      const inputPath = join(projectPath, "mirascope-ui", "ui", "input.tsx");
 
       await expect(stat(buttonPath)).resolves.toBeTruthy();
       await expect(stat(inputPath)).resolves.toBeTruthy();
@@ -136,7 +136,7 @@ describe("Add Command Integration", () => {
             type: "registry:ui",
             files: [
               {
-                path: "registry/ui/button.tsx",
+                path: "mirascope-ui/ui/button.tsx",
                 type: "registry:ui",
                 content: "export const Button = () => <button />;",
               },
@@ -146,9 +146,9 @@ describe("Add Command Integration", () => {
       };
 
       await writeFile(join(projectPath, "registry.json"), JSON.stringify(registryData));
-      await mkdir(join(projectPath, "registry", "ui"), { recursive: true });
+      await mkdir(join(projectPath, "mirascope-ui", "ui"), { recursive: true });
       await writeFile(
-        join(projectPath, "registry", "ui", "button.tsx"),
+        join(projectPath, "mirascope-ui", "ui", "button.tsx"),
         "export const Button = () => <button />;"
       );
 
@@ -175,7 +175,7 @@ describe("Add Command Integration", () => {
             registryDependencies: ["button"],
             files: [
               {
-                path: "registry/ui/alert-dialog.tsx",
+                path: "mirascope-ui/ui/alert-dialog.tsx",
                 type: "registry:ui",
                 content: "export const AlertDialog = () => null;",
               },
@@ -186,7 +186,7 @@ describe("Add Command Integration", () => {
             type: "registry:ui",
             files: [
               {
-                path: "registry/ui/button.tsx",
+                path: "mirascope-ui/ui/button.tsx",
                 type: "registry:ui",
                 content: "export const Button = () => <button />;",
               },
@@ -196,13 +196,13 @@ describe("Add Command Integration", () => {
       };
 
       await writeFile(join(projectPath, "registry.json"), JSON.stringify(registryData));
-      await mkdir(join(projectPath, "registry", "ui"), { recursive: true });
+      await mkdir(join(projectPath, "mirascope-ui", "ui"), { recursive: true });
       await writeFile(
-        join(projectPath, "registry", "ui", "alert-dialog.tsx"),
+        join(projectPath, "mirascope-ui", "ui", "alert-dialog.tsx"),
         "export const AlertDialog = () => null;"
       );
       await writeFile(
-        join(projectPath, "registry", "ui", "button.tsx"),
+        join(projectPath, "mirascope-ui", "ui", "button.tsx"),
         "export const Button = () => <button />;"
       );
 
@@ -217,7 +217,7 @@ describe("Add Command Integration", () => {
       expect(result.stdout).toContain("✅ Added 2 components");
 
       // Check both components were added
-      const manifestPath = join(projectPath, "src", "mirascope-ui", "manifest.json");
+      const manifestPath = join(projectPath, "mirascope-ui", "manifest.json");
       const manifest = JSON.parse(await readFile(manifestPath, "utf-8"));
       expect(manifest.components["alert-dialog"]).toBeDefined();
       expect(manifest.components.button).toBeDefined();
@@ -233,12 +233,12 @@ describe("Add Command Integration", () => {
             type: "registry:block",
             files: [
               {
-                path: "registry/blocks/code-block.tsx",
+                path: "mirascope-ui/blocks/code-block.tsx",
                 type: "registry:block",
                 content: "export const CodeBlock = () => null;",
               },
               {
-                path: "registry/lib/code-highlight.ts",
+                path: "mirascope-ui/lib/code-highlight.ts",
                 type: "registry:lib",
                 content: "export const highlight = () => {};",
               },
@@ -248,14 +248,14 @@ describe("Add Command Integration", () => {
       };
 
       await writeFile(join(projectPath, "registry.json"), JSON.stringify(registryData));
-      await mkdir(join(projectPath, "registry", "blocks"), { recursive: true });
-      await mkdir(join(projectPath, "registry", "lib"), { recursive: true });
+      await mkdir(join(projectPath, "mirascope-ui", "blocks"), { recursive: true });
+      await mkdir(join(projectPath, "mirascope-ui", "lib"), { recursive: true });
       await writeFile(
-        join(projectPath, "registry", "blocks", "code-block.tsx"),
+        join(projectPath, "mirascope-ui", "blocks", "code-block.tsx"),
         "export const CodeBlock = () => null;"
       );
       await writeFile(
-        join(projectPath, "registry", "lib", "code-highlight.ts"),
+        join(projectPath, "mirascope-ui", "lib", "code-highlight.ts"),
         "export const highlight = () => {};"
       );
 
@@ -269,8 +269,8 @@ describe("Add Command Integration", () => {
       expect(result.stdout).toContain("✅ Added 1 component");
 
       // Check files were created in correct locations
-      const blockPath = join(projectPath, "src", "mirascope-ui", "blocks", "code-block.tsx");
-      const libPath = join(projectPath, "src", "mirascope-ui", "lib", "code-highlight.ts");
+      const blockPath = join(projectPath, "mirascope-ui", "blocks", "code-block.tsx");
+      const libPath = join(projectPath, "mirascope-ui", "lib", "code-highlight.ts");
 
       await expect(stat(blockPath)).resolves.toBeTruthy();
       await expect(stat(libPath)).resolves.toBeTruthy();
