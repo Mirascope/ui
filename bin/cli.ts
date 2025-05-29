@@ -41,13 +41,28 @@ async function main() {
       i++;
     } else if (arg === "--local-path") {
       globalFlags.local = true;
-      globalFlags.localPath = rawArgs[i + 1] || "";
+      const nextArg = rawArgs[i + 1];
+      if (!nextArg || nextArg.startsWith("--")) {
+        console.error("❌ --local-path requires a path argument");
+        process.exit(1);
+      }
+      globalFlags.localPath = nextArg;
       i += 2;
     } else if (arg === "--registry-url") {
-      globalFlags.registryUrl = rawArgs[i + 1] || "";
+      const nextArg = rawArgs[i + 1];
+      if (!nextArg || nextArg.startsWith("--")) {
+        console.error("❌ --registry-url requires a URL argument");
+        process.exit(1);
+      }
+      globalFlags.registryUrl = nextArg;
       i += 2;
     } else if (arg === "--target") {
-      globalFlags.target = rawArgs[i + 1] || "";
+      const nextArg = rawArgs[i + 1];
+      if (!nextArg || nextArg.startsWith("--")) {
+        console.error("❌ --target requires a path argument");
+        process.exit(1);
+      }
+      globalFlags.target = nextArg;
       i += 2;
     } else {
       remainingArgs.push(arg);
