@@ -17,6 +17,7 @@
     "build:storybook": "storybook build; mv storybook-static/* dist; rm -r storybook-static",
     "build": "bun run build:cli && rm -rf dist && mkdir -p dist && bun run build:registry && bun run build:storybook",
     "build:cli": "bun build bin/cli.ts --outfile=bin/cli.js --target=bun --minify",
+    "build:full": "bun run build",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "typecheck": "bun run tsc --noEmit",
