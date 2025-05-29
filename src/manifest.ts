@@ -7,7 +7,7 @@ export class ManifestManager {
   private manifestPath: string;
   private cwd: string;
 
-  constructor(cwd: string = process.cwd()) {
+  constructor(cwd: string) {
     this.cwd = cwd;
     this.manifestPath = join(cwd, "src", "mirascope-ui", "manifest.json");
     this.validateProject();

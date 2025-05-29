@@ -92,7 +92,7 @@ describe("CLI Integration", () => {
 
       expect(result.exitCode).toBe(1);
       expect(result.stderr).toContain(
-        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] <command> [args]"
+        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] [--target <path>] <command> [args]"
       );
       expect(result.stderr).toContain("Commands: init, sync, add, remove, status");
     });
@@ -112,7 +112,7 @@ describe("CLI Integration", () => {
       expect(result.exitCode).toBe(1);
       expect(result.stderr).toContain("No components specified");
       expect(result.stderr).toContain(
-        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] add"
+        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] [--target <path>] add"
       );
     });
 

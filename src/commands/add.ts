@@ -19,7 +19,7 @@ export class AddCommand extends BaseCommand {
 
     if (values.help) {
       console.log(
-        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] add <component1> [component2] ..."
+        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] [--target <path>] add <component1> [component2] ..."
       );
       console.log("");
       console.log("Global Options:");
@@ -28,13 +28,16 @@ export class AddCommand extends BaseCommand {
       console.log(
         "  --registry-url <url> Override registry URL (default: https://ui.mirascope.com)"
       );
+      console.log(
+        "  --target <path>      Target directory for file operations (default: current directory)"
+      );
       process.exit(0);
     }
 
     if (componentNames.length === 0) {
       console.error("❌ No components specified");
       console.error(
-        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] add <component1> [component2] ..."
+        "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] [--target <path>] add <component1> [component2] ..."
       );
       process.exit(1);
     }
@@ -42,7 +45,7 @@ export class AddCommand extends BaseCommand {
     try {
       console.log(`🔍 Fetching components: ${componentNames.join(", ")}`);
 
-      const manifest = new ManifestManager();
+      const manifest = new ManifestManager(context.targetPath);
       if (!(await manifest.exists())) {
         console.error("❌ Manifest not found. Run 'mirascope-ui init' first.");
         process.exit(1);
@@ -95,7 +98,7 @@ export class AddCommand extends BaseCommand {
 
           // Determine target path
           const targetPath = file.target || this.getDefaultTargetPath(file.path);
-          const fullTargetPath = join(process.cwd(), targetPath);
+          const fullTargetPath = join(context.targetPath, targetPath);
 
           // Ensure directory exists
           await mkdir(dirname(fullTargetPath), { recursive: true });

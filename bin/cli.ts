@@ -7,6 +7,8 @@ import { RemoveCommand } from "../src/commands/remove";
 import { StatusCommand } from "../src/commands/status";
 import { ExecutionContext } from "../src/commands/base";
 import { FileRegistry, RemoteRegistry } from "../src/registry";
+import { existsSync } from "fs";
+import { join } from "path";
 
 const COMMANDS = {
   init: InitCommand,
@@ -28,7 +30,7 @@ async function main() {
   }
 
   // Parse global flags manually
-  const globalFlags = { local: false, localPath: "", registryUrl: "" };
+  const globalFlags = { local: false, localPath: "", registryUrl: "", target: "" };
   const remainingArgs: string[] = [];
   let i = 0;
 
@@ -44,6 +46,9 @@ async function main() {
     } else if (arg === "--registry-url") {
       globalFlags.registryUrl = rawArgs[i + 1] || "";
       i += 2;
+    } else if (arg === "--target") {
+      globalFlags.target = rawArgs[i + 1] || "";
+      i += 2;
     } else {
       remainingArgs.push(arg);
       i++;
@@ -54,9 +59,20 @@ async function main() {
 
   if (!command || !(command in COMMANDS)) {
     console.error(
-      "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] <command> [args]"
+      "Usage: mirascope-ui [--local] [--local-path <path>] [--registry-url <url>] [--target <path>] <command> [args]"
     );
     console.error("Commands: init, sync, add, remove, status");
+    process.exit(1);
+  }
+
+  // Determine target directory and validate
+  const targetPath = globalFlags.target || process.cwd();
+  const packageJsonPath = join(targetPath, "package.json");
+  if (!existsSync(packageJsonPath)) {
+    console.error(`❌ No package.json found in target directory: ${targetPath}`);
+    console.error(
+      "Please run this command from your project root or specify a valid --target directory."
+    );
     process.exit(1);
   }
 
@@ -67,7 +83,7 @@ async function main() {
         globalFlags.registryUrl || process.env.MIRASCOPE_REGISTRY_URL || "https://ui.mirascope.com"
       );
 
-  const context: ExecutionContext = { registry };
+  const context: ExecutionContext = { registry, targetPath };
 
   const CommandClass = COMMANDS[command as Command];
   const commandInstance = new CommandClass();

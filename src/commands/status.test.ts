@@ -34,7 +34,7 @@ describe("StatusCommand", () => {
 
   test("should show no manifest message when manifest doesn't exist", async () => {
     const command = new StatusCommand();
-    const context = createTestContext();
+    const context = createTestContext([], {}, testDir);
     const { logs, restore } = captureConsoleOutput();
 
     await command.execute([], context);
@@ -57,7 +57,7 @@ describe("StatusCommand", () => {
     );
 
     const command = new StatusCommand();
-    const context = createTestContext();
+    const context = createTestContext([], {}, testDir);
     const { logs, restore } = captureConsoleOutput();
 
     await command.execute([], context);
@@ -91,7 +91,7 @@ describe("StatusCommand", () => {
     );
 
     const command = new StatusCommand();
-    const context = createTestContext();
+    const context = createTestContext([], {}, testDir);
     const { logs, restore } = captureConsoleOutput();
 
     await command.execute([], context);

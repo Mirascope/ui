@@ -2,11 +2,11 @@ import { BaseCommand, ExecutionContext } from "./base";
 import { ManifestManager } from "../manifest";
 
 export class InitCommand extends BaseCommand {
-  async execute(_args: string[], _context: ExecutionContext): Promise<void> {
+  async execute(_args: string[], context: ExecutionContext): Promise<void> {
     try {
       console.log("🚀 Initializing Mirascope UI Registry");
 
-      const manifest = new ManifestManager();
+      const manifest = new ManifestManager(context.targetPath);
       await manifest.init();
 
       console.log("✅ Created manifest at src/mirascope-ui/manifest.json");

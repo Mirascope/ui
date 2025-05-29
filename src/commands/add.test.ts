@@ -36,7 +36,7 @@ describe("AddCommand", () => {
   describe("argument parsing", () => {
     test("shows error for no components", async () => {
       const command = new AddCommand();
-      const context = createTestContext();
+      const context = createTestContext([], {}, tempDir);
 
       await expect(command.execute([], context)).rejects.toThrow("process.exit called");
       expect(errorSpy).toHaveBeenCalledWith("❌ No components specified");
@@ -53,7 +53,7 @@ describe("AddCommand", () => {
         "registry/ui/button.tsx": "export const Button = () => <button>Click me</button>;",
       };
 
-      const context = createTestContext([buttonComponent], files);
+      const context = createTestContext([buttonComponent], files, tempDir);
 
       await mkdir("src/mirascope-ui", { recursive: true });
       await writeFile(
@@ -75,7 +75,7 @@ describe("AddCommand", () => {
   describe("manifest validation", () => {
     test("shows error if manifest doesn't exist", async () => {
       const command = new AddCommand();
-      const context = createTestContext();
+      const context = createTestContext([], {}, tempDir);
 
       await expect(command.execute(["button"], context)).rejects.toThrow("process.exit called");
       expect(errorSpy).toHaveBeenCalledWith(
@@ -107,7 +107,7 @@ describe("AddCommand", () => {
         "registry/ui/button.tsx": "export const Button = () => <button>Click me</button>;",
       };
 
-      const context = createTestContext([buttonComponent], files);
+      const context = createTestContext([buttonComponent], files, tempDir);
 
       await writeFile(
         "src/mirascope-ui/manifest.json",
@@ -141,7 +141,7 @@ describe("AddCommand", () => {
         files: [{ path: "registry/ui/button.tsx", type: "registry:ui" as const, content: "" }],
       };
 
-      const context = createTestContext([buttonComponent]);
+      const context = createTestContext([buttonComponent], {}, tempDir);
 
       await writeFile(
         "src/mirascope-ui/manifest.json",
@@ -186,7 +186,7 @@ describe("AddCommand", () => {
         "registry/ui/input.tsx": "export const Input = () => <input />;",
       };
 
-      const context = createTestContext(components, files);
+      const context = createTestContext(components, files, tempDir);
 
       await writeFile(
         "src/mirascope-ui/manifest.json",
@@ -236,7 +236,7 @@ describe("AddCommand", () => {
         "registry/ui/button.tsx": "export const Button = () => <button />;",
       };
 
-      const context = createTestContext(components, files);
+      const context = createTestContext(components, files, tempDir);
 
       await mkdir("src/mirascope-ui", { recursive: true });
       await writeFile(
@@ -269,7 +269,7 @@ describe("AddCommand", () => {
 
   describe("error handling", () => {
     test("handles registry fetch errors", async () => {
-      const context = createTestContext(); // Empty registry
+      const context = createTestContext([], {}, tempDir); // Empty registry
 
       await mkdir("src/mirascope-ui", { recursive: true });
       await writeFile(

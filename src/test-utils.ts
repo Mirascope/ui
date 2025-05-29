@@ -40,9 +40,11 @@ export class TestRegistry implements Registry {
 
 export function createTestContext(
   components: RegistryComponent[] = [],
-  files: Record<string, string> = {}
+  files: Record<string, string> = {},
+  targetPath: string = "/tmp/test-project"
 ): ExecutionContext {
   return {
     registry: new TestRegistry(components, files),
+    targetPath,
   };
 }

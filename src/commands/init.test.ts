@@ -23,7 +23,7 @@ describe("InitCommand", () => {
 
   test("should create manifest successfully", async () => {
     const command = new InitCommand();
-    const context = createTestContext();
+    const context = createTestContext([], {}, testDir);
 
     const consoleLogs: string[] = [];
     const originalLog = console.log;
@@ -51,7 +51,7 @@ describe("InitCommand", () => {
     await writeFile(manifestPath, JSON.stringify({ registryUrl: "test" }));
 
     const command = new InitCommand();
-    const context = createTestContext();
+    const context = createTestContext([], {}, testDir);
 
     const consoleErrors: string[] = [];
     const originalError = console.error;
