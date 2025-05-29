@@ -3,13 +3,20 @@
   "version": "0.1.0",
   "private": false,
   "bin": {
-    "mirascope-ui": "./bin/cli.ts"
+    "mirascope-ui": "./bin/cli.js"
   },
+  "files": [
+    "bin/cli.js",
+    "README.md",
+    "LICENSE",
+    "CLI.md"
+  ],
+  "main": "./bin/cli.js",
   "scripts": {
     "build:registry": "cp registry.json dist/; cp -r mirascope-ui dist/",
     "build:storybook": "storybook build; mv storybook-static/* dist; rm -r storybook-static",
-    "build": "rm -rf dist; mkdir -p dist; bun run build:registry; bun run build:storybook",
-    "build:full": "bun run build",
+    "build": "bun run build:cli && rm -rf dist && mkdir -p dist && bun run build:registry && bun run build:storybook",
+    "build:cli": "bun build bin/cli.ts --outfile=bin/cli.js --target=bun --minify",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "typecheck": "bun run tsc --noEmit",
