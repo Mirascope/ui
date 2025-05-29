@@ -130,12 +130,11 @@ describe("CLI Integration", () => {
       expect(result.stderr).toContain("No components specified");
     });
 
-    test("sync command should show stub message", async () => {
+    test("sync command should require manifest", async () => {
       const result = await runCLI(["sync", "button"], projectPath);
 
-      expect(result.exitCode).toBe(0);
-      expect(result.stdout).toContain("Sync command not implemented yet");
-      expect(result.stdout).toContain("Would sync: button");
+      expect(result.exitCode).toBe(1);
+      expect(result.stderr).toContain("Manifest not found. Run 'mirascope-ui init' first.");
     });
   });
 });
