@@ -115,7 +115,7 @@ export class AddCommand extends BaseCommand {
       // Install npm dependencies if any
       if (allDeps.size > 0) {
         console.log(`📦 Installing dependencies: ${Array.from(allDeps).join(", ")}`);
-        await this.installDependencies(Array.from(allDeps));
+        await this.installDependencies(Array.from(allDeps), context.targetPath);
       }
 
       console.log(
@@ -134,12 +134,13 @@ export class AddCommand extends BaseCommand {
     return join("src", "mirascope-ui", relativePath);
   }
 
-  private async installDependencies(dependencies: string[]): Promise<void> {
+  private async installDependencies(dependencies: string[], targetPath: string): Promise<void> {
     const { spawn } = await import("child_process");
 
     return new Promise((resolve, reject) => {
       const proc = spawn("bun", ["add", ...dependencies], {
         stdio: "inherit",
+        cwd: targetPath,
       });
 
       proc.on("close", (code) => {

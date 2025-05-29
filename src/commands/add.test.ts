@@ -130,7 +130,7 @@ describe("AddCommand", () => {
       const buttonContent = await readFile("src/mirascope-ui/ui/button.tsx", "utf-8");
       expect(buttonContent).toBe("export const Button = () => <button>Click me</button>;");
 
-      expect(installSpy).toHaveBeenCalledWith(["@radix-ui/react-slot"]);
+      expect(installSpy).toHaveBeenCalledWith(["@radix-ui/react-slot"], tempDir);
       expect(logSpy).toHaveBeenCalledWith("✅ Added 1 component");
     });
 
@@ -206,7 +206,7 @@ describe("AddCommand", () => {
       expect(manifest.components.button).toBeDefined();
       expect(manifest.components.input).toBeDefined();
 
-      expect(installSpy).toHaveBeenCalledWith(["@radix-ui/react-slot"]);
+      expect(installSpy).toHaveBeenCalledWith(["@radix-ui/react-slot"], tempDir);
       expect(logSpy).toHaveBeenCalledWith("✅ Added 2 components");
     });
   });
@@ -257,10 +257,10 @@ describe("AddCommand", () => {
       expect(manifest.components["alert-dialog"]).toBeDefined();
       expect(manifest.components.button).toBeDefined();
 
-      expect(installSpy).toHaveBeenCalledWith([
-        "@radix-ui/react-alert-dialog",
-        "@radix-ui/react-slot",
-      ]);
+      expect(installSpy).toHaveBeenCalledWith(
+        ["@radix-ui/react-alert-dialog", "@radix-ui/react-slot"],
+        tempDir
+      );
 
       expect(logSpy).toHaveBeenCalledWith("🔗 Resolving registry dependencies: button");
       expect(logSpy).toHaveBeenCalledWith("✅ Added 2 components");
