@@ -115,8 +115,8 @@ describe("SyncCommand", () => {
       await command.execute([], context);
 
       expect(logSpy).toHaveBeenCalledWith("🔄 Syncing all 2 tracked components...");
-      expect(logSpy).toHaveBeenCalledWith("📦 Updating button...");
-      expect(logSpy).toHaveBeenCalledWith("📦 Updating card...");
+      expect(logSpy).toHaveBeenCalledWith("🗑️  Removing components: button, card");
+      expect(logSpy).toHaveBeenCalledWith("🔍 Fetching components: button, card");
       expect(logSpy).toHaveBeenCalledWith("✅ Synced 2 components");
 
       const buttonContent = await readFile("mirascope-ui/ui/button.tsx", "utf-8");
@@ -164,7 +164,8 @@ describe("SyncCommand", () => {
       await command.execute(["button"], context);
 
       expect(logSpy).toHaveBeenCalledWith("🔄 Syncing components: button");
-      expect(logSpy).toHaveBeenCalledWith("📦 Updating button...");
+      expect(logSpy).toHaveBeenCalledWith("🗑️  Removing components: button");
+      expect(logSpy).toHaveBeenCalledWith("🔍 Fetching components: button");
       expect(logSpy).toHaveBeenCalledWith("✅ Synced 1 component");
     });
 

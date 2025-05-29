@@ -1,8 +1,7 @@
 import { BaseCommand, ExecutionContext } from "./base";
 import { ManifestManager } from "../manifest";
-import { findComponents } from "../registry";
-import { writeFile, mkdir } from "fs/promises";
-import { join, dirname } from "path";
+import { RemoveCommand } from "./remove";
+import { AddCommand } from "./add";
 import { parseArgs } from "util";
 
 export class SyncCommand extends BaseCommand {
@@ -73,45 +72,25 @@ export class SyncCommand extends BaseCommand {
         console.log(`🔄 Syncing all ${componentsToSync.length} tracked components...`);
       }
 
-      const components = await findComponents(context.registry, componentsToSync);
+      // Step 1: Remove components
+      const removeCommand = new RemoveCommand();
+      await removeCommand.execute(componentsToSync, context);
 
-      for (const component of components) {
-        console.log(`📦 Updating ${component.name}...`);
-
-        const files: string[] = [];
-        for (const file of component.files) {
-          const content = await context.registry.fetchComponentFile(file.path);
-
-          // Determine target path
-          const targetPath = file.target || this.getDefaultTargetPath(file.path);
-          const fullTargetPath = join(context.targetPath, targetPath);
-
-          // Ensure directory exists
-          await mkdir(dirname(fullTargetPath), { recursive: true });
-
-          // Write file
-          await writeFile(fullTargetPath, content, "utf-8");
-          files.push(targetPath);
-        }
-
-        // Update manifest with new file list and sync time
-        await manifest.addComponent(component.name, files);
-      }
+      // Step 2: Add components back (which will pull latest + dependencies)
+      const addCommand = new AddCommand();
+      await addCommand.execute(componentsToSync, context);
 
       // Update full sync timestamp if syncing all components
       if (componentNames.length === 0) {
         await manifest.updateFullSync();
       }
 
-      console.log(`✅ Synced ${components.length} component${components.length === 1 ? "" : "s"}`);
-      components.forEach((c) => console.log(`   • ${c.name}`));
+      console.log(
+        `✅ Synced ${componentsToSync.length} component${componentsToSync.length === 1 ? "" : "s"}`
+      );
     } catch (error) {
       console.error(`❌ ${error instanceof Error ? error.message : String(error)}`);
       process.exit(1);
     }
-  }
-
-  private getDefaultTargetPath(sourcePath: string): string {
-    return sourcePath;
   }
 }
