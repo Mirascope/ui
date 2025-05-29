@@ -2,6 +2,7 @@ import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
   stories: ["../mirascope-ui/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
+  staticDirs: ["../public"],
   addons: [
     {
       name: "@storybook/addon-essentials",
