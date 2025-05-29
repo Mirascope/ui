@@ -1,8 +1,34 @@
 # Mirascope UI
 
-Mirascope UI Registry
+A component registry for React projects, built on shadcn/ui patterns with automatic synchronization capabilities.
 
-## ShadCN Registry Docs
+## Using the Registry
+
+To use components from this registry in your project:
+
+```bash
+# Install the CLI tool
+bun add -D @mirascope/ui
+
+# Initialize your project
+bunx mirascope-ui init
+
+# Add components
+bunx mirascope-ui add button dialog
+
+# Keep components in sync
+bunx mirascope-ui sync
+```
+
+The components will be installed to `./mirascope-ui` at the root of your project (alongside `package.json`).
+
+For complete CLI documentation, see [CLI.md](./CLI.md).
+
+## Development
+
+This section covers developing the registry itself (adding new components, testing, etc).
+
+### ShadCN Registry Docs
 
 https://ui.shadcn.com/docs/registry
 
@@ -26,15 +52,8 @@ bun build
 
 ## How to pull components
 
-1. Start the server
-
-   `bun dev`
-
-2. Use the `shadcn` CLI add command to install a registry item, assuming the registry item is named `hello-world` :
-
-   ```bash
-   bunx --bun shadcn@latest add http://localhost:3000/r/hello-world.json
-   ```
+Use the `mirascope-ui` CLI command (see above). Note it has `--local` and `--target` options which facilitate testing
+locally current versions of the components in your target destination of choice.
 
 ## Storybook
 

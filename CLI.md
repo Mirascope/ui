@@ -122,7 +122,7 @@ Shows current state of tracked components.
 
 Commands fetch components from the registry URL specified in `manifest.json` (default: `https://ui.mirascope.com`).
 
-### Local Development
+### Development Flags
 
 For testing registry changes during development:
 
