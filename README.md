@@ -1,6 +1,13 @@
 # Mirascope UI
 
-A component registry for React projects, built on shadcn/ui patterns with automatic synchronization capabilities.
+This repo contains the shared components and style system for building UIs aligned with the general Mirascope brand.
+
+It is still in relatively early stages and some parts (e.g. theme support) are not yet fully fleshed out or integrated
+from consumers like mirascope/lilypad and mirascope/website.
+
+This repo is intended to be the source of truth for all the components—i.e. if you need to make a change, please
+make the change here in the registry and then import it downstream into your project. By doing things this way, we
+hope to maintain a high degree of consistency between UIs across the Mirascope ecosystem.
 
 ## Using the Registry
 
