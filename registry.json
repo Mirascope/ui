@@ -310,7 +310,7 @@
       "title": "Tabs",
       "description": "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
       "dependencies": ["@radix-ui/react-tabs"],
-      "registryDependencies": ["utils"],
+      "registryDependencies": ["utils", "button"],
       "files": [
         {
           "path": "mirascope-ui/ui/tabs.tsx",
