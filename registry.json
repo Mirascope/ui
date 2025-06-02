@@ -57,6 +57,20 @@
       ]
     },
     {
+      "name": "lilypad-pricing",
+      "type": "registry:block",
+      "title": "Lilypad Pricing",
+      "description": "A complete pricing page component with feature comparison tables",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["tabs", "button-link", "utils"],
+      "files": [
+        {
+          "path": "mirascope-ui/blocks/lilypad-pricing.tsx",
+          "type": "registry:block"
+        }
+      ]
+    },
+    {
       "name": "code-block",
       "type": "registry:block",
       "title": "Code Block",
