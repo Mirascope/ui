@@ -52,6 +52,7 @@
     "@storybook/addon-actions": "^8.6.14",
     "@storybook/addon-themes": "^8.6.14",
     "@tailwindcss/typography": "^0.5.16",
+    "@tanstack/react-router": "^1.120.13",
     "bun-types": "^1.2.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

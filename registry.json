@@ -57,6 +57,20 @@
       ]
     },
     {
+      "name": "lilypad-pricing",
+      "type": "registry:block",
+      "title": "Lilypad Pricing",
+      "description": "A complete pricing page component with feature comparison tables",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["tabs", "button-link", "utils"],
+      "files": [
+        {
+          "path": "mirascope-ui/blocks/lilypad-pricing.tsx",
+          "type": "registry:block"
+        }
+      ]
+    },
+    {
       "name": "code-block",
       "type": "registry:block",
       "title": "Code Block",
@@ -92,6 +106,20 @@
       "files": [
         {
           "path": "mirascope-ui/ui/button.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
+      "name": "button-link",
+      "type": "registry:ui",
+      "title": "Button Link",
+      "description": "A component that renders either a Link or anchor tag with button styling.",
+      "dependencies": ["@tanstack/react-router"],
+      "registryDependencies": ["button", "utils"],
+      "files": [
+        {
+          "path": "mirascope-ui/ui/button-link.tsx",
           "type": "registry:ui"
         }
       ]
@@ -296,7 +324,7 @@
       "title": "Tabs",
       "description": "A set of layered sections of content—known as tab panels—that are displayed one at a time.",
       "dependencies": ["@radix-ui/react-tabs"],
-      "registryDependencies": ["utils"],
+      "registryDependencies": ["utils", "button"],
       "files": [
         {
           "path": "mirascope-ui/ui/tabs.tsx",
