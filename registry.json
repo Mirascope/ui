@@ -97,6 +97,20 @@
       ]
     },
     {
+      "name": "button-link",
+      "type": "registry:ui",
+      "title": "Button Link",
+      "description": "A component that renders either a Link or anchor tag with button styling.",
+      "dependencies": ["@tanstack/react-router"],
+      "registryDependencies": ["button", "utils"],
+      "files": [
+        {
+          "path": "mirascope-ui/ui/button-link.tsx",
+          "type": "registry:ui"
+        }
+      ]
+    },
+    {
       "name": "input",
       "type": "registry:ui",
       "title": "Input",
