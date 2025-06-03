@@ -161,14 +161,25 @@ describe("AddCommand", () => {
       expect(logSpy).toHaveBeenCalledWith("✅ Added 1 component");
     });
 
-    test("warns about already tracked components", async () => {
+    test("syncs already tracked components", async () => {
       const buttonComponent: RegistryComponent = {
         name: "button",
         type: "registry:ui" as const,
         files: [{ path: "mirascope-ui/ui/button.tsx", type: "registry:ui" as const, content: "" }],
       };
 
-      const context = createTestContext([buttonComponent], {}, tempDir);
+      const files = {
+        "mirascope-ui/ui/button.tsx": "export const Button = () => <button>Updated</button>;",
+      };
+
+      const context = createTestContext([buttonComponent], files, tempDir);
+
+      // Create existing button file
+      await mkdir("mirascope-ui/ui", { recursive: true });
+      await writeFile(
+        "mirascope-ui/ui/button.tsx",
+        "export const Button = () => <button>Old</button>;"
+      );
 
       await writeFile(
         "mirascope-ui/manifest.json",
@@ -189,8 +200,13 @@ describe("AddCommand", () => {
 
       await command.execute(["button"], context);
 
-      expect(logSpy).toHaveBeenCalledWith("⚠️  Already tracking: button");
-      expect(logSpy).toHaveBeenCalledWith("✅ All components already tracked");
+      // Should show sync message
+      expect(logSpy).toHaveBeenCalledWith("🔄 Syncing button...");
+      expect(logSpy).toHaveBeenCalledWith("✅ Added 1 component");
+
+      // Component should be updated
+      const buttonContent = await readFile("mirascope-ui/ui/button.tsx", "utf-8");
+      expect(buttonContent).toBe("export const Button = () => <button>Updated</button>;");
     });
 
     test("adds multiple components", async () => {
@@ -289,12 +305,81 @@ describe("AddCommand", () => {
       expect(manifest.components.button).toBeDefined();
 
       expect(installSpy).toHaveBeenCalledWith(
-        ["@radix-ui/react-alert-dialog", "@radix-ui/react-slot"],
+        expect.arrayContaining(["@radix-ui/react-alert-dialog", "@radix-ui/react-slot"]),
         tempDir
       );
 
-      expect(logSpy).toHaveBeenCalledWith("🔗 Resolving registry dependencies: button");
+      expect(logSpy).toHaveBeenCalledWith("📦 Adding button...");
       expect(logSpy).toHaveBeenCalledWith("✅ Added 2 components");
+    });
+
+    test("resolves recursive registry dependencies", async () => {
+      const components: RegistryComponent[] = [
+        {
+          name: "primary",
+          type: "registry:ui" as const,
+          dependencies: ["dep-a"],
+          registryDependencies: ["secondary"],
+          files: [
+            { path: "mirascope-ui/ui/primary.tsx", type: "registry:ui" as const, content: "" },
+          ],
+        },
+        {
+          name: "secondary",
+          type: "registry:ui" as const,
+          dependencies: ["dep-b"],
+          registryDependencies: ["tertiary"],
+          files: [
+            { path: "mirascope-ui/ui/secondary.tsx", type: "registry:ui" as const, content: "" },
+          ],
+        },
+        {
+          name: "tertiary",
+          type: "registry:lib" as const,
+          dependencies: ["dep-c"],
+          files: [
+            { path: "mirascope-ui/lib/tertiary.ts", type: "registry:lib" as const, content: "" },
+          ],
+        },
+      ];
+
+      const files = {
+        "mirascope-ui/ui/primary.tsx": "export const Primary = () => null;",
+        "mirascope-ui/ui/secondary.tsx": "export const Secondary = () => null;",
+        "mirascope-ui/lib/tertiary.ts": "export const tertiary = () => {};",
+      };
+
+      const context = createTestContext(components, files, tempDir);
+
+      await mkdir("mirascope-ui", { recursive: true });
+      await writeFile(
+        "mirascope-ui/manifest.json",
+        JSON.stringify({
+          registryUrl: REGISTRY_URL,
+          components: {},
+          lastFullSync: "",
+        })
+      );
+
+      const command = new AddCommand();
+      const installSpy = spyOn(command as any, "installDependencies").mockResolvedValue(undefined);
+
+      await command.execute(["primary"], context);
+
+      const manifest = JSON.parse(await readFile("mirascope-ui/manifest.json", "utf-8"));
+
+      // All three components should be installed (primary -> secondary -> tertiary)
+      expect(manifest.components.primary).toBeDefined();
+      expect(manifest.components.secondary).toBeDefined();
+      expect(manifest.components.tertiary).toBeDefined();
+
+      // All npm dependencies from all levels should be collected
+      expect(installSpy).toHaveBeenCalledWith(
+        expect.arrayContaining(["dep-a", "dep-b", "dep-c"]),
+        tempDir
+      );
+
+      expect(logSpy).toHaveBeenCalledWith("✅ Added 3 components");
     });
   });
 

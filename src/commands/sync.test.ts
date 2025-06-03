@@ -116,9 +116,9 @@ describe("SyncCommand", () => {
       await command.execute([], context);
 
       expect(logSpy).toHaveBeenCalledWith("🔄 Syncing all 2 tracked components...");
-      expect(logSpy).toHaveBeenCalledWith("🗑️  Removing components: button, card");
-      expect(logSpy).toHaveBeenCalledWith("🔍 Fetching components: button, card");
-      expect(logSpy).toHaveBeenCalledWith("✅ Synced 2 components");
+      expect(logSpy).toHaveBeenCalledWith("🔄 Syncing button...");
+      expect(logSpy).toHaveBeenCalledWith("🔄 Syncing card...");
+      expect(logSpy).toHaveBeenCalledWith("✅ Added 2 components");
 
       const buttonContent = await readFile("mirascope-ui/ui/button.tsx", "utf-8");
       expect(buttonContent).toBe("export const Button = () => <button>Updated Button</button>;");
@@ -165,9 +165,8 @@ describe("SyncCommand", () => {
       await command.execute(["button"], context);
 
       expect(logSpy).toHaveBeenCalledWith("🔄 Syncing components: button");
-      expect(logSpy).toHaveBeenCalledWith("🗑️  Removing components: button");
-      expect(logSpy).toHaveBeenCalledWith("🔍 Fetching components: button");
-      expect(logSpy).toHaveBeenCalledWith("✅ Synced 1 component");
+      expect(logSpy).toHaveBeenCalledWith("🔄 Syncing button...");
+      expect(logSpy).toHaveBeenCalledWith("✅ Added 1 component");
     });
 
     test("shows error for untracked components", async () => {
@@ -192,8 +191,7 @@ describe("SyncCommand", () => {
       await expect(command.execute(["nonexistent"], context)).rejects.toThrow(
         "process.exit called"
       );
-      expect(errorSpy).toHaveBeenNthCalledWith(1, "❌ Components not tracked: nonexistent");
-      expect(errorSpy).toHaveBeenNthCalledWith(2, "Available components:", "button");
+      expect(errorSpy).toHaveBeenCalledWith('❌ Component "nonexistent" not found in registry');
     });
 
     test("updates lastSync timestamp", async () => {

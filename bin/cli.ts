@@ -8,7 +8,7 @@ import { StatusCommand } from "../src/commands/status";
 import { ExecutionContext } from "../src/commands/base";
 import { FileRegistry, RemoteRegistry } from "../src/registry";
 import { existsSync } from "fs";
-import { join } from "path";
+import { join, resolve } from "path";
 import { REGISTRY_URL } from "@/src/constants";
 
 const COMMANDS = {
@@ -90,6 +90,30 @@ async function main() {
       "Please run this command from your project root or specify a valid --target directory."
     );
     process.exit(1);
+  }
+
+  // Validate --local requires --target
+  if (globalFlags.local && !globalFlags.target) {
+    console.error("❌ --local requires --target to specify where to install components");
+    console.error(
+      "Usage: mirascope-ui --local [--local-path <path>] --target <target-path> <command>"
+    );
+    process.exit(1);
+  }
+
+  // Validate source and target are different directories
+  if (globalFlags.local) {
+    const sourcePath = globalFlags.localPath || process.cwd();
+    const resolvedSource = resolve(sourcePath);
+    const resolvedTarget = resolve(targetPath);
+
+    if (resolvedSource === resolvedTarget) {
+      console.error("❌ Registry source and target directories cannot be the same");
+      console.error(
+        "Use --local-path to specify a different registry location, or --target to specify a different target location."
+      );
+      process.exit(1);
+    }
   }
 
   // Create registry based on flags

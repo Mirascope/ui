@@ -23,6 +23,12 @@ export async function createTempProject(basePath: string, name: string): Promise
   return projectPath;
 }
 
+export async function createTempRegistry(basePath: string, name: string): Promise<string> {
+  const registryPath = join(basePath, name);
+  await mkdir(registryPath, { recursive: true });
+  return registryPath;
+}
+
 export async function cleanupTempDir(path: string): Promise<void> {
   try {
     await rm(path, { recursive: true, force: true });

@@ -5,6 +5,7 @@ import { writeFile, mkdir } from "fs/promises";
 import { join, dirname } from "path";
 import { parseArgs } from "util";
 import { InitCommand } from "./init";
+import { RemoveCommand } from "./remove";
 
 export class AddCommand extends BaseCommand {
   async execute(args: string[], context: ExecutionContext): Promise<void> {
@@ -53,81 +54,109 @@ export class AddCommand extends BaseCommand {
         await initCommand.execute([], context);
       }
 
-      const components = await findComponents(context.registry, componentNames);
+      // Track what we've processed in this operation to avoid duplicates
+      const processedComponents = new Set<string>();
+      const allNpmDeps = new Set<string>();
+      const addedComponents: string[] = [];
 
-      // Check for already tracked components
-      const manifestData = await manifest.read();
-      const alreadyTracked = components.filter((c) => c.name in manifestData.components);
-      if (alreadyTracked.length > 0) {
-        console.log(`⚠️  Already tracking: ${alreadyTracked.map((c) => c.name).join(", ")}`);
-        console.log("   Use 'mirascope-ui sync' to update them");
+      // Process each requested component recursively
+      for (const componentName of componentNames) {
+        await this.addComponentRecursively(
+          componentName,
+          context,
+          processedComponents,
+          allNpmDeps,
+          addedComponents
+        );
       }
 
-      const newComponents = components.filter((c) => !(c.name in manifestData.components));
-      if (newComponents.length === 0) {
-        console.log("✅ All components already tracked");
-        return;
-      }
-
-      // Collect all dependencies (including registry dependencies)
-      const allDeps = new Set<string>();
-      const registryDeps = new Set<string>();
-
-      for (const component of newComponents) {
-        component.dependencies?.forEach((dep) => allDeps.add(dep));
-        component.registryDependencies?.forEach((dep) => registryDeps.add(dep));
-      }
-
-      // Resolve registry dependencies
-      if (registryDeps.size > 0) {
-        console.log(`🔗 Resolving registry dependencies: ${Array.from(registryDeps).join(", ")}`);
-        const depComponents = await findComponents(context.registry, Array.from(registryDeps));
-        for (const dep of depComponents) {
-          if (!(dep.name in manifestData.components)) {
-            newComponents.push(dep);
-            dep.dependencies?.forEach((d) => allDeps.add(d));
-          }
-        }
-      }
-
-      // Download and save all component files
-      for (const component of newComponents) {
-        console.log(`📦 Adding ${component.name}...`);
-
-        const files: string[] = [];
-        for (const file of component.files) {
-          const content = await context.registry.fetchComponentFile(file.path);
-
-          // Determine target path
-          const targetPath = file.target || this.getDefaultTargetPath(file.path);
-          const fullTargetPath = join(context.targetPath, targetPath);
-
-          // Ensure directory exists
-          await mkdir(dirname(fullTargetPath), { recursive: true });
-
-          // Write file
-          await writeFile(fullTargetPath, content, "utf-8");
-          files.push(targetPath);
-        }
-
-        // Add to manifest
-        await manifest.addComponent(component.name, files);
-      }
-
-      // Install npm dependencies if any
-      if (allDeps.size > 0) {
-        console.log(`📦 Installing dependencies: ${Array.from(allDeps).join(", ")}`);
-        await this.installDependencies(Array.from(allDeps), context.targetPath);
+      // Install all collected npm dependencies
+      if (allNpmDeps.size > 0) {
+        console.log(`📦 Installing dependencies: ${Array.from(allNpmDeps).join(", ")}`);
+        await this.installDependencies(Array.from(allNpmDeps), context.targetPath);
       }
 
       console.log(
-        `✅ Added ${newComponents.length} component${newComponents.length === 1 ? "" : "s"}`
+        `✅ Added ${addedComponents.length} component${addedComponents.length === 1 ? "" : "s"}`
       );
-      newComponents.forEach((c) => console.log(`   • ${c.name}`));
+      addedComponents.forEach((c) => console.log(`   • ${c}`));
     } catch (error) {
       console.error(`❌ ${error instanceof Error ? error.message : String(error)}`);
       process.exit(1);
     }
+  }
+
+  private async addComponentRecursively(
+    componentName: string,
+    context: ExecutionContext,
+    processedComponents: Set<string>,
+    allNpmDeps: Set<string>,
+    addedComponents: string[]
+  ): Promise<void> {
+    // Skip if already processed in this operation
+    if (processedComponents.has(componentName)) {
+      return;
+    }
+
+    processedComponents.add(componentName);
+
+    const manifest = new ManifestManager(context.targetPath);
+    const manifestData = await manifest.read();
+
+    // If component is already tracked, remove it first (sync behavior)
+    if (componentName in manifestData.components) {
+      console.log(`🔄 Syncing ${componentName}...`);
+      const removeCommand = new RemoveCommand();
+      await removeCommand.removeComponent(componentName, context, false);
+    }
+
+    // Fetch the component
+    const components = await findComponents(context.registry, [componentName]);
+    if (components.length === 0) {
+      throw new Error(`Component '${componentName}' not found in registry`);
+    }
+
+    const component = components[0];
+
+    // First, recursively add all registry dependencies
+    if (component.registryDependencies && component.registryDependencies.length > 0) {
+      for (const dep of component.registryDependencies) {
+        await this.addComponentRecursively(
+          dep,
+          context,
+          processedComponents,
+          allNpmDeps,
+          addedComponents
+        );
+      }
+    }
+
+    // Now add this component
+    const isSync = componentName in manifestData.components;
+    console.log(`📦 ${isSync ? "Syncing" : "Adding"} ${componentName}...`);
+
+    const files: string[] = [];
+    for (const file of component.files) {
+      const content = await context.registry.fetchComponentFile(file.path);
+
+      // Determine target path
+      const targetPath = file.target || this.getDefaultTargetPath(file.path);
+      const fullTargetPath = join(context.targetPath, targetPath);
+
+      // Ensure directory exists
+      await mkdir(dirname(fullTargetPath), { recursive: true });
+
+      // Write file
+      await writeFile(fullTargetPath, content, "utf-8");
+      files.push(targetPath);
+    }
+
+    // Add to manifest
+    await manifest.addComponent(componentName, files);
+    addedComponents.push(componentName);
+
+    // Collect npm dependencies
+    component.dependencies?.forEach((dep) => allNpmDeps.add(dep));
   }
 
   private getDefaultTargetPath(sourcePath: string): string {

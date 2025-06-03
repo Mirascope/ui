@@ -8,7 +8,8 @@
       "Bash(bun test:*)",
       "Bash(bun run test-cli:*)",
       "Bash(rg:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(ls:*)"
     ],
     "deny": []
   },
