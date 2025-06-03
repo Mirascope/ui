@@ -69,23 +69,7 @@ export class RemoveCommand extends BaseCommand {
 
       for (const componentName of componentNames) {
         console.log(`📦 Removing ${componentName}...`);
-
-        const componentInfo = manifestData.components[componentName];
-
-        // Remove files
-        for (const file of componentInfo.files) {
-          const fullFilePath = join(context.targetPath, file);
-          try {
-            await rm(fullFilePath, { force: true });
-          } catch (error) {
-            console.warn(
-              `⚠️  Could not remove file ${file}: ${error instanceof Error ? error.message : String(error)}`
-            );
-          }
-        }
-
-        // Remove from manifest
-        await manifest.removeComponent(componentName);
+        await this.removeComponent(componentName, context, true);
       }
 
       console.log(
@@ -96,5 +80,41 @@ export class RemoveCommand extends BaseCommand {
       console.error(`❌ ${error instanceof Error ? error.message : String(error)}`);
       process.exit(1);
     }
+  }
+
+  /**
+   * Core removal logic shared between public and silent removal methods.
+   */
+  async removeComponent(
+    componentName: string,
+    context: ExecutionContext,
+    showWarnings: boolean = false
+  ): Promise<void> {
+    const manifest = new ManifestManager(context.targetPath);
+    const manifestData = await manifest.read();
+
+    // Skip if component not tracked
+    if (!(componentName in manifestData.components)) {
+      return;
+    }
+
+    const componentInfo = manifestData.components[componentName];
+
+    // Remove files
+    for (const file of componentInfo.files) {
+      const fullFilePath = join(context.targetPath, file);
+      try {
+        await rm(fullFilePath, { force: true });
+      } catch (error) {
+        if (showWarnings) {
+          console.warn(
+            `⚠️  Could not remove file ${file}: ${error instanceof Error ? error.message : String(error)}`
+          );
+        }
+      }
+    }
+
+    // Remove from manifest
+    await manifest.removeComponent(componentName);
   }
 }

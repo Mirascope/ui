@@ -1,6 +1,5 @@
 import { BaseCommand, ExecutionContext } from "./base";
 import { ManifestManager } from "../manifest";
-import { RemoveCommand } from "./remove";
 import { AddCommand } from "./add";
 import { parseArgs } from "util";
 
@@ -55,28 +54,16 @@ export class SyncCommand extends BaseCommand {
 
       let componentsToSync: string[];
       if (componentNames.length > 0) {
-        // Sync specific components
-        const invalidComponents = componentNames.filter(
-          (name) => !(name in manifestData.components)
-        );
-        if (invalidComponents.length > 0) {
-          console.error(`❌ Components not tracked: ${invalidComponents.join(", ")}`);
-          console.error("Available components:", trackedComponents.join(", "));
-          process.exit(1);
-        }
+        // Sync specific components (no need to validate - AddCommand will handle)
         componentsToSync = componentNames;
         console.log(`🔄 Syncing components: ${componentsToSync.join(", ")}`);
       } else {
-        // Sync all components
+        // Sync all tracked components
         componentsToSync = trackedComponents;
         console.log(`🔄 Syncing all ${componentsToSync.length} tracked components...`);
       }
 
-      // Step 1: Remove components
-      const removeCommand = new RemoveCommand();
-      await removeCommand.execute(componentsToSync, context);
-
-      // Step 2: Add components back (which will pull latest + dependencies)
+      // AddCommand now handles remove + add automatically for existing components
       const addCommand = new AddCommand();
       await addCommand.execute(componentsToSync, context);
 
@@ -84,10 +71,6 @@ export class SyncCommand extends BaseCommand {
       if (componentNames.length === 0) {
         await manifest.updateFullSync();
       }
-
-      console.log(
-        `✅ Synced ${componentsToSync.length} component${componentsToSync.length === 1 ? "" : "s"}`
-      );
     } catch (error) {
       console.error(`❌ ${error instanceof Error ? error.message : String(error)}`);
       process.exit(1);

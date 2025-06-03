@@ -20,10 +20,10 @@ bun add -D @mirascope/ui
 # Initialize your project
 bunx mirascope-ui init
 
-# Add components
+# Add components (automatically syncs if already exists)
 bunx mirascope-ui add button dialog
 
-# Keep components in sync
+# Sync all tracked components
 bunx mirascope-ui sync
 ```
 

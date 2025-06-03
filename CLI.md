@@ -64,7 +64,7 @@ mirascope-ui [global-flags] <command> [command-args]
 
 ### Global Flags
 
-- `--local` - Use local registry.json file in current directory
+- `--local` - Use local registry.json file in current directory. When using `--local`, `--target` must be set.
 - `--local-path <path>` - Use local registry.json file at specified path
 - `--registry-url <url>` - Override registry URL (default: https://ui.mirascope.com)
 - `--target <path>` - Target directory for file operations (default: current directory)
@@ -81,23 +81,17 @@ Creates initial manifest.json file and sets up mirascope-ui/ directory structure
 
 #### `mirascope-ui add <component1> [component2] ...`
 
-Adds new components to the project.
+Adds or updates components in the project.
 
 - Downloads component files from registry to `mirascope-ui/`
-- Resolves and includes registry dependencies (e.g., components using `cn` util automatically get `utils`)
+- Recursively resolves registry dependencies (e.g., `button-link` → `button` → `utils`)
+- Auto-syncs components: If component already tracked, removes and re-adds with latest version
 - Installs npm dependencies via `bun add`
 - Updates manifest to track new components
-- Skips components already tracked (use `sync` to update them)
 
-#### `mirascope-ui sync [component1] [component2] ...]`
+#### `mirascope-ui sync [component1] [component2] ...`
 
-Updates existing tracked components to latest versions.
-
-- **No components specified**: Syncs all tracked components
-- **Components specified**: Syncs only named components
-- **Implementation**: Runs `remove` then `add` commands to ensure clean updates
-- Resolves new dependencies that may have been added to components
-- Updates manifest timestamps
+Updates all tracked components to latest versions. If components are passed, then it is an alias for calling `mirascpe-ui add`.
 
 #### `mirascope-ui remove <component1> [component2] ...`
 
@@ -129,11 +123,12 @@ For testing registry changes during development:
 #### `--local` flag
 
 ```bash
-mirascope-ui --local add button
+mirascope-ui --local --target ../other/path add button
 ```
 
 - Reads `registry.json` from current directory
-- Useful when working within the registry project itself
+- Useful when you want to test local changes to registry within another project.
+- Must use `--target` flag too (since installing registry components into the registry itself does not make sense)
 
 #### `--local-path` flag
 
@@ -160,7 +155,7 @@ mirascope-ui --target /path/to/project add button
 ```
 
 - Changes where files are written (default: current directory)
-- Useful for testing or scripting operations on other projects
+- Useful for testing changes on other projects
 
 ## Integration Points
 
@@ -175,13 +170,6 @@ mirascope-ui --target /path/to/project add button
 }
 ```
 
-### GitHub Actions Integration
-
-- Daily workflow runs `mirascope-ui status`
-- If updates available, runs `mirascope-ui`
-- Creates PR with changes and updated manifest
-- PR description shows which components were updated
-
 ## Key Behaviors
 
 ### Overwrite Strategy
@@ -193,20 +181,6 @@ mirascope-ui --target /path/to/project add button
 ### Registry Dependencies
 
 Components can declare dependencies on other registry components using `registryDependencies`. For example, most UI components depend on the `utils` component for the `cn()` utility function.
-
-When adding or syncing components, registry dependencies are automatically resolved and included. This ensures all required utilities and base components are available.
-
-### Dependency Management
-
-- Installs npm dependencies via `bun add` for new components
-- Registry dependencies automatically resolved and included
-- Does not remove npm dependencies when removing components (to avoid breaking local code)
-
-### Overwrite Strategy
-
-- Registry files are **always overwritten** during sync operations
-- No merge conflicts - registry version always wins
-- Clear separation between registry files (`mirascope-ui/`) and local components (`src/`) prevents accidental modifications
 
 ## Examples
 
@@ -258,19 +232,3 @@ mirascope-ui --target ./my-project add button
   }
 }
 ```
-
-GitHub Actions workflow:
-
-```yaml
-- name: Sync UI Registry
-  run: |
-    bun mirascope-ui status
-    bun mirascope-ui sync
-```
-
-## Architecture Notes
-
-- **Command delegation**: `sync` command delegates to `remove` + `add` for clean updates
-- **Atomic operations**: All file operations are atomic - either fully succeed or fail cleanly
-- **Comprehensive testing**: 100+ tests covering all commands and edge cases
-- **TypeScript**: Full type safety throughout codebase

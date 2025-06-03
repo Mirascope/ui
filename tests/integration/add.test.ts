@@ -1,14 +1,21 @@
 import { describe, test, expect, beforeEach, afterEach } from "bun:test";
 import { mkdir, writeFile, readFile, stat } from "fs/promises";
 import { join } from "path";
-import { runCLI, createTempProject, cleanupTempDir } from "../helpers/test-utils";
+import {
+  runCLI,
+  createTempProject,
+  createTempRegistry,
+  cleanupTempDir,
+} from "../helpers/test-utils";
 
 describe("Add Command Integration", () => {
   const tempDir = join(process.cwd(), "test-temp-add-integration");
   let projectPath: string;
+  let registryPath: string;
 
   beforeEach(async () => {
     projectPath = await createTempProject(tempDir, "test-project");
+    registryPath = await createTempRegistry(tempDir, "test-registry");
   });
 
   afterEach(async () => {
@@ -35,12 +42,12 @@ describe("Add Command Integration", () => {
         ],
       };
 
-      await writeFile(join(projectPath, "registry.json"), JSON.stringify(registryData));
+      await writeFile(join(registryPath, "registry.json"), JSON.stringify(registryData));
 
       // Create registry files
-      await mkdir(join(projectPath, "mirascope-ui", "ui"), { recursive: true });
+      await mkdir(join(registryPath, "mirascope-ui", "ui"), { recursive: true });
       await writeFile(
-        join(projectPath, "mirascope-ui", "ui", "button.tsx"),
+        join(registryPath, "mirascope-ui", "ui", "button.tsx"),
         "export const Button = () => <button>Click me</button>;"
       );
 
@@ -48,7 +55,10 @@ describe("Add Command Integration", () => {
       await runCLI(["init"], projectPath);
 
       // Add component
-      const result = await runCLI(["add", "--local", "button"], projectPath);
+      const result = await runCLI(
+        ["add", "--local-path", registryPath, "--target", projectPath, "button"],
+        projectPath
+      );
 
       expect(result.exitCode).toBe(0);
       expect(result.stdout).toContain("🔍 Fetching components: button");
@@ -96,16 +106,16 @@ describe("Add Command Integration", () => {
         ],
       };
 
-      await writeFile(join(projectPath, "registry.json"), JSON.stringify(registryData));
+      await writeFile(join(registryPath, "registry.json"), JSON.stringify(registryData));
 
       // Create registry files
-      await mkdir(join(projectPath, "mirascope-ui", "ui"), { recursive: true });
+      await mkdir(join(registryPath, "mirascope-ui", "ui"), { recursive: true });
       await writeFile(
-        join(projectPath, "mirascope-ui", "ui", "button.tsx"),
+        join(registryPath, "mirascope-ui", "ui", "button.tsx"),
         "export const Button = () => <button />;"
       );
       await writeFile(
-        join(projectPath, "mirascope-ui", "ui", "input.tsx"),
+        join(registryPath, "mirascope-ui", "ui", "input.tsx"),
         "export const Input = () => <input />;"
       );
 
@@ -113,7 +123,10 @@ describe("Add Command Integration", () => {
       await runCLI(["init"], projectPath);
 
       // Add components
-      const result = await runCLI(["add", "--local", "button", "input"], projectPath);
+      const result = await runCLI(
+        ["add", "--local-path", registryPath, "--target", projectPath, "button", "input"],
+        projectPath
+      );
 
       expect(result.exitCode).toBe(0);
       expect(result.stdout).toContain("🔍 Fetching components: button, input");
@@ -145,23 +158,29 @@ describe("Add Command Integration", () => {
         ],
       };
 
-      await writeFile(join(projectPath, "registry.json"), JSON.stringify(registryData));
-      await mkdir(join(projectPath, "mirascope-ui", "ui"), { recursive: true });
+      await writeFile(join(registryPath, "registry.json"), JSON.stringify(registryData));
+      await mkdir(join(registryPath, "mirascope-ui", "ui"), { recursive: true });
       await writeFile(
-        join(projectPath, "mirascope-ui", "ui", "button.tsx"),
+        join(registryPath, "mirascope-ui", "ui", "button.tsx"),
         "export const Button = () => <button />;"
       );
 
       // Initialize project and add component first time
       await runCLI(["init"], projectPath);
-      await runCLI(["add", "--local", "button"], projectPath);
+      await runCLI(
+        ["add", "--local-path", registryPath, "--target", projectPath, "button"],
+        projectPath
+      );
 
       // Try to add again
-      const result = await runCLI(["add", "--local", "button"], projectPath);
+      const result = await runCLI(
+        ["add", "--local-path", registryPath, "--target", projectPath, "button"],
+        projectPath
+      );
 
       expect(result.exitCode).toBe(0);
-      expect(result.stdout).toContain("⚠️  Already tracking: button");
-      expect(result.stdout).toContain("✅ All components already tracked");
+      expect(result.stdout).toContain("🔄 Syncing button...");
+      expect(result.stdout).toContain("✅ Added 1 component");
     });
   });
 
@@ -195,14 +214,14 @@ describe("Add Command Integration", () => {
         ],
       };
 
-      await writeFile(join(projectPath, "registry.json"), JSON.stringify(registryData));
-      await mkdir(join(projectPath, "mirascope-ui", "ui"), { recursive: true });
+      await writeFile(join(registryPath, "registry.json"), JSON.stringify(registryData));
+      await mkdir(join(registryPath, "mirascope-ui", "ui"), { recursive: true });
       await writeFile(
-        join(projectPath, "mirascope-ui", "ui", "alert-dialog.tsx"),
+        join(registryPath, "mirascope-ui", "ui", "alert-dialog.tsx"),
         "export const AlertDialog = () => null;"
       );
       await writeFile(
-        join(projectPath, "mirascope-ui", "ui", "button.tsx"),
+        join(registryPath, "mirascope-ui", "ui", "button.tsx"),
         "export const Button = () => <button />;"
       );
 
@@ -210,10 +229,14 @@ describe("Add Command Integration", () => {
       await runCLI(["init"], projectPath);
 
       // Add component with registry dependency
-      const result = await runCLI(["add", "--local", "alert-dialog"], projectPath);
+      const result = await runCLI(
+        ["add", "--local-path", registryPath, "--target", projectPath, "alert-dialog"],
+        projectPath
+      );
 
       expect(result.exitCode).toBe(0);
-      expect(result.stdout).toContain("🔗 Resolving registry dependencies: button");
+      expect(result.stdout).toContain("📦 Adding button...");
+      expect(result.stdout).toContain("📦 Adding alert-dialog...");
       expect(result.stdout).toContain("✅ Added 2 components");
 
       // Check both components were added
@@ -247,15 +270,15 @@ describe("Add Command Integration", () => {
         ],
       };
 
-      await writeFile(join(projectPath, "registry.json"), JSON.stringify(registryData));
-      await mkdir(join(projectPath, "mirascope-ui", "blocks"), { recursive: true });
-      await mkdir(join(projectPath, "mirascope-ui", "lib"), { recursive: true });
+      await writeFile(join(registryPath, "registry.json"), JSON.stringify(registryData));
+      await mkdir(join(registryPath, "mirascope-ui", "blocks"), { recursive: true });
+      await mkdir(join(registryPath, "mirascope-ui", "lib"), { recursive: true });
       await writeFile(
-        join(projectPath, "mirascope-ui", "blocks", "code-block.tsx"),
+        join(registryPath, "mirascope-ui", "blocks", "code-block.tsx"),
         "export const CodeBlock = () => null;"
       );
       await writeFile(
-        join(projectPath, "mirascope-ui", "lib", "code-highlight.ts"),
+        join(registryPath, "mirascope-ui", "lib", "code-highlight.ts"),
         "export const highlight = () => {};"
       );
 
@@ -263,7 +286,10 @@ describe("Add Command Integration", () => {
       await runCLI(["init"], projectPath);
 
       // Add block component
-      const result = await runCLI(["add", "--local", "code-block"], projectPath);
+      const result = await runCLI(
+        ["add", "--local-path", registryPath, "--target", projectPath, "code-block"],
+        projectPath
+      );
 
       expect(result.exitCode).toBe(0);
       expect(result.stdout).toContain("✅ Added 1 component");
@@ -280,13 +306,16 @@ describe("Add Command Integration", () => {
   describe("error handling", () => {
     test("fails for non-existent component", async () => {
       // Create empty registry
-      await writeFile(join(projectPath, "registry.json"), JSON.stringify({ items: [] }));
+      await writeFile(join(registryPath, "registry.json"), JSON.stringify({ items: [] }));
 
       // Initialize project
       await runCLI(["init"], projectPath);
 
       // Try to add non-existent component
-      const result = await runCLI(["add", "--local", "nonexistent"], projectPath);
+      const result = await runCLI(
+        ["add", "--local-path", registryPath, "--target", projectPath, "nonexistent"],
+        projectPath
+      );
 
       expect(result.exitCode).toBe(1);
       expect(result.stderr).toContain('Component "nonexistent" not found in registry');
@@ -297,10 +326,34 @@ describe("Add Command Integration", () => {
       await runCLI(["init"], projectPath);
 
       // Try to add with local flag but no registry.json
-      const result = await runCLI(["add", "--local", "button"], projectPath);
+      const result = await runCLI(
+        ["add", "--local-path", registryPath, "--target", projectPath, "button"],
+        projectPath
+      );
 
       expect(result.exitCode).toBe(1);
       expect(result.stderr).toContain("Failed to read local registry");
+    });
+
+    test("fails when --local is used without --target", async () => {
+      const result = await runCLI(["add", "--local", "button"], projectPath);
+
+      expect(result.exitCode).toBe(1);
+      expect(result.stderr).toContain(
+        "❌ --local requires --target to specify where to install components"
+      );
+    });
+
+    test("fails when source and target directories are the same", async () => {
+      const result = await runCLI(
+        ["add", "--local", "--target", projectPath, "button"],
+        projectPath
+      );
+
+      expect(result.exitCode).toBe(1);
+      expect(result.stderr).toContain(
+        "❌ Registry source and target directories cannot be the same"
+      );
     });
 
     test("shows usage when no components specified", async () => {
