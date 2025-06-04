@@ -319,7 +319,7 @@ export function LilypadPricing({ actions }: LilypadPricingProps) {
           <p className="text-muted-foreground">
             Join our{" "}
             <ButtonLink
-              href="https://join.slack.com/t/mirascope-community/shared_invite/zt-2ilqhvmki-FB6LWluInUCkkjYD3oSjNA"
+              href="https://mirascope.com/slack-invite?"
               variant="link"
               className="h-auto p-0"
             >
