@@ -20,7 +20,8 @@ const buttonVariants = cva(
         default: "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90 ",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 ",
-        outline: "border bg-background shadow-xs hover:bg-muted hover:cursor-pointer ",
+        outline:
+          "border border-primary text-primary bg-background shadow-xs hover:bg-accent hover:text-accent-foreground hover:cursor-pointer",
         outlineDestructive:
           "border border-input bg-background text-destructive hover:cursor-pointer hover:bg-destructive-hover",
         outlineSecondary:
@@ -53,12 +54,12 @@ const buttonVariants = cva(
   }
 );
 
-export interface ButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof buttonVariants> {
-  asChild?: boolean;
-  loading?: boolean;
-}
+export type ButtonProps = React.ComponentProps<"button"> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean;
+    loading?: boolean;
+  };
+
 function Button({
   className,
   loading = false,
