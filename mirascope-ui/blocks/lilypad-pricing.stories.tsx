@@ -1,4 +1,5 @@
 import { LilypadPricing } from "@/mirascope-ui/blocks/lilypad-pricing";
+import { ButtonLink } from "@/mirascope-ui/ui/button-link";
 import type { Meta, StoryObj } from "@storybook/react";
 import {
   createMemoryHistory,
@@ -55,36 +56,48 @@ type Story = StoryObj<typeof meta>;
 const defaultActions = {
   hosted: {
     free: {
-      buttonText: "Get Started Free",
-      buttonLink: "/signup",
-      variant: "default" as const,
+      button: (
+        <ButtonLink href="/signup" variant="default">
+          Get Started Free
+        </ButtonLink>
+      ),
     },
     pro: {
-      buttonText: "Join Waitlist",
-      buttonLink: "/waitlist",
-      variant: "outline" as const,
+      button: (
+        <ButtonLink href="/waitlist" variant="outline">
+          Join Waitlist
+        </ButtonLink>
+      ),
     },
     team: {
-      buttonText: "Contact Sales",
-      buttonLink: "/contact",
-      variant: "outline" as const,
+      button: (
+        <ButtonLink href="/contact" variant="outline">
+          Contact Sales
+        </ButtonLink>
+      ),
     },
   },
   selfHosted: {
     free: {
-      buttonText: "Download",
-      buttonLink: "/download",
-      variant: "default" as const,
+      button: (
+        <ButtonLink href="/download" variant="default">
+          Download
+        </ButtonLink>
+      ),
     },
     pro: {
-      buttonText: "Request Access",
-      buttonLink: "/request-access",
-      variant: "outline" as const,
+      button: (
+        <ButtonLink href="/request-access" variant="outline">
+          Request Access
+        </ButtonLink>
+      ),
     },
     team: {
-      buttonText: "Contact Sales",
-      buttonLink: "/contact",
-      variant: "outline" as const,
+      button: (
+        <ButtonLink href="/contact" variant="outline">
+          Contact Sales
+        </ButtonLink>
+      ),
     },
   },
 };
@@ -100,36 +113,48 @@ export const WithExternalLinks: Story = {
     actions: {
       hosted: {
         free: {
-          buttonText: "Sign Up Now",
-          buttonLink: "https://app.lilypad.com/signup",
-          variant: "default" as const,
+          button: (
+            <ButtonLink href="https://app.lilypad.com/signup" variant="default">
+              Sign Up Now
+            </ButtonLink>
+          ),
         },
         pro: {
-          buttonText: "Join Beta",
-          buttonLink: "https://forms.lilypad.com/beta",
-          variant: "outline" as const,
+          button: (
+            <ButtonLink href="https://forms.lilypad.com/beta" variant="outline">
+              Join Beta
+            </ButtonLink>
+          ),
         },
         team: {
-          buttonText: "Schedule Demo",
-          buttonLink: "https://calendly.com/lilypad-team",
-          variant: "outline" as const,
+          button: (
+            <ButtonLink href="https://calendly.com/lilypad-team" variant="outline">
+              Schedule Demo
+            </ButtonLink>
+          ),
         },
       },
       selfHosted: {
         free: {
-          buttonText: "GitHub Release",
-          buttonLink: "https://github.com/mirascope/lilypad/releases",
-          variant: "default" as const,
+          button: (
+            <ButtonLink href="https://github.com/mirascope/lilypad/releases" variant="default">
+              GitHub Release
+            </ButtonLink>
+          ),
         },
         pro: {
-          buttonText: "Enterprise Inquiry",
-          buttonLink: "https://forms.lilypad.com/enterprise",
-          variant: "outline" as const,
+          button: (
+            <ButtonLink href="https://forms.lilypad.com/enterprise" variant="outline">
+              Enterprise Inquiry
+            </ButtonLink>
+          ),
         },
         team: {
-          buttonText: "Book Consultation",
-          buttonLink: "https://calendly.com/lilypad-enterprise",
-          variant: "outline" as const,
+          button: (
+            <ButtonLink href="https://calendly.com/lilypad-enterprise" variant="outline">
+              Book Consultation
+            </ButtonLink>
+          ),
         },
       },
     },
@@ -148,36 +173,48 @@ export const AllPrimaryButtons: Story = {
     actions: {
       hosted: {
         free: {
-          buttonText: "Start Free",
-          buttonLink: "/start",
-          variant: "default" as const,
+          button: (
+            <ButtonLink href="/start" variant="default">
+              Start Free
+            </ButtonLink>
+          ),
         },
         pro: {
-          buttonText: "Upgrade to Pro",
-          buttonLink: "/upgrade-pro",
-          variant: "default" as const,
+          button: (
+            <ButtonLink href="/upgrade-pro" variant="default">
+              Upgrade to Pro
+            </ButtonLink>
+          ),
         },
         team: {
-          buttonText: "Get Team Plan",
-          buttonLink: "/upgrade-team",
-          variant: "default" as const,
+          button: (
+            <ButtonLink href="/upgrade-team" variant="default">
+              Get Team Plan
+            </ButtonLink>
+          ),
         },
       },
       selfHosted: {
         free: {
-          buttonText: "Download Free",
-          buttonLink: "/download",
-          variant: "default" as const,
+          button: (
+            <ButtonLink href="/download" variant="default">
+              Download Free
+            </ButtonLink>
+          ),
         },
         pro: {
-          buttonText: "Get Pro License",
-          buttonLink: "/license-pro",
-          variant: "default" as const,
+          button: (
+            <ButtonLink href="/license-pro" variant="default">
+              Get Pro License
+            </ButtonLink>
+          ),
         },
         team: {
-          buttonText: "Get Team License",
-          buttonLink: "/license-team",
-          variant: "default" as const,
+          button: (
+            <ButtonLink href="/license-team" variant="default">
+              Get Team License
+            </ButtonLink>
+          ),
         },
       },
     },
