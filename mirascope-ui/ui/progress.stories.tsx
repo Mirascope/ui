@@ -44,3 +44,10 @@ export const Completed: Story = {
     value: 100,
   },
 };
+
+export const Color: Story = {
+  args: {
+    value: 100,
+    indicatorClassName: "bg-red-500",
+  },
+};
