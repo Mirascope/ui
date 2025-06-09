@@ -1,8 +1,12 @@
 import type { Meta, StoryObj } from "@storybook/react";
 import { useState } from "react";
-import { addDays } from "date-fns";
+import { addDays, format } from "date-fns";
 
 import { Calendar } from "@/mirascope-ui/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/mirascope-ui/ui/popover";
+import { Button } from "@/mirascope-ui/ui/button";
+import { cn } from "@/mirascope-ui/lib/utils";
+import { CalendarIcon } from "lucide-react";
 
 const meta = {
   title: "UI/Calendar",
@@ -52,9 +56,10 @@ export const Default: Story = {};
  */
 export const SingleSelection: Story = {
   render: () => {
-    const [date, setDate] = useState<Date | undefined>(new Date());
     return (
-      <Calendar mode="single" selected={date} onSelect={setDate} className="rounded-md border" />
+      <div className="w-auto p-0">
+        <Calendar mode="single" autoFocus />
+      </div>
     );
   },
 };
@@ -125,6 +130,31 @@ export const DisabledDates: Story = {
         disabled={disabledDays}
         className="rounded-md border"
       />
+    );
+  },
+};
+
+export const ButtonCalendar: Story = {
+  render: () => {
+    const [date, setDate] = useState<Date | undefined>(new Date());
+    return (
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            variant="outline"
+            className={cn(
+              "w-auto justify-start text-left font-normal",
+              !date && "text-muted-foreground"
+            )}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? format(date, "PPP") : "Start date"}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="w-auto p-0" align="start">
+          <Calendar mode="single" selected={date} onSelect={(date) => setDate(date)} autoFocus />
+        </PopoverContent>
+      </Popover>
     );
   },
 };
